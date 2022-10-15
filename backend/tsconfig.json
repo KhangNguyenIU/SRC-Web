@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "incremental": true,
+      "removeComments": true,
+      "outDir": "./dist",
+      "sourceMap": true,
+      "baseUrl": "./src",
+      "paths": {
+        "@config/*": ["config/*"],
+        "@entity":["entity/*"],
+        "@middleware": ["middleware/*"],
+        "@routes": ["routes/*"],
+        "@repository": ["repository/*"],
+      },
+      "lib": ["dom", "ESNext"],
+      "target": "ESNext",
+      "module": "CommonJS",
+      "allowSyntheticDefaultImports": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true
+    },
+    "exclude" : [
+      "**/**/node_modules",
+      "node_modules"
+    ]
+  }
