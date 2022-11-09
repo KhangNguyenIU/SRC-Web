@@ -1,5 +1,7 @@
 import { Application } from 'express';
 import { Server as HTTPServer, createServer } from 'http';
+import { Environment } from './environment.config';
+import { Logger } from './logger.config';
 
 export class ServerConfiguration {
   private static instance: ServerConfiguration;
@@ -20,9 +22,9 @@ export class ServerConfiguration {
   }
 
   listen(): any {
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT;
     return this.server.listen(port, () => {
-      console.log(`Server started on port ${port}`);
+      Logger.log('info', `Server started on port ${process.env.PORT}`);
     });
   }
 }
