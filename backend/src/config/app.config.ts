@@ -5,6 +5,8 @@ import * as Compression from 'compression';
 import { config as Dotenv } from 'dotenv';
 import { ProxyRouter } from '@services/proxy-route.service';
 import * as Morgan from 'morgan';
+import * as CookieParser from 'cookie-parser';
+import { Environment } from './environment.config';
 
 export class ExpressConfiguration {
   private static instance: ExpressConfiguration;
@@ -21,12 +23,15 @@ export class ExpressConfiguration {
         'Origin',
         'From',
       ],
+        origin: Environment.FE_URL,
+    //   origin: '*',
+    //   credential: true,
     },
     helmet: {
-        hidePoweredBy: true,
-        noSniff: true,
-        referrerPolicy: { policy: 'no-referrer' }
-    }
+      hidePoweredBy: true,
+      noSniff: true,
+      referrerPolicy: { policy: 'no-referrer' },
+    },
   };
 
   private constructor() {}
@@ -50,23 +55,35 @@ export class ExpressConfiguration {
   }
 
   plug(): ExpressConfiguration {
-    this.application.use(Cors(this.options.cors));
+    // this.application.use(Cors(this.options.cors));
+    this.application.use(Cors({
+        origin: ['http://localhost:3000',Environment.FE_URL],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        credentials: true
+    }))
+
     this.application.use(Express.json());
     this.application.use(Express.urlencoded({ extended: true }));
+    this.application.use(CookieParser())
     this.application.use(Compression());
-    this.application.use(Morgan('dev'))
-   
-     /**
-      * Enable Helmet security
-      */
+    this.application.use(Morgan('dev'));
 
-     Object.keys(this.options.helmet).forEach(key =>{
-        this.application.use(this.options.helmet[key] && typeof this.options.helmet[key] === 'boolean' ? Helmet[key]() : Helmet[key](this.options.helmet[key]))
-     })
+    /**
+     * Enable Helmet security
+     */
 
-     /**
-      * Routers
-      */
+    Object.keys(this.options.helmet).forEach((key) => {
+      this.application.use(
+        this.options.helmet[key] &&
+          typeof this.options.helmet[key] === 'boolean'
+          ? Helmet[key]()
+          : Helmet[key](this.options.helmet[key])
+      );
+    });
+
+    /**
+     * Routers
+     */
     this.application.use('/api', ProxyRouter.map());
     return this;
   }

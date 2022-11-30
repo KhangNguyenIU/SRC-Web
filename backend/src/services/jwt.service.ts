@@ -1,6 +1,7 @@
 import { ROLE } from '@enums';
 import * as jwt from 'jsonwebtoken';
 import {UserDecode} from  "@interfaces/user.interface"
+import { Environment } from '@config/environment.config';
 
 class JWTService {
   private static instance: JWTService;
@@ -14,19 +15,19 @@ class JWTService {
 
   private options = {
     jwt: {
-      secretOrKey: process.env.ACCESS_TOKEN_SECRET,
+      secretOrKey: Environment.JWT_SECRET,
     },
   };
 
   private constructor() {}
   async generateToken(userData: UserDecode): Promise<string> {
-    return jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, {
+    return jwt.sign(userData, this.options.jwt.secretOrKey, {
       expiresIn: '1h',
     });
   }
 
   async verifyToken(token: string): Promise<UserDecode> {
-    return await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    return await jwt.verify(token, Environment.JWT_SECRET);
   }
 }
 

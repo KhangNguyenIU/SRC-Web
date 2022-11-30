@@ -15,6 +15,7 @@ export interface ENV {
   CLOUDINARY_CLOUD_NAME: string | undefined;
   CLOUDINARY_API_KEY: string | undefined;
   CLOUDINARY_API_SECRET: string | undefined;
+  FE_URL: string | undefined;
 }
 
 export interface EnvConfig {
@@ -34,4 +35,5 @@ export interface EnvConfig {
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
+  FE_URL: string;
 }

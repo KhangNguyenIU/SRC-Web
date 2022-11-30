@@ -1,0 +1,1 @@
+export const isAuth =user => user.email !="" && user.role!="" && user.id!="" && user.firstName!=""

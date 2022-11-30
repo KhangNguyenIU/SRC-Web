@@ -25,7 +25,6 @@ class UserController {
   async signIn(req: Request, res: Response): Promise<Response<string | any>> {
     return AppDataSource.initialize()
       .then(async () => {
-        console.log(req.body);
         const UserRepo = await AppDataSource.getRepository(User);
         const { firstName, lastName, email, password } = req.body;
 
@@ -55,7 +54,6 @@ class UserController {
     res: Response
   ): Promise<Response<string | any>> {
     try {
-      console.log(req.body);
       const UserRepo = await AppDataSource.getRepository(User);
       const { firstName, lastName, email, password } = req.body;
 
@@ -99,7 +97,7 @@ class UserController {
       user.lastName = lastName;
       user.email = email;
       user.salt = await bcrypt.genSalt();
-      user.role = ROLE.admin;
+      user.role = ROLE.admin ;
       user.password = await bcrypt.hash(password, user.salt);
 
       await AppDataSource.manager.save(user);
@@ -129,6 +127,9 @@ class UserController {
 
       const userData = {
         id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
         role: user.role as ROLE,
       } as UserDecode;
 
@@ -145,6 +146,7 @@ class UserController {
 
       return res.status(200).json({
         message: 'Login success',
+        user: userData,
         accessToken,
       });
     } catch (error) {
@@ -189,7 +191,7 @@ class UserController {
   }
 
   async auth(req: Request, res: Response): Promise<Response<string | Error>> {
-    return res.status(200).json({ message: 'Auth success' });
+    return res.status(200).json({ user: req.user});
   }
 }
 
