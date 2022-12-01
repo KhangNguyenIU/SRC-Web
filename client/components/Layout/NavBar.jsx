@@ -1,21 +1,28 @@
-import { Avatar, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
+import {
+  Avatar,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AuthModal from '@components/Auth/AuthModal';
+import { logout } from 'slices/auth/auth.slice';
 
 export default function NavBar(props) {
   let user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = React.useState(false);
-const [ openAccountSetting, setOpenAccountSetting ] = useState(false);
 
-  const handleOpenAuthModal = () => {setOpenAuthModal(true);};
+  const handleOpenAuthModal = () => {
+    setOpenAuthModal(true);
+  };
   const handleCloseAuthModal = () => setOpenAuthModal(false);
 
-  const handleOpenAccountSetting = () => setOpenAccountSetting(true);
-    const handleCloseAccountSetting = () => setOpenAccountSetting(false);
   return (
     <React.Fragment>
       <Box
@@ -27,11 +34,7 @@ const [ openAccountSetting, setOpenAccountSetting ] = useState(false);
           fontFamily: 'Lora',
         }}
       >
-        <IconButton 
-        // onClick={() => props.setToggleSideBar(true)}
-        onClick={()=>handleOpenAccountSetting()}
-        
-        >
+        <IconButton onClick={() => props.setToggleSideBar(true)}>
           <MenuIcon />
         </IconButton>
 
@@ -43,42 +46,6 @@ const [ openAccountSetting, setOpenAccountSetting ] = useState(false);
 
         <AuthModal open={openAuthModal} closeModal={handleCloseAuthModal} />
       </Box>
-      <Menu
-        anchorEl={openAccountSetting}
-        open={openAccountSetting}
-        id="account-menu"
-        onClose={handleCloseAccountSetting}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 50,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
-            },
-        }}
-      > 
-        <MenuItem>Logout</MenuItem>
-      </Menu>
     </React.Fragment>
   );
 }
@@ -98,18 +65,30 @@ const AuthButtons = ({ handleOpenAuthModal }) => {
 
 const UserInfo = () => {
   const [open, setOpen] = useState(false);
-  const handleAvatarClick = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const onSignout = () => {
+    dispatch(logout({callback:handleClose}));
+  };
+
+  const handleAvatarClick = (e) => {
+    setAnchorEl(e.currentTarget);
     setOpen(true);
-    console.log('avatar clicked');
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setAnchorEl(null);
   };
   return (
     <React.Fragment>
       <Box>
-        <Tooltip title="account-setting">
         <IconButton
-          aria-controls='account-menu'
+          aria-controls="account-menu"
           aria-haspopup="true"
-          aria-expanded='true'
+          aria-expanded="true"
           onClick={handleAvatarClick}
         >
           <Avatar
@@ -118,45 +97,64 @@ const UserInfo = () => {
             src="https://source.unsplash.com/random"
           />
         </IconButton>
-        </Tooltip>
-       
       </Box>
 
       <Menu
-        anchorEl={open}
+        anchorEl={anchorEl}
         open={open}
         id="account-menu"
-        onClose={() => setOpen(false)}
+        onClose={handleClose}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 50,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.15))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
             },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
         }}
-      > 
-        <MenuItem>Logout</MenuItem>
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 200,
+            padding: '1rem 0',
+          }}
+        >
+          <IconButton>
+            <Avatar
+              sx={{ width: 40, height: 40, cursor: 'pointer' }}
+              alt="user avatar"
+              src="https://source.unsplash.com/random"
+            />
+          </IconButton>
+          <span style={{ marginTop: '1rem' }}>{user?.email}</span>
+        </Box>
+        <Divider />
+        <MenuItem>Settings</MenuItem>
+        <MenuItem onClick={onSignout}>Logout</MenuItem>
       </Menu>
     </React.Fragment>
   );

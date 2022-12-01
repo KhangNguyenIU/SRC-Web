@@ -20,33 +20,35 @@ class UserController {
     return UserController.instance;
   }
 
-
-
   async signIn(req: Request, res: Response): Promise<Response<string | any>> {
-    return AppDataSource.initialize()
-      .then(async () => {
-        const UserRepo = await AppDataSource.getRepository(User);
-        const { firstName, lastName, email, password } = req.body;
+    try {
+      const UserRepo = await AppDataSource.getRepository(User);
+      const { firstName, lastName, email, password } = req.body;
 
-        // check existed account
-        const existedUser = await UserRepo.findOneBy({ email });
-        if (existedUser) {
-          return res.status(400).json({ message: 'User already exists' });
-        }
+      // check existed account
+      const existedUser = await UserRepo.findOneBy({ email });
+      if (existedUser) {
+        return res.status(400).json({
+          message: 'Email is existed',
+        });
+      }
 
-        const user = new User();
-        user.firstName = firstName;
-        user.lastName = lastName;
-        user.email = email;
-        user.salt = await bcrypt.genSalt();
-        user.password = await bcrypt.hash(password, user.salt);
-
-        await AppDataSource.manager.save(user);
-        return res.status(200).json({ message: 'Create new account success' });
-      })
-      .catch((error) => {
-        return res.status(400).send(error);
+      const user = new User();
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.email = email;
+      user.salt = await bcrypt.genSalt();
+      user.role = ROLE.user;
+      user.password = await bcrypt.hash(password, user.salt);
+      user.username = email.split('@')[0];
+      await AppDataSource.manager.save(user);
+      return res.status(200).json({
+        message: 'Create new account success',
       });
+    } catch (error) {
+      Logger.log('error', error);
+      return res.status(400).json({ error: 'Failed to sign in' });
+    }
   }
 
   async signInStaff(
@@ -70,6 +72,7 @@ class UserController {
       user.salt = await bcrypt.genSalt();
       user.role = ROLE.staff;
       user.password = await bcrypt.hash(password, user.salt);
+      user.username = email.split('@')[0];
 
       await AppDataSource.manager.save(user);
       return res.status(200).json({ message: 'Create new account success' });
@@ -97,8 +100,9 @@ class UserController {
       user.lastName = lastName;
       user.email = email;
       user.salt = await bcrypt.genSalt();
-      user.role = ROLE.admin ;
+      user.role = ROLE.admin;
       user.password = await bcrypt.hash(password, user.salt);
+      user.username = email.split('@')[0];
 
       await AppDataSource.manager.save(user);
       return res.status(200).json({ message: 'Create new account success' });
@@ -155,12 +159,15 @@ class UserController {
     }
   }
 
-  async disactiveAccount(req: Request, res: Response): Promise<Response<string | any>> {
+  async disactiveAccount(
+    req: Request,
+    res: Response
+  ): Promise<Response<string | any>> {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
       let { id } = req.params as unknown as { id: number };
       const user = await UserRepo.findOne({ where: { id } });
-        console.log(user)
+      console.log(user);
       if (!user) {
         return res.status(400).json({ message: 'User does not exist' });
       }
@@ -173,7 +180,10 @@ class UserController {
     }
   }
 
-  async activateAccount(req: Request, res: Response): Promise<Response<string | any>> {
+  async activateAccount(
+    req: Request,
+    res: Response
+  ): Promise<Response<string | any>> {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
       let { id } = req.params as unknown as { id: number };
@@ -191,7 +201,16 @@ class UserController {
   }
 
   async auth(req: Request, res: Response): Promise<Response<string | Error>> {
-    return res.status(200).json({ user: req.user});
+    return res.status(200).json({ user: req.user });
+  }
+
+  async logout(req: Request, res: Response): Promise<Response<string | Error>> {
+    try {
+      res.clearCookie('accessToken');
+      return res.status(200).json({ message: 'Logout success' });
+    } catch (error) {
+      return res.status(400).json({ error: 'Error while logout' });
+    }
   }
 }
 

@@ -35,7 +35,7 @@ export class Post {
   @Column()
   year: number;
 
-  @ManyToOne((type) => User, (user) => user.posts)
+  @ManyToOne((type) => User, (user) => user.posts, {onDelete: 'CASCADE'})
   postedBy: User;
 
   @ManyToOne((type) => Category, (category) => category.posts)

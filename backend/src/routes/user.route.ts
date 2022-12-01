@@ -55,5 +55,10 @@ export class UserRoute extends Router {
     this.router
       .route('/auth')
       .post(AuthMiddleware.checkRole([ROLE.staff, ROLE.admin, ROLE.user]), UserController.auth);
+
+
+    this.router
+    .route('/logout')
+    .post(AuthMiddleware.checkRole([ROLE.staff, ROLE.admin, ROLE.user]), UserController.logout);
   }
 }

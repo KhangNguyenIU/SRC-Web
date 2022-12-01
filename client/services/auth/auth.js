@@ -9,6 +9,10 @@ const authService = {
     checkAuth: () => {
         const url = '/user/auth'
         return axiosClient.post(url)
+    },
+    logout : ()=>{
+        const url = '/user/logout'
+        return axiosClient.post(url)
     }
 }
 

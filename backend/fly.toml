@@ -1,6 +1,0 @@
-app="src-app2023"
-[build]
-    image ="flyio/hellofly:latest"
-
-[[services]]
-    internal_port =  8080

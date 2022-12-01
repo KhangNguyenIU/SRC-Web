@@ -38,6 +38,18 @@ export class User {
   email: string;
 
   @Column({
+    nullable: false,
+  })
+  username: string;
+
+  @Column({
+    nullable: false,
+    default:
+      'https://images.unsplash.com/photo-1668603146337-be7fcd268306?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  })
+  avatar: string;
+
+  @Column({
     nullable: true,
   })
   salt: string;
@@ -62,8 +74,8 @@ export class User {
   })
   enabled: ACCOUNT_STATUS;
 
-  @OneToOne(()=>Feedback, feedback => feedback.user)
-    feedback: Feedback;
+  @OneToOne(() => Feedback, (feedback) => feedback.user,{ eager: true, onDelete: 'CASCADE' })
+  feedback: Feedback;
 
   @OneToMany((type) => Post, (post) => post.postedBy, {
     eager: true,

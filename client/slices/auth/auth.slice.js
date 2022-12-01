@@ -32,12 +32,29 @@ export const signinUser = createAsyncThunk(
     }
 )
 
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async (payload, thunkAPI) => {
+        try {
+            const {callback} = payload
+            if(!callback || typeof callback != "function") return thunkAPI.rejectWithValue({message: "Invalid callback"})
+            const response = await authService.logout()
+            if (response.status === 200) {
+                thunkAPI.dispatch(setUser(userInitialState))
+                thunkAPI.dispatch(showNotification({ message: response?.data?.message, type: 'success' }))
+                callback()
+            }
+        } catch (error) {
+            thunkAPI.dispatch(showNotification({ message: error?.response?.data?.message || 'Internal Server', type: 'error' }))
+        }
+    }
+)
+
 export const checkAuth = createAsyncThunk(
     'auth/checkAuth',
     async (payload, thunkAPI) => {
         try {
             const response = await authService.checkAuth()
-            console.log({ response })
             if (response.status === 200) {
                 thunkAPI.dispatch(setUser(response?.data?.user))
             } else {
