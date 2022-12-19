@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
   Divider,
@@ -7,10 +9,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useEffect, useState } from 'react';
-
 import MenuIcon from '@mui/icons-material/Menu';
-import { useDispatch, useSelector } from 'react-redux';
 import AuthModal from '@components/Auth/AuthModal';
 import { logout } from 'slices/auth/auth.slice';
 
@@ -32,6 +31,8 @@ export default function NavBar(props) {
           width: '100%',
           alignItems: 'center',
           fontFamily: 'Lora',
+        //   position: 'fixed',
+          zIndex: 1,
         }}
       >
         <IconButton onClick={() => props.setToggleSideBar(true)}>
@@ -70,7 +71,7 @@ const UserInfo = () => {
   const dispatch = useDispatch();
 
   const onSignout = () => {
-    dispatch(logout({callback:handleClose}));
+    dispatch(logout({ callback: handleClose }));
   };
 
   const handleAvatarClick = (e) => {
@@ -94,7 +95,7 @@ const UserInfo = () => {
           <Avatar
             sx={{ width: 40, height: 40, cursor: 'pointer' }}
             alt="user avatar"
-            src="https://source.unsplash.com/random"
+            src={user?.avatar}
           />
         </IconButton>
       </Box>
@@ -147,7 +148,7 @@ const UserInfo = () => {
             <Avatar
               sx={{ width: 40, height: 40, cursor: 'pointer' }}
               alt="user avatar"
-              src="https://source.unsplash.com/random"
+              src={user?.avatar}
             />
           </IconButton>
           <span style={{ marginTop: '1rem' }}>{user?.email}</span>

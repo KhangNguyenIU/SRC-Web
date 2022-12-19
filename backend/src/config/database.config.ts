@@ -1,8 +1,6 @@
 import 'reflect-metadata';
 
 import { DataSource } from 'typeorm';
-import { DatabaseEngine } from '@types';
-import { config } from '@config/env.config';
 import { Environment } from './environment.config';
 
 export class DatabaseConfig {

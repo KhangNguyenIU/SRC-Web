@@ -18,7 +18,8 @@
         "@classes": ["types/classes"],
         "@services/*": ["services/*"],
         "@dto/*":["types/dto/*"],
-        "@validators/*": ["validators/*"]
+        "@validators/*": ["validators/*"],
+        "@utils/*": ["utils/*"],
       },
       "lib": ["dom", "ESNext"],
       "target": "ESNext",
@@ -26,7 +27,7 @@
       "allowSyntheticDefaultImports": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "typeRoots": ["./config/index.d.ts", "node_modules/@types"],
+      "typeRoots": ["./config/index.d.ts", "node_modules/@types"]
     },
     "exclude" : [
       "**/**/node_modules",

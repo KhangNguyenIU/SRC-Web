@@ -2,12 +2,22 @@ import { Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { Box } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 /**
  * @author
  * @function SideBar
  **/
-const listArray = ['Recruiment', 'News', 'Enrollment Project', 'Contact'];
+
+
+const navItems = [
+    {item:'Home', link:'/'},
+    {item:'Recruiment', link:'/recruiment'},
+    {item:'News', link:'/news'},
+    {item:'Enrollment Project', link:'/enrollment-project'},
+    {item:'Contact', link:'/contact'},
+]
+
 const SideBar = (props) => {
   const closeBar = () => props.setToggleSideBar(false);
   return (
@@ -20,6 +30,7 @@ const SideBar = (props) => {
 };
 
 const list = () => {
+  const user = useSelector((state) => state.user);
   return (
     <Box
       sx={{
@@ -32,11 +43,17 @@ const list = () => {
       role="presentation"
     >
       <List>
-        {listArray.map((text, index) => (
-          <ListItem key={text}>
-            <Link href={`/${text}`}>{text}</Link>
+        {navItems.map((item, index) => (
+          <ListItem key={index}>
+            <Link href={`/${item.link}`}>{item.item}</Link>
           </ListItem>
         ))}
+
+        {user?.role === 'admin' && (
+          <ListItem key="admin">
+            <Link href="/private/dashboard">Dashboard</Link>
+          </ListItem>
+        )}
       </List>
     </Box>
   );

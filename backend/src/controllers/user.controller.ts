@@ -7,6 +7,7 @@ import { JWTService } from '@services/jwt.service';
 import { ACCOUNT_STATUS, ROLE } from '@enums';
 import { UserDecode } from '@interfaces/user.interface';
 import { Logger } from '@config/logger.config';
+import { Faculty } from '@entities/faculty.entity';
 
 class UserController {
   private static instance: UserController;
@@ -57,13 +58,20 @@ class UserController {
   ): Promise<Response<string | any>> {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
-      const { firstName, lastName, email, password } = req.body;
+      const FacultyRepo = await AppDataSource.getRepository(Faculty);
+      const { firstName, lastName, email, password, facultyId } = req.body;
 
       // check existed account
       const existedUser = await UserRepo.findOneBy({ email });
       if (existedUser) {
         return res.status(400).json({ message: 'User already exists' });
       }
+
+      // check existed faculty
+        const existedFaculty = await FacultyRepo.findOneBy({ id: facultyId });
+        if (!existedFaculty) {
+            return res.status(400).json({ message: 'Faculty not found' });
+        }
 
       const user = new User();
       user.firstName = firstName;
@@ -73,6 +81,7 @@ class UserController {
       user.role = ROLE.staff;
       user.password = await bcrypt.hash(password, user.salt);
       user.username = email.split('@')[0];
+      user.faculty = existedFaculty;
 
       await AppDataSource.manager.save(user);
       return res.status(200).json({ message: 'Create new account success' });
@@ -134,6 +143,7 @@ class UserController {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        avatar: user.avatar,
         role: user.role as ROLE,
       } as UserDecode;
 
@@ -210,6 +220,25 @@ class UserController {
       return res.status(200).json({ message: 'Logout success' });
     } catch (error) {
       return res.status(400).json({ error: 'Error while logout' });
+    }
+  }
+
+  async getAllUsers(
+    req: Request,
+    res: Response
+  ): Promise<Response<string | any>> {
+    try {
+      const UserRepo = await AppDataSource.getRepository(User);
+    const users = await UserRepo.createQueryBuilder('user')
+    .leftJoin('user.faculty', 'faculty')
+    .addSelect(['faculty'])
+    .getMany()
+    
+      return res.status(200).json({ users });
+    } catch (error) {
+        console.log(error)
+        Logger.log('error', error);
+      return res.status(400).send(error);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Router } from '@classes';
+import slugify from 'slugify';
 import { AppDataSource } from '@config/database.config';
 import { Logger } from '@config/logger.config';
 import { Category } from '@entities/category.entity';
@@ -46,6 +46,7 @@ class PostController {
       post.year = year;
       post.postedBy = author;
       post.category = cate;
+      post.slug = slugify(title, { locale: 'vi', lower: true });
       await AppDataSource.manager.save(post);
       return res.status(200).json({ message: 'Create new post success' });
     } catch (error) {
@@ -114,10 +115,47 @@ class PostController {
       });
       if (!cate) return res.status(400).json({ error: 'Category not existed' });
 
-    return res.status(200).json({ posts:cate.posts });
+      return res.status(200).json({ posts: cate.posts });
     } catch (error) {
       Logger.log('error', error);
       return res.status(400).json({ error: 'Error occurs when getting post' });
+    }
+  }
+
+  async getPostBySlug(
+    req: Request,
+    res: Response
+  ): Promise<Response<string | any>> {
+    try {
+      const PostRepoitory = await AppDataSource.getRepository(Post);
+      const { slug } = req.params as unknown as { slug: string };
+      const post = await PostRepoitory.findOneBy({ slug });
+      if (!post) return res.status(400).json({ error: 'Post not existed' });
+      return res.status(200).json({ post });
+    } catch (error) {
+      Logger.log('error', error);
+      return res.status(400).json({ error: 'Error occurs when getting post' });
+    }
+  }
+
+  async getPostList(
+    req: Request,
+    res: Response
+  ): Promise<Response<string | any>> {
+    try{
+        const limit = Number(req.query.limit ) || 10;
+        let page = Number(req.query.page) || 1;
+
+        console.log({limit, page})
+        const PostRepoitory = await AppDataSource.getRepository(Post);
+        const posts = await PostRepoitory.find({
+            skip: (page - 1) * limit,
+            take: limit,
+        });
+        return res.status(200).json({ posts });
+    }catch(error){
+        Logger.log('error', error);
+        return res.status(400).json({ error: 'Error occurs when getting post' });
     }
   }
 }

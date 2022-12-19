@@ -1,7 +1,11 @@
 import { CategoryRoute } from '@routes/category.route';
+import { EmailRoute } from '@routes/email.route';
+import { FacultyRoute } from '@routes/faculty.route';
 import { FeedbackRoute } from '@routes/feedback.route';
+import { PhoneRoute } from '@routes/phone.route';
 import { PostRoute } from '@routes/post.route';
 import { TestRoute } from '@routes/test.route';
+import { UploadRoute } from '@routes/upload.route';
 import { UserRoute } from '@routes/user.route';
 import { Router } from 'express';
 
@@ -24,6 +28,10 @@ class ProxyRouter {
     { segment: '/post', provider: PostRoute },
     { segment: '/feedback', provider: FeedbackRoute },
     { segment: '/test', provider: TestRoute },
+    { segment: '/upload', provider: UploadRoute },
+    { segment: '/phone', provider:  PhoneRoute},
+    { segment: '/email', provider:  EmailRoute},
+    { segment: '/faculty',  provider: FacultyRoute}
   ];
 
   private constructor() {}

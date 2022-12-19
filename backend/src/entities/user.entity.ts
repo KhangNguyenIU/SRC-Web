@@ -8,10 +8,14 @@ import {
   UpdateDateColumn,
   OneToMany,
   OneToOne,
+  ManyToOne,
+  JoinColumn,
+  JoinTable,
 } from 'typeorm';
+import { ROLE, ACCOUNT_STATUS } from '@enums';
 
 import { Post } from '@entities/post.entity';
-import { ROLE, ACCOUNT_STATUS } from '@enums';
+import { Faculty } from '@entities/faculty.entity';
 import { Feedback } from '@entities/feedback.entity';
 @Entity()
 export class User {
@@ -74,14 +78,22 @@ export class User {
   })
   enabled: ACCOUNT_STATUS;
 
-  @OneToOne(() => Feedback, (feedback) => feedback.user,{ eager: true, onDelete: 'CASCADE' })
-  feedback: Feedback;
-
-  @OneToMany((type) => Post, (post) => post.postedBy, {
+  @OneToOne(() => Feedback, (feedback) => feedback.user, {
     eager: true,
     onDelete: 'CASCADE',
   })
+  feedback: Feedback;
+
+  @OneToMany((type) => Post, (post) => post.postedBy, {
+    onDelete: 'CASCADE',
+  })
   posts: Post[];
+
+  @ManyToOne((type) => Faculty, (faculty) => faculty.users, {
+    onDelete: 'CASCADE',
+  })
+//   @JoinColumn({name: 'faculty_id'})
+  faculty: Faculty;
 
   @CreateDateColumn()
   created_at;

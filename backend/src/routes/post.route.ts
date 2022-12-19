@@ -12,6 +12,10 @@ export class PostRoute extends Router {
 
   define(): void {
     this.router
+    .route('/')
+    .get(PostController.getPostList);
+
+    this.router
       .route('/create')
       .post(
         AuthMiddleware.checkRole([ROLE.admin, ROLE.staff]),
@@ -38,5 +42,7 @@ export class PostRoute extends Router {
     this.router
       .route('/get-by-category/:id')
       .get(PostController.getPostByCategory);
+
+    this.router.route('/get-by-slug/:slug').get(PostController.getPostBySlug);
   }
 }

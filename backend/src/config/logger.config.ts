@@ -27,7 +27,6 @@ class Logger {
   init(): Logger {
     this.logger = createLogger({
       level: 'info',
-
       format: format.combine(
         label({ label: 'SRC server' }),
         timestamp(),

@@ -1,5 +1,5 @@
 import Layout from '@components/Layout'
-import PrivateRoute from '@components/Layout/PrivateRoute'
+import PrivateRoute from '@components/Dashboard/Layout/PrivateRoute'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 

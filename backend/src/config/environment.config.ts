@@ -38,6 +38,7 @@ class Ennvironment {
       CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
       CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
       FE_URL: process.env.FE_URL,
+      REDIS_URL: process.env.REDIS_URL,
     };
   }
 

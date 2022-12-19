@@ -25,5 +25,6 @@ export namespace Nodejs{
         DB_ENTITIES: string;
         DB_MIGRATIONS: string;
         DB_CACHE: boolean;
+        REDIS_URL: string;
     }
 }

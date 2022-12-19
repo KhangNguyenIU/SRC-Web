@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import { User } from '@entities/user.entity';
 import { Category } from './category.entity';
+import slugify from 'slugify';
 @Entity()
 export class Post {
   @PrimaryGeneratedColumn()
@@ -21,6 +22,9 @@ export class Post {
     nullable: false,
   })
   title: string;
+
+  @Column()
+  slug: string;
 
   @Column({
     nullable: false,
@@ -46,4 +50,6 @@ export class Post {
 
   @UpdateDateColumn()
   updated_at;
+
+
 }

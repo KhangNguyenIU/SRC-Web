@@ -16,6 +16,7 @@ export interface ENV {
   CLOUDINARY_API_KEY: string | undefined;
   CLOUDINARY_API_SECRET: string | undefined;
   FE_URL: string | undefined;
+  REDIS_URL: string | undefined;
 }
 
 export interface EnvConfig {
@@ -36,4 +37,5 @@ export interface EnvConfig {
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
   FE_URL: string;
+  REDIS_URL: string;
 }

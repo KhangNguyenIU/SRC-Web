@@ -5,5 +5,6 @@ export class UserDecode{
     firstName: string;
     lastName: string;
     email: string;
+    avatar:string;
     role: ROLE;
 }

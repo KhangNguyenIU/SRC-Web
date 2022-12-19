@@ -1,7 +1,6 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import authService from '@services/auth/auth'
-import data from 'data'
 import { showNotification } from 'slices/util/notification.slice'
 
 const userInitialState = {
@@ -36,8 +35,8 @@ export const logout = createAsyncThunk(
     'auth/logout',
     async (payload, thunkAPI) => {
         try {
-            const {callback} = payload
-            if(!callback || typeof callback != "function") return thunkAPI.rejectWithValue({message: "Invalid callback"})
+            const { callback } = payload
+            if (!callback || typeof callback != "function") return thunkAPI.rejectWithValue({ message: "Invalid callback" })
             const response = await authService.logout()
             if (response.status === 200) {
                 thunkAPI.dispatch(setUser(userInitialState))
@@ -57,15 +56,12 @@ export const checkAuth = createAsyncThunk(
             const response = await authService.checkAuth()
             if (response.status === 200) {
                 thunkAPI.dispatch(setUser(response?.data?.user))
-            } else {
-                if (window.location.pathname.startsWith('/private') && (callback && typeof callback === "function")) {
-                    const { callback } = payload
-                    callback()
-                }
             }
-
-
         } catch (error) {
+            const { callback } = payload
+            if (window.location.pathname.startsWith('/private') && (callback && typeof callback === "function")) {
+                callback()
+            }
             thunkAPI.dispatch(clearUser())
         }
     }

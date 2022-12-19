@@ -24,8 +24,7 @@ export class ExpressConfiguration {
         'From',
       ],
         origin: Environment.FE_URL,
-    //   origin: '*',
-    //   credential: true,
+
     },
     helmet: {
       hidePoweredBy: true,
@@ -63,7 +62,7 @@ export class ExpressConfiguration {
     }))
 
     this.application.use(Express.json());
-    this.application.use(Express.urlencoded({ extended: true }));
+    this.application.use(Express.urlencoded({ extended: true , limit:'50mb'}));
     this.application.use(CookieParser())
     this.application.use(Compression());
     this.application.use(Morgan('dev'));
