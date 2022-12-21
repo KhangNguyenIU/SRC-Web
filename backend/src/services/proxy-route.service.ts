@@ -1,7 +1,9 @@
 import { CategoryRoute } from '@routes/category.route';
+import { ConversationRoute } from '@routes/conversation.route';
 import { EmailRoute } from '@routes/email.route';
 import { FacultyRoute } from '@routes/faculty.route';
 import { FeedbackRoute } from '@routes/feedback.route';
+import { MessageRoute } from '@routes/message.route';
 import { PhoneRoute } from '@routes/phone.route';
 import { PostRoute } from '@routes/post.route';
 import { TestRoute } from '@routes/test.route';
@@ -29,9 +31,11 @@ class ProxyRouter {
     { segment: '/feedback', provider: FeedbackRoute },
     { segment: '/test', provider: TestRoute },
     { segment: '/upload', provider: UploadRoute },
-    { segment: '/phone', provider:  PhoneRoute},
-    { segment: '/email', provider:  EmailRoute},
-    { segment: '/faculty',  provider: FacultyRoute}
+    { segment: '/phone', provider: PhoneRoute },
+    { segment: '/email', provider: EmailRoute },
+    { segment: '/faculty', provider: FacultyRoute },
+    { segment: '/conversation', provider: ConversationRoute },
+    { segment: '/message', provider: MessageRoute },
   ];
 
   private constructor() {}

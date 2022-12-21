@@ -2,6 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -22,10 +24,10 @@ export class Message {
   })
   type: MESSAGE_TYPE;
 
-  @Column((type) => Conversation)
+  @ManyToOne((type) => Conversation,conversation =>conversation.messages)
   conversation: Conversation;
 
-  @Column((type) => User)
+  @ManyToOne((type) => User, user=>user.messages)
   postedBy: User;
 
   @CreateDateColumn()

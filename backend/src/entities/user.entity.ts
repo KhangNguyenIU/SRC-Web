@@ -11,12 +11,17 @@ import {
   ManyToOne,
   JoinColumn,
   JoinTable,
+  ManyToMany,
 } from 'typeorm';
 import { ROLE, ACCOUNT_STATUS } from '@enums';
 
 import { Post } from '@entities/post.entity';
 import { Faculty } from '@entities/faculty.entity';
 import { Feedback } from '@entities/feedback.entity';
+import { Conversation } from './conversation.entity';
+import { Message } from './message.entity';
+import { ConversationParticipant } from './ConversationParticipant.entity';
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -92,8 +97,17 @@ export class User {
   @ManyToOne((type) => Faculty, (faculty) => faculty.users, {
     onDelete: 'CASCADE',
   })
-//   @JoinColumn({name: 'faculty_id'})
   faculty: Faculty;
+
+  @OneToMany(
+    (type) => ConversationParticipant,
+    (conversationParticipant) => conversationParticipant.user
+  )
+  @JoinColumn({ name: 'userId' })
+  conversationParticipants: ConversationParticipant[];
+
+  @OneToMany((type) => Message, (message) => message.postedBy)
+  messages: Message[];
 
   @CreateDateColumn()
   created_at;

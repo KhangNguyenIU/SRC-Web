@@ -5,6 +5,7 @@ import { Environment } from '@config/environment.config';
 import { Logger } from '@config/logger.config';
 import { Server } from '@config/server.config';
 import { RedisCache } from '@config/cache.config';
+import {Server as SocketServer} from 'socket.io'
 
 const main = async (): Promise<void> => {
   AppDataSource.initialize()
@@ -19,7 +20,19 @@ const main = async (): Promise<void> => {
         await RedisCache.connect()
         const redisClient = RedisCache.getClient()
        
+        // socket io
+        const socketIo = new SocketServer(server)
 
+        global.io =socketIo
+
+        socketIo.on('connection', (socket) => {
+            console.log('socket connected')
+            socket.on('disconnect', () => {
+                console.log('socket disconnected')
+            })
+
+            
+        })
     })
     .catch((error) => {
       console.log(error);

@@ -146,7 +146,6 @@ class PostController {
         const limit = Number(req.query.limit ) || 10;
         let page = Number(req.query.page) || 1;
 
-        console.log({limit, page})
         const PostRepoitory = await AppDataSource.getRepository(Post);
         const posts = await PostRepoitory.find({
             skip: (page - 1) * limit,
