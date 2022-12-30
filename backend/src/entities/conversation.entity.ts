@@ -22,10 +22,10 @@ export class Conversation {
     (type) => ConversationParticipant,
     (conversationParticipant) => conversationParticipant.conversation
   )
-  @JoinColumn({ name: 'conversationId' })
+  @JoinColumn({ name: 'conversationid' })
   conversationParticipants: ConversationParticipant[];
 
-  @OneToMany((type) => Message, (message) => message.conversation)
+  @OneToMany((type) => Message, (message) => message.conversation, {onUpdate: 'CASCADE', onDelete: 'CASCADE'})
   messages: Message[];
 
   @CreateDateColumn()

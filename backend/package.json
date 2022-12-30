@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/socket.io": "^3.0.2",
+
     "bcrypt": "^5.1.0",
     "class-validator": "^0.13.2",
     "cloudinary": "^1.32.0",
@@ -37,6 +37,7 @@
     "reflect-metadata": "^0.1.13",
     "slugify": "^1.6.5",
     "socket.io": "^4.5.4",
+    "socket.io-redis": "^6.1.1",
     "typeorm": "^0.3.10",
     "winston": "^3.8.2"
   },

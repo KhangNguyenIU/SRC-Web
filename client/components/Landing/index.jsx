@@ -4,7 +4,7 @@ import Hero from './hero'
 export default function Landing() {
   return (
     <React.Fragment>
-        < Hero/>
+        {/* < Hero/> */}
     </React.Fragment>
   )
 }

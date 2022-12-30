@@ -6,16 +6,16 @@ import { User } from "./user.entity";
 @Entity()
 export class ConversationParticipant {
     @PrimaryColumn()
-    conversationId: number;
+    conversationid: number;
 
     @PrimaryColumn()
-    userId : number;
+    userid : number;
 
     @ManyToOne(type => Conversation, conversation => conversation.conversationParticipants, {onDelete:'CASCADE'})
-    @JoinColumn({name: 'conversationId'})
+    @JoinColumn({name: 'conversationid'})
     conversation: Conversation;
 
     @ManyToOne(type=> User, user => user.conversationParticipants, {onDelete:'CASCADE'})
-    @JoinColumn({name: 'userId'})
+    @JoinColumn({name: 'userid'})
     user: User;
 }

@@ -1,0 +1,116 @@
+@import 'colors';
+@import 'mixins';
+
+.chatboxHeader {
+  flex-basis: 6%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem 2rem;
+  align-items: center;
+
+  .chatboxHeaderInfo {
+    display: flex;
+    align-items: center;
+  }
+  .groupHeaderInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 1rem;
+
+    .groupName {
+      color: $secondary-gray-light;
+      font-size: 0.9rem;
+      font-family: 'Arial', sans;
+    }
+    .groupMemberNumbers {
+      color: $primary-gray-light;
+      font-family: 'Arial', sans;
+      font-size: 0.6rem;
+    }
+  }
+
+  .chatboxToolInfo {
+    display: flex;
+    align-items: center;
+    color: $primary-gray-light;
+
+    & > * {
+      cursor: pointer;
+      margin: 0 0.5rem;
+    }
+  }
+}
+
+.chatboxContent {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 0.5rem 0;
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: $primary-gray-light;
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    background-color: $primary-gray;
+    display: none;
+  }
+
+  .messageContent{
+    &.isTyping {
+        padding-left: 1rem;
+      }
+      margin-bottom: 1rem;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      &.isMyMessage {
+        flex-direction: row-reverse;
+      }
+
+      
+  }
+}
+
+
+.messagePartDir {
+    max-width: 80%;
+    display: flex;
+    margin-bottom: 0.2rem;
+
+    &.isMyMesaage {
+      flex-direction: row-reverse;
+    }
+
+    .message {
+        display: flex;
+        margin-left: 0.5rem;
+        width: 100%;
+
+        .messageText {
+          padding: 0.6rem 0.8rem;
+          word-break: break-all;
+          font-size: 1rem;
+          border-radius: 15px;
+          background-color: $secondary-purple-dark;
+          color: $secondary-gray;
+
+          &.isMyMessage {
+            background-color: $primary-purple;
+            color: $secondary-gray;
+            margin-right: 0.5rem;
+          }
+
+          &.puffInCenter {
+            // animation: puff-in-center 0.7s
+            //   cubic-bezier(0.47, 0, 0.745, 0.715) both;
+            .scaleInCenter {
+              animation: scale-in-center 0.5s
+                cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+            }
+          }
+        }
+    }
+  }

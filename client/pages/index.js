@@ -7,18 +7,14 @@ import { showNotification } from 'slices/util/notification.slice'
 
 import data from '../data'
 
-export default function Home() {
-    const dispatch = useDispatch()
-    const user = useSelector(state => state.user)
- 
+export default function Home({ socket }) {
 
     return (
 
         <React.Fragment>
             <Layout >
-            <Landing/>
+                <Landing />
             </Layout>
-
         </React.Fragment>
     )
 }

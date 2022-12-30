@@ -24,6 +24,9 @@ class RedisCache {
       Logger.log('error', 'Error occured when connect to redis');
       process.exit(0);
     });
+    this.client.on('connect', () => {
+        Logger.log('info', 'Redis connected');
+    })
     await this.client.connect();
     return this.client;
   }

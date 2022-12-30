@@ -33,10 +33,8 @@ export default function AuthModal({ open, closeModal }) {
 
   const handleAuthSigninOptions = (e) => {
     let option = e.target.attributes.getNamedItem('data-tag').value;
-    console.log({ option });
     if (!option) return;
 
-    console.log(data.signin);
     switch (option) {
       case 'guest':
         dispatch(signinUser({ body: data.signin.user, callback: closeModal }));

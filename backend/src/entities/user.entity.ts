@@ -103,7 +103,7 @@ export class User {
     (type) => ConversationParticipant,
     (conversationParticipant) => conversationParticipant.user
   )
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'userid' })
   conversationParticipants: ConversationParticipant[];
 
   @OneToMany((type) => Message, (message) => message.postedBy)

@@ -137,12 +137,12 @@ class UserController {
       if (!isPasswordValid) {
         return res.status(400).json({ message: 'Password is not valid' });
       }
-
       const userData = {
         id: user.id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        username: user.username,
         avatar: user.avatar,
         role: user.role as ROLE,
       } as UserDecode;
@@ -177,7 +177,6 @@ class UserController {
       const UserRepo = await AppDataSource.getRepository(User);
       let { id } = req.params as unknown as { id: number };
       const user = await UserRepo.findOne({ where: { id } });
-      console.log(user);
       if (!user) {
         return res.status(400).json({ message: 'User does not exist' });
       }

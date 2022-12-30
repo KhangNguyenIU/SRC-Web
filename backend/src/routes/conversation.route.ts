@@ -14,5 +14,8 @@ export class ConversationRoute extends Router{
         this.router.get('/',  AuthMiddleware.checkRole([ROLE.admin,ROLE.staff, ROLE.user]),ConversationController.getConversation)
 
         this.router.get('/my-conversation',  AuthMiddleware.checkRole([ROLE.admin,ROLE.staff, ROLE.user]),ConversationController.getConversationByUserId)
+
+        // get the conversation by participant's ids
+        this.router.get('/from-participants',  AuthMiddleware.checkRole([ROLE.admin,ROLE.staff, ROLE.user]),ConversationController.getConversationByParticipants)
     }
 }

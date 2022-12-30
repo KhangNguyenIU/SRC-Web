@@ -9,13 +9,20 @@ import { useSelector } from 'react-redux';
  * @function SideBar
  **/
 
-
 const navItems = [
-    {item:'Home', link:'/'},
-    {item:'Recruiment', link:'/recruiment'},
-    {item:'News', link:'/news'},
-    {item:'Enrollment Project', link:'/enrollment-project'},
-    {item:'Contact', link:'/contact'},
+  { item: 'Home', link: '/' },
+  { item: 'Recruiment', link: '/recruiment' },
+  { item: 'News', link: '/news' },
+  { item: 'Enrollment Project', link: '/enrollment-project' },
+  { item: 'Contact', link: '/contact' },
+];
+
+const privateItems =[
+    { item: 'Message', link: '/private/message' },
+]
+
+const adminItems = [
+    { item: 'Dashboard', link: '/private/dashboard' },
 ]
 
 const SideBar = (props) => {
@@ -45,15 +52,15 @@ const list = () => {
       <List>
         {navItems.map((item, index) => (
           <ListItem key={index}>
-            <Link href={`/${item.link}`}>{item.item}</Link>
+            <Link href={`${item.link}`}>{item.item}</Link>
           </ListItem>
         ))}
 
-        {user?.role === 'admin' && (
-          <ListItem key="admin">
-            <Link href="/private/dashboard">Dashboard</Link>
+        {['admin','staff','user'].includes(user.role)  && privateItems.map((item, index)=>(
+          <ListItem key={`${item}-${index}`}>
+            <Link href={`${item.link}`}>{item.item}</Link>
           </ListItem>
-        )}
+        ))}
       </List>
     </Box>
   );

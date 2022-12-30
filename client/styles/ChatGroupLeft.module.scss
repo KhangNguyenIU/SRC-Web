@@ -1,0 +1,96 @@
+@import 'colors';
+@import 'mixins';
+
+.leftWrapper {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  @include respond(xs) {
+    padding: 0;
+  }
+}
+
+.groupList {
+  flex: 1;
+  overflow-y: scroll;
+  height: 50%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.list {
+  max-height: 75vh;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  height: 70px;
+}
+
+.groupChatWrapper {
+  padding: 0 15px;
+  display: flex;
+  width: 100%;
+  border-radius: 5px;
+  transition: 300ms;
+  cursor: pointer;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  &.isNotReaded {
+    background-color: $primary-gray;
+  }
+  &:hover {
+    background-color: $primary-gray;
+  }
+}
+
+.groupInfo {
+  // flex-basis: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  font-size: 10px;
+  line-height: 15px;
+  width: 100%;
+  padding: 0 1rem;
+
+  @include respond(md) {
+    //   padding: 0 .5rem;
+    display: none;
+  }
+  @include respond(sm) {
+    padding: 0 0.5rem;
+  }
+}
+
+.groupName {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  color: $secondary-gray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nameText {
+}
+
+.groupLastMessage {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: $secondary-gray-light;
+}
+
+.timeText {
+  color: $primary-gray-light;
+  font-size: 11px;
+}

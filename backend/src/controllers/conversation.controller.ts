@@ -3,6 +3,7 @@ import { Logger } from '@config/logger.config';
 import { Conversation } from '@entities/conversation.entity';
 import { ConversationParticipant } from '@entities/ConversationParticipant.entity';
 import { User } from '@entities/user.entity';
+import { ConversationService } from '@services/conversation.service';
 import { Request, Response } from 'express';
 import { Any } from 'typeorm';
 
@@ -36,6 +37,19 @@ class ConversationController {
       const user2 = await AppDataSource.getRepository(User).findOneBy({
         id: chatReceiverId,
       });
+      console.log('user1', user1)
+        console.log('user2', user2)
+
+      // check if conversation existed
+      const existedConversation =
+        await ConversationService.getConversationByParticipants([
+          chatInitiatorId,
+          chatReceiverId,
+        ]);
+      console.log('existedConversation', existedConversation);
+      if (existedConversation.length > 0) {
+        return res.status(400).json({ message: 'Conversation existed' });
+      }
 
       const newConversation = new Conversation();
       await AppDataSource.manager.save(newConversation);
@@ -70,19 +84,15 @@ class ConversationController {
       const conversation = await ConversationRepo.createQueryBuilder(
         'conversation'
       )
-      .select([
-        'conversation',
-        'cp',
-        'user.id',
-        'user.username',
-        'user.email',
-      ])
+        .select(['conversation', 'cp', 'user', 'message'])
         .leftJoin(
           'conversation.conversationParticipants',
           'cp',
           'conversation.id = cp.conversationId'
         )
         .leftJoin('cp.user', 'user', 'user.id = cp.userId')
+        .leftJoin('conversation.messages', 'message')
+        .addSelect('message')
         .getMany();
 
       return res
@@ -94,35 +104,46 @@ class ConversationController {
     }
   }
 
+
+  // get list conversation belong to a user
   async getConversationByUserId(
     req: Request,
     res: Response
   ): Promise<Response<string | any>> {
     try {
-    //   const { id } = req.user;
-        const id = 2;
-      const ConversationRepo = await AppDataSource.getRepository(Conversation);
+      const { id } = req.user;
 
-      const conversations = await ConversationRepo.createQueryBuilder(
-        'conversation'
-      )
-      .select([
-        'conversation',
-        'cp',
-        'user.id',
-        'user.username',
-        'user.email',
-        'message'
-      ])
-        .leftJoin(
-          'conversation.conversationParticipants',
-          'cp',
-          'conversation.id = cp.conversationId'
-        )
-        .leftJoin('cp.user', 'user', 'user.id = cp.userId')
-        .where('user.id = :id', { id })
-        .leftJoin('conversation.messages', 'message', 'message.conversationId = conversation.id')
-        .getMany();
+      const ConversationRepo = await AppDataSource.getRepository(Conversation);
+      const conversations = await ConversationService.getConversationsByUserId(
+        id
+      );
+
+      return res
+        .status(200)
+        .json({ message: 'Get conversation success', conversations });
+    } catch (error) {
+      Logger.log('error', error);
+      console.log(error)
+      return res.status(400).send('Error occurs when get conversation');
+    }
+  }
+
+    // get conversation by participants
+  async getConversationByParticipants(
+    req: Request,
+    res: Response
+  ): Promise<Response<string | any>> {
+    try {
+      const { id } = req.user;
+      const { chatReceiverId } = req.body as unknown as {
+        chatReceiverId: number;
+      };
+
+      const conversations =
+        await ConversationService.getConversationByParticipants([
+          id,
+          chatReceiverId,
+        ]);
       return res
         .status(200)
         .json({ message: 'Get conversation success', conversations });
@@ -131,6 +152,24 @@ class ConversationController {
       return res.status(400).send('Error occurs when get conversation');
     }
   }
+
+  // get messages of a conversation
+    async getMessagesByConversationId(
+      req: Request,
+      res: Response
+    ): Promise<Response<string | any>> {
+      try {
+        const { id } = req.params as unknown as { id: number };
+        const ConversationRepo = await AppDataSource.getRepository(Conversation);
+        const conversation = await ConversationService.getConversationById(id);
+        return res
+          .status(200)
+          .json({ message: 'Get conversation success', conversation });
+      } catch (error) {
+        Logger.log('error', error);
+        return res.status(400).send('Error occurs when get conversation');
+      }
+    }
 }
 
 const conversationController = ConversationController.get();

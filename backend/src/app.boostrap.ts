@@ -5,34 +5,25 @@ import { Environment } from '@config/environment.config';
 import { Logger } from '@config/logger.config';
 import { Server } from '@config/server.config';
 import { RedisCache } from '@config/cache.config';
-import {Server as SocketServer} from 'socket.io'
+import { Server as SocketServer } from 'socket.io';
+import { Message } from '@entities/message.entity';
+import { MessageService } from '@services/message.service';
+import { SocketConfig } from '@config/socket.config';
 
 const main = async (): Promise<void> => {
+  //Connect database
   AppDataSource.initialize()
     .then(async () => {
       Logger.log(
         'info',
         `Connect to database ${Environment.DB_DATABASE} on port ${Environment.DB_PORT}`
       );
-
+      //init serve
       const application = Application;
       const server = Server.init(application).listen() as unknown;
-        await RedisCache.connect()
-        const redisClient = RedisCache.getClient()
-       
-        // socket io
-        const socketIo = new SocketServer(server)
 
-        global.io =socketIo
-
-        socketIo.on('connection', (socket) => {
-            console.log('socket connected')
-            socket.on('disconnect', () => {
-                console.log('socket disconnected')
-            })
-
-            
-        })
+      //init socket server
+      SocketConfig.init(server).plug();
     })
     .catch((error) => {
       console.log(error);

@@ -3,8 +3,7 @@ import { Server as HTTPServer, createServer } from 'http';
 import { Environment } from './environment.config';
 import { Logger } from './logger.config';
 import cluster from 'cluster';
-import * as  os from 'os';
-
+import * as os from 'os';
 
 export class ServerConfiguration {
   private static instance: ServerConfiguration;
@@ -22,10 +21,8 @@ export class ServerConfiguration {
   }
 
   init(app: Application) {
- 
-        this.server = !this.server ? createServer(app) : this.server;
-        return this;
-    
+    this.server = !this.server ? createServer(app) : this.server;
+    return this;
   }
 
   listen(): any {

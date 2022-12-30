@@ -24,10 +24,12 @@ export class Message {
   })
   type: MESSAGE_TYPE;
 
-  @ManyToOne((type) => Conversation,conversation =>conversation.messages)
+  @ManyToOne((type) => Conversation, (conversation) => conversation.messages, {
+    onDelete: 'CASCADE',
+  })
   conversation: Conversation;
 
-  @ManyToOne((type) => User, user=>user.messages)
+  @ManyToOne((type) => User, (user) => user.messages)
   postedBy: User;
 
   @CreateDateColumn()

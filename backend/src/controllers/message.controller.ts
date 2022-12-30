@@ -4,6 +4,7 @@ import { Conversation } from "@entities/conversation.entity";
 import { Message } from "@entities/message.entity";
 import { User } from "@entities/user.entity";
 import { MESSAGE_TYPE } from "@enums";
+import { MessageService } from "@services/message.service";
 import { Request, Response} from 'express'
 class MessageController {
     private static instance : MessageController;
@@ -23,17 +24,27 @@ class MessageController {
 
             const userId = req.user.id;
             
-            const ConversationRepo = await AppDataSource.getRepository(Conversation);
-            const UserRepo = await AppDataSource.getRepository(User);
-            const MessageRepo = await AppDataSource.getRepository(Message);
-            const user = await UserRepo.findOneBy({ id: userId });
-            const conversation = await ConversationRepo.findOneBy({ id: conversationId });
-            const newMessage = new Message();
-            newMessage.content = content;
-            newMessage.conversation = conversation;
-            newMessage.postedBy = user;
-            newMessage.type = messageType;
-            await AppDataSource.manager.save(newMessage);
+            const newMessage = await  MessageService.createMessage(content, conversationId, messageType, userId);
+            if(!newMessage) {
+                return res.status(400).send('Error occurs when create message');
+            }
+
+
+            // const ConversationRepo = await AppDataSource.getRepository(Conversation);
+            // const UserRepo = await AppDataSource.getRepository(User);
+            // const MessageRepo = await AppDataSource.getRepository(Message);
+            // const user = await UserRepo.findOneBy({ id: userId });
+
+            // const conversation = await ConversationRepo.findOneBy({ id: conversationId });
+            // const newMessage = new Message();
+            // newMessage.content = content;
+            // newMessage.conversation = conversation;
+            // newMessage.postedBy = user;
+            // newMessage.type = messageType;
+
+            // conversation.updated_at = new Date();
+            // await AppDataSource.manager.save(conversation);
+            // await AppDataSource.manager.save(newMessage);
             return res.status(200).json({ message: 'Create new message success', newMessage });
         } catch (error) {
             Logger.log('error', error);
