@@ -70,6 +70,7 @@
     "@services": "dist/services",
     "@dto": "dist/types/dto",
     "@validators": "dist/validators",
-    "@utils": "dist/utils"
+    "@utils": "dist/utils",
+    "@mock":"dist/mock"
   }
 }

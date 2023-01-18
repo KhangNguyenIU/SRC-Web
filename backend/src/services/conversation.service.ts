@@ -68,7 +68,7 @@ class ConversationService {
         .leftJoinAndSelect('conversation.messages', 'message')
         .leftJoin('message.postedBy', 'postedBy')
         .addSelect(['postedBy.id','postedBy.firstName','postedBy.lastName','postedBy.email','postedBy.avatar', 'postedBy.username'])
-        .addOrderBy('message.created_at', 'DESC')
+        .addOrderBy('message.created_at', 'ASC')
         .getMany();
         return conversations
     } catch (error) {

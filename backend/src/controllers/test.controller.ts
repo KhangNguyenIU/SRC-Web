@@ -1,3 +1,4 @@
+import { UserService } from '@services/user.service';
 import { Request, Response } from 'express';
 class TestController {
   private static instance: TestController;
@@ -11,24 +12,22 @@ class TestController {
     return TestController.instance;
   }
 
-  async testGet(req: Request, res: Response): Promise<Response<string | any>> {
-    try {
-      return res.status(200).json({ message: 'Test Get' });
-    } catch (error) {
-      console.log(error);
-      return res.status(400).send(error);
-    }
-  }
 
-  async testPost(req: Request, res: Response): Promise<Response<string | any>> {
+  async massCreateUsers(req: Request, res: Response): Promise<any> {
     try {
-      const { name } = req.body;
-      console.log(req.body.name)
-      console.log({name})
-      return res.status(200).json({ message: 'Test Post', name });
+      
+        const createdUsers: boolean = await UserService.massCreateUsers()
+
+        if(createdUsers){
+            return res.status(200).json({
+                message: "Created users successfully"
+            })
+        }
     } catch (error) {
-      console.log(error);
-      return res.status(400).send(error);
+        console.log(error)
+        return res.status(500).json({
+            message: "Internal server error"
+        })
     }
   }
 }

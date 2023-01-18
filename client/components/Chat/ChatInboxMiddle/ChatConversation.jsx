@@ -1,13 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState , useRef} from 'react';
 import styles from '@styles/ChatInboxMiddle.module.scss';
 import ChatBoxHeader from './ChatBoxHeader';
 import { useSelector } from 'react-redux';
 import ChatBoxContent from './ChatBoxContent';
 import ChatBoxInput from './ChatBoxInput';
-import { messageType } from 'constants';
+import { messageType } from '@constants';
 
-export default function ChatConversation({ currentChatRoom }) {
+export default function ChatConversation({ currentChatRoom , socket,updateChatList}) {
   const user = useSelector((state) => state.user);
+     const chatBoxRef = useRef(null);
+
   const partner = useMemo(
     () =>
       currentChatRoom.conversationParticipants.filter(
@@ -16,11 +18,24 @@ export default function ChatConversation({ currentChatRoom }) {
     [user, currentChatRoom]
   );
 
+
   const [textInput, setTextInput] = useState('');
   const [typeOfMessage, setTypeOMessage] = useState(messageType.TEXT);
 
   const handleSendMessage = () => {
-    console.log('send message', textInput);
+      if(socket && textInput!==''){
+        console.log('send message', textInput);
+
+        const messagePacket ={
+            chatRoomId: currentChatRoom.id,
+            message: textInput,
+            type: typeOfMessage,
+            postedBy: user.id
+        }
+
+        socket.emit('send-message', messagePacket);
+        setTextInput('');
+    }
   };
 
   return (
@@ -35,6 +50,7 @@ export default function ChatConversation({ currentChatRoom }) {
         handleSendMessage={handleSendMessage}
         typeOfMessage={typeOfMessage}
         setTypeOMessage={setTypeOMessage}
+        updateChatList={updateChatList}
       />
     </React.Fragment>
   );

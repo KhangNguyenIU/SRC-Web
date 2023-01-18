@@ -38,8 +38,8 @@ class UserController {
       user.firstName = firstName;
       user.lastName = lastName;
       user.email = email;
-      user.salt = await bcrypt.genSalt();
       user.role = ROLE.user;
+      user.salt = await bcrypt.genSalt();
       user.password = await bcrypt.hash(password, user.salt);
       user.username = email.split('@')[0];
       await AppDataSource.manager.save(user);

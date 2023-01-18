@@ -11,8 +11,6 @@ export class TestRoute extends Router{
     define(): void{
         this.router.post('/', UploadController.upload);
         
-        this.router.get('/get', TestController.testGet)
-
-        this.router.post('/post', TestController.testPost)
+        this.router.post('/mass-create-users', TestController.massCreateUsers)
     }
 }

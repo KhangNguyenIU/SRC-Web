@@ -20,6 +20,7 @@
         "@dto/*":["types/dto/*"],
         "@validators/*": ["validators/*"],
         "@utils/*": ["utils/*"],
+        "@mock/*":["mock/*"],
       },
       "lib": ["dom", "ESNext"],
       "target": "ESNext",

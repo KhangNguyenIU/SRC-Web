@@ -19,6 +19,8 @@ function MyApp({ Component, pageProps }) {
             };
             const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL, connectionOptions);
             setSocket(newSocket);
+
+          
     }, [])
 
     return <Provider store={store}>

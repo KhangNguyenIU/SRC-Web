@@ -28,12 +28,12 @@ export class User {
   id: number;
 
   @Column({
-    nullable: false,
+    nullable:true
   })
   firstName: string;
 
   @Column({
-    nullable: false,
+    nullable:true
   })
   lastName: string;
 
