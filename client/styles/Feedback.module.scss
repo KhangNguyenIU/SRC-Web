@@ -1,0 +1,115 @@
+@import "colors";
+@import "mixins";
+
+.heading{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-family:  'Lora' ;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.wrapper{
+    display: flex;
+    width: 100%;
+
+    @include respond(sm){
+        flex-direction: column;
+    }
+    .feedbackHero{
+        flex-basis: 50%;    
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        @include respond(sm){
+        display: none;
+        }
+
+    }
+
+    .feedbackStat{
+        flex-basis: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        .number{
+            color:#295270;
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+        .star{
+        }
+
+        .total{
+            color: $primary-gray;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-family: 'Lora' ;
+        }
+        .feedback{
+            width: 50%;
+            .percent{
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-self: center;
+           
+                .brand{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    & > *{
+                        margin: 0 0.25rem;
+                    };
+                }
+                // flex-direction: column;
+                & > *{
+                    margin-left: 0.5rem;
+                };
+
+                .percenLine{
+                    width: 60%;
+                    margin-top: 2px;
+                }
+                .ratio{
+                    font-size: .9rem;
+                    color: $primary-gray;
+                    font-family: 'Lora';
+                }
+            }
+        }
+       
+        @include respond(sm){
+            flex-basis: 100%;
+        }
+    }
+
+    .feedbackSection{
+        margin-top:1rem;
+
+        .yourFeedback{
+            display: flex;
+            align-items: center;
+            padding: .5rem;
+            background-color: #84D2C5;
+            border-radius: 30px;
+            & > *{
+                margin-right: 1rem;
+            }
+        }
+        .ratingNow{
+            display: flex;
+            flex-direction: column;
+            font-weight: 'Lora' sans;
+            font-size: .8rem;
+            align-items: center;
+        }
+    }
+}

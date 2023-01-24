@@ -22,10 +22,10 @@ export class Feedback {
   })
   comment: string;
 
-  @Column()
-  userId : number;
+//   @Column()
+//   userId : number;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, user => user.feedback)
   @JoinColumn()
   user: User;
 

@@ -35,11 +35,18 @@ class FacultyController {
 
     async getAllFaculty(req: Request, res: Response): Promise<Response<string | any>> {
         try {
-            const faculties: Faculty[] = await AppDataSource.manager.find(Faculty)
+            // const faculties: Faculty[] = await AppDataSource.manager.find(Faculty)
+            const faculties = await AppDataSource.getRepository(Faculty).createQueryBuilder('faculty')
+            .select(['users.id', 'faculty.id', 'faculty.name', 'faculty.slug', 'emails.email', 'phones.phone'])
+            .leftJoinAndSelect('faculty.emails', 'emails')
+            .leftJoinAndSelect('faculty.phones', 'phones')
+            .leftJoin('faculty.users', 'users')
+            .getMany()
             return res.status(200).json(faculties)
         } catch (error) {
             Logger.log('error', error)
             return res.status(400).send(ErrorHandler.santinizeError(error, 'Error occurs when get all faculty'))
+            // return res.status(400).json("error")
         }
     }
 

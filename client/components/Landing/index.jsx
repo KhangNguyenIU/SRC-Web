@@ -1,10 +1,15 @@
-import React from 'react'
-import Hero from './hero'
+import { Container } from '@mui/system';
+import React from 'react';
+import Feedback from './Feedback';
+import Hero from './hero';
 
-export default function Landing() {
+export default function Landing({feedbacks}) {
   return (
     <React.Fragment>
-        {/* < Hero/> */}
+      <Container>
+        <Feedback feedbackList={feedbacks} />
+      </Container>
+      {/* < Hero/> */}
     </React.Fragment>
-  )
+  );
 }

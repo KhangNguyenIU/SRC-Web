@@ -13,7 +13,7 @@ const loadingSlice = createSlice({
         setLoading: (state,action) => ({
             ...state,
             state: true,
-            type: action.payload.type || loadingType.GENERAL,
+            type: action?.payload?.type || loadingType.GENERAL,
         }),
         stopLoading: (state) => ({
             ...initialState

@@ -27,6 +27,16 @@ export class FeedbackRoute extends Router {
      */
     this.router.route('/').get(FeedbackController.getFeedbacks);
 
+    /*
+     * @description Get feedback by id
+     */
+    this.router
+      .route('/user')
+      .get(
+        AuthMiddleware.checkRole([ROLE.admin, ROLE.staff, ROLE.user]),
+        FeedbackController.getFeedbackByUserId
+      );
+
     /**
      * @description Delete feedback
      */
@@ -38,15 +48,15 @@ export class FeedbackRoute extends Router {
         FeedbackController.deleteFeedBack
       );
 
-      /**
-       * @description Update feedback
-       */
-        this.router
-        .route('/update/:id')
-        .put(
-            AuthMiddleware.checkRole([ROLE.user, ROLE.staff, ROLE.admin]),
-            ValidatorMiddleware.check(createFeedbackValidator),
-            FeedbackController.updateFeedback
-        )
+    /**
+     * @description Update feedback
+     */
+    this.router
+      .route('/update/:id')
+      .put(
+        AuthMiddleware.checkRole([ROLE.user, ROLE.staff, ROLE.admin]),
+        ValidatorMiddleware.check(createFeedbackValidator),
+        FeedbackController.updateFeedback
+      );
   }
 }

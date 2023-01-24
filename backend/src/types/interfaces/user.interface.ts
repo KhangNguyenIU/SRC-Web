@@ -1,3 +1,5 @@
+import { Faculty } from "@entities/faculty.entity";
+import { Feedback } from "@entities/feedback.entity";
 import { ROLE } from "@enums";
 
 export class UserDecode{
@@ -8,4 +10,6 @@ export class UserDecode{
     email: string;
     avatar:string;
     role: ROLE;
+    feedback: Feedback;
+    faculty: Faculty
 }

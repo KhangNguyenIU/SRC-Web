@@ -6,6 +6,8 @@ import { User } from '@entities/user.entity';
 import { ROLE } from '@enums';
 import * as bcrypt from 'bcrypt';
 import { Feedback } from '@entities/feedback.entity';
+import { Email } from '@entities/email.entity';
+import { Phone } from '@entities/phone.entity';
 
 class UserService {
   private static instance: UserService;
@@ -22,8 +24,9 @@ class UserService {
       await Promise.all(
         MockData.faculty.map(async (faculty) => {
           let newFaculty = new Faculty();
-          newFaculty.name = faculty;
-          newFaculty.slug = slugify(faculty, { lower: true, locale: 'vi' });
+          newFaculty.name = faculty.name;
+          newFaculty.slug = slugify(faculty.name, { lower: true, locale: 'vi' });
+          newFaculty.avatar = faculty.avatar;
           await AppDataSource.manager.save(newFaculty);
         })
       );
@@ -35,6 +38,7 @@ class UserService {
           newUser.email = user.email;
           newUser.password = await bcrypt.hash('123456', newUser.salt);
           newUser.role = user.role;
+          newUser.avatar = user.avatar;
           if (user.role === ROLE.user) {
             newUser.firstName = user.firstName;
             newUser.lastName = user.lastName;
@@ -47,6 +51,18 @@ class UserService {
             newUser.username = user.username;
             newUser.faculty = existedFaculty;
             newUser.username = user.username;
+
+            const email = new Email()
+            email.email = user.email
+            email.faculty = existedFaculty
+
+            await AppDataSource.manager.save(email)
+
+            const phone = new Phone()
+            phone.phone = user.phone
+            phone.faculty = existedFaculty
+
+            await AppDataSource.manager.save(phone)
           } else {
             newUser.username = user.username;
           }

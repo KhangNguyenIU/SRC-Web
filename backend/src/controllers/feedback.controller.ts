@@ -50,9 +50,13 @@ class FeedbackController {
       const FeedbackRepo = AppDataSource.manager.getRepository(Feedback);
       const feedbacks = await AppDataSource.getRepository(Feedback)
         .createQueryBuilder('feedback')
-        .leftJoin('feedback.user', 'user')
-        .addSelect(['user.firstName'])
-        .getMany();
+        .select(['count(*) as total'])
+        .select(["feedback.rating"])
+        .addSelect(['sum(feedback.rating) as rating'])
+        .addSelect(['count(feedback.rating) as count'])
+        .groupBy('feedback.rating')
+        .getRawMany();
+
 
       return res.status(200).json({ feedbacks });
     } catch (error) {
@@ -63,17 +67,45 @@ class FeedbackController {
     }
   }
 
+  async getFeedbackByUserId(req: Request, res: Response): Promise<Response<string>> {
+    try {
+        // const { id } = req.params as unknown as { id: number };
+        const id = req.user.id
+        const feedback = await AppDataSource.getRepository(Feedback)
+        .createQueryBuilder('feedback')
+        .leftJoin('feedback.user', 'user')
+        .addSelect(['user.id','user.avatar','user.username'])
+        .where('user.id = :id', { id })
+        .getOne();
+
+        // if(!feedback) {
+        //     return res.status(200).json({ message: 'Feedback not found' });
+        // }
+        return res.status(200).json({ feedback });
+    } catch (error) {
+        Logger.log('error', error);
+        return res
+        .status(400)
+        .json({ error: 'Error occurs when getting user feedback' });
+    }
+    }
+
   async deleteFeedBack(req: Request, res: Response): Promise<Response<string>> {
     try {
       const { id } = req.params as unknown as { id: number };
       const FeedbackRepo = await AppDataSource.getRepository(Feedback);
 
-      const feedback = await FeedbackRepo.findOneBy({ id });
+
+      const feedback = await FeedbackRepo.createQueryBuilder('feedback')
+        .leftJoinAndSelect('feedback.user', 'user')
+        .where('feedback.id = :id', { id })
+        .getOne();
+
       if (!feedback) {
         return res.status(400).json({ message: 'Feedback not found' });
       }
 
-        if (feedback.userId === req.user.id || req.user.role === ROLE.admin) {
+        if (feedback.user.id === req.user.id || req.user.role === ROLE.admin) {
           await FeedbackRepo.delete(id);
           return res.status(200).json({ message: 'Delete feedback success' });
         }
@@ -95,12 +127,15 @@ class FeedbackController {
       const { comment, rating } = req.body;
       const FeedbackRepo = await AppDataSource.getRepository(Feedback);
 
-      const feedback = await FeedbackRepo.findOneBy({ id });
+      const feedback = await FeedbackRepo.createQueryBuilder('feedback')
+      .leftJoinAndSelect('feedback.user', 'user')
+      .where('feedback.id = :id', { id })
+      .getOne();
       if (!feedback) {
         return res.status(400).json({ message: 'Feedback not found' });
       }
 
-      if (feedback.userId === req.user.id || req.user.role === ROLE.admin) {
+      if (feedback.user.id === req.user.id || req.user.role === ROLE.admin) {
         feedback.comment = comment;
         feedback.rating = rating;
         await AppDataSource.manager.save(feedback);

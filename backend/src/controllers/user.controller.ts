@@ -124,7 +124,14 @@ class UserController {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
       const { email, password } = req.body;
-      const user = await UserRepo.findOne({ where: { email } });
+    //   const user = await UserRepo.findOne({ where: { email } });
+      const user = await UserRepo.createQueryBuilder('user')
+        .leftJoinAndSelect('user.faculty', 'faculty')
+        .where('user.email = :email', { email })
+        .leftJoinAndSelect('user.feedback', 'feedback')
+        .getOne();
+
+        console.log({user})
       if (!user) {
         return res.status(400).json({ message: 'User does not exist' });
       }
@@ -145,6 +152,8 @@ class UserController {
         username: user.username,
         avatar: user.avatar,
         role: user.role as ROLE,
+        faculty: user.faculty,
+        feedback: user.feedback,
       } as UserDecode;
 
       const accessToken: string = await JWTService.generateToken(userData);

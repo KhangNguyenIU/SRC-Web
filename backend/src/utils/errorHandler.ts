@@ -27,7 +27,7 @@ class ErrorHandler {
       }
     }
 
-    return !!message.length ? message : errorMessage;
+    return !!message?.length ? message : errorMessage;
   }
 }
 
