@@ -40,7 +40,7 @@ export default function NavBar(props) {
         </IconButton>
 
         {user?.email ? (
-          <UserInfo />
+          <UserInfo socket={props.socket}/>
         ) : (
           <AuthButtons handleOpenAuthModal={handleOpenAuthModal} />
         )}
@@ -64,13 +64,16 @@ const AuthButtons = ({ handleOpenAuthModal }) => {
   );
 };
 
-const UserInfo = () => {
+const UserInfo = ({socket}) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const onSignout = () => {
+    if(socket){
+        socket.disconnect()
+    }
     dispatch(logout({ callback: handleClose }));
   };
 

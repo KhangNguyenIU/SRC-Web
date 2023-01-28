@@ -7,7 +7,8 @@ module.exports = {
             "localhost",
             "api.vip.myblog.engineer",
             "img.upxi.me",
-            "source.unsplash.com"
+            "source.unsplash.com",
+            "tuyensinh.hcmiu.edu.vn"
         ],
     }
 };

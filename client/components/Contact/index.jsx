@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  Avatar,
   FormControlLabel,
   IconButton,
   Table,
@@ -15,8 +16,16 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Box } from '@mui/system';
+import { useRouter } from 'next/router';
+
 export default function Contact({ contacts }) {
-  console.log({ contacts });
+
+  const router = useRouter();
+    console.log(contacts)
+  const handleDirectMessage = (data) => {
+    localStorage.setItem('partner', JSON.stringify(data));
+    router.push('/private/message');
+  };
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
@@ -28,12 +37,17 @@ export default function Contact({ contacts }) {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <strong>{row.name}</strong>
+                  <Box sx={{ display: 'flex', alignItems:'center'}}>
+                    <Avatar src={row.avatar} alt="group" style={{marginRight:'.5rem'}}/>
+                    <span>{row.name}</span>
+                  </Box>
                 </TableCell>
                 <ContactCell contact={row} />
                 <TableCell align="right">
                   <Tooltip title="Online Chat">
-                    <IconButton>
+                    <IconButton
+                      onClick={() => handleDirectMessage(row.users[0])}
+                    >
                       <ChatBubbleOutlineIcon />
                     </IconButton>
                   </Tooltip>

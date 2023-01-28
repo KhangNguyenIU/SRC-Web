@@ -5,7 +5,6 @@ import GroupMessage from './GroupMessage'
 
 export default function GroupMessageList({chatRooms, setCurrentChatRoom}) {
 
-
   return (
     <React.Fragment>
         <div className={styles.leftWrapper}>

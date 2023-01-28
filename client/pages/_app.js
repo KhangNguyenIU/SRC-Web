@@ -1,4 +1,4 @@
-import { Provider, useSelector } from 'react-redux'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 import '../styles/globals.css'
 import store from '../store/index'
 import { Notification } from '@components/Common/Notification'
@@ -8,7 +8,6 @@ import Wrapper from '@components/Auth/Wrapper'
 import io from 'socket.io-client'
 
 function MyApp({ Component, pageProps }) {
-
     const [socket, setSocket] = useState(null)
     useEffect(() => {
             const connectionOptions = {
@@ -19,12 +18,10 @@ function MyApp({ Component, pageProps }) {
             };
             const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL, connectionOptions);
             setSocket(newSocket);
-
-          
     }, [])
 
     return <Provider store={store}>
-        <Wrapper>
+        <Wrapper >
             <Component {...pageProps} socket={socket} />
             <Notification />
             <Loading />

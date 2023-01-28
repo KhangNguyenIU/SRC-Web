@@ -1,4 +1,4 @@
-import { Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Drawer, List, ListItem } from '@mui/material';
 import { Box } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 const navItems = [
   { item: 'Home', link: '/' },
-  { item: 'Post', link: '/private/dashboard/create-post' },
+  { item: 'Create Post', link: '/private/dashboard/create-post' },
   { item: 'News', link: '/news' },
   { item: 'Enrollment Project', link: '/enrollment-project' },
   { item: 'Contact', link: '/contact' },
@@ -29,7 +29,6 @@ const navItems = [
 };
 
 const list = () => {
-  const user = useSelector((state) => state.user);
   return (
     <Box
       sx={{
@@ -44,15 +43,15 @@ const list = () => {
       <List>
         {navItems.map((item, index) => (
           <ListItem key={index}>
-            <Link href={`/${item.link}`}>{item.item}</Link>
+            <Link href={`${item.link}`}>{item.item}</Link>
           </ListItem>
         ))}
 
-        {user?.role === 'admin' && (
+        {/* {user?.role === 'admin' && (
           <ListItem key="admin">
             <Link href="/private/dashboard">Dashboard</Link>
           </ListItem>
-        )}
+        )} */}
       </List>
     </Box>
   );

@@ -17,7 +17,6 @@ export const createNewPost = createAsyncThunk(
                 return thunkAPI.rejectWithValue({ message: "Invalid callback" })
             }
             const response = await PostService.createPost(body)
-            console.log({ response })
             if (response.status === 200) {
                 thunkAPI.dispatch(showNotification({ message: "Create a Post success", type: 'success' }))
                 callback()

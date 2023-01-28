@@ -20,7 +20,6 @@ export const signinUser = createAsyncThunk(
             if (!callback || typeof callback != "function") return thunkAPI.rejectWithValue({ message: "Invalid callback" })
             const response = await authService.login(body)
             if (response.status === 200) {
-
                 thunkAPI.dispatch(setUser(response?.data?.user))
                 thunkAPI.dispatch(showNotification({ message: response?.data?.message, type: 'success' }))
                 callback()

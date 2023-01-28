@@ -131,7 +131,6 @@ class UserController {
         .leftJoinAndSelect('user.feedback', 'feedback')
         .getOne();
 
-        console.log({user})
       if (!user) {
         return res.status(400).json({ message: 'User does not exist' });
       }

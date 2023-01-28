@@ -58,11 +58,9 @@ export default function Feedback({ feedbackList }) {
     getMyFeedback();
   }, [user]);
 
-  console.log({userFeedback})
   const getMyFeedback = async () => {
     if (user.id !== '') {
       const res = await FeedbackService.getFeedbackByUser();
-      console.log(res.data)
       if (res.status === 200) {
         setUserFeedback(res.data.feedback);
       }

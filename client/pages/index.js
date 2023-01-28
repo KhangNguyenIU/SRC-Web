@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 export default function Home({ socket, feedbacks }) {
     return (
         <React.Fragment>
-            <Layout >
+            <Layout socket={socket}>
                 <Landing feedbacks={feedbacks}  />
             </Layout>
         </React.Fragment>

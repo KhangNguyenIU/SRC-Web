@@ -2,7 +2,7 @@ import { AppDataSource } from '@config/database.config';
 import { Logger } from '@config/logger.config';
 import { Category } from '@entities/category.entity';
 import { Request, Response } from 'express';
-class CategoryController {
+import slugify from 'slugify';class CategoryController {
   private static instance: CategoryController;
 
   private constructor() {}
@@ -22,6 +22,7 @@ class CategoryController {
       const { name }: { name: string } = req.body;
       const category: Category = new Category();
       category.name = name;
+      category.slug = slugify(name, { lower: true, locale: 'vi' })
       await AppDataSource.manager.save(category);
       return res.status(200).json({ message: 'Create new category success' });
     } catch (error) {

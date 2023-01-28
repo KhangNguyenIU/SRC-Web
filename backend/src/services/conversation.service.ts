@@ -55,22 +55,25 @@ class ConversationService {
     const conversationIds = query.map((conversation) => conversation.id);
         
     // get conversation from conversationIds
-    const conversations = await ConversationRepo.createQueryBuilder('conversation')
-        .select(['conversation','cp','user.id','user.firstName','user.lastName','user.email','user.avatar', 'user.username'])
-        .leftJoin(
-            'conversation.conversationParticipants',
-            'cp',
-            'conversation.id = cp.conversationId'
-        )
-        .leftJoin('cp.user', 'user', 'user.id = cp.userId')
-        .andWhere('conversation.id in (:...conversationIds)', { conversationIds })
-        .orderBy('conversation.updated_at', 'DESC')
-        .leftJoinAndSelect('conversation.messages', 'message')
-        .leftJoin('message.postedBy', 'postedBy')
-        .addSelect(['postedBy.id','postedBy.firstName','postedBy.lastName','postedBy.email','postedBy.avatar', 'postedBy.username'])
-        .addOrderBy('message.created_at', 'ASC')
-        .getMany();
-        return conversations
+        if(conversationIds.length>0){
+            const conversations = await ConversationRepo.createQueryBuilder('conversation')
+            .select(['conversation','cp','user.id','user.firstName','user.lastName','user.email','user.avatar', 'user.username'])
+            .leftJoin(
+                'conversation.conversationParticipants',
+                'cp',
+                'conversation.id = cp.conversationId'
+            )
+            .leftJoin('cp.user', 'user', 'user.id = cp.userId')
+            .andWhere('conversation.id in (:...conversationIds)', { conversationIds })
+            .orderBy('conversation.updated_at', 'DESC')
+            .leftJoinAndSelect('conversation.messages', 'message')
+            .leftJoin('message.postedBy', 'postedBy')
+            .addSelect(['postedBy.id','postedBy.firstName','postedBy.lastName','postedBy.email','postedBy.avatar', 'postedBy.username'])
+            .addOrderBy('message.created_at', 'ASC')
+            .getMany();
+            return conversations
+        }
+        return []
     } catch (error) {
       console.log(error);
       throw new Error(error);

@@ -8,7 +8,7 @@ class AuthMiddleware {
 
   constructor() {}
 
-  static get(): AuthMiddleware {
+static get(): AuthMiddleware {
     if (!AuthMiddleware.instance) {
       AuthMiddleware.instance = new AuthMiddleware();
     }

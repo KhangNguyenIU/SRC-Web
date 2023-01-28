@@ -8,6 +8,8 @@ import * as bcrypt from 'bcrypt';
 import { Feedback } from '@entities/feedback.entity';
 import { Email } from '@entities/email.entity';
 import { Phone } from '@entities/phone.entity';
+import { Category } from '@entities/category.entity';
+import { Post } from '@entities/post.entity';
 
 class UserService {
   private static instance: UserService;
@@ -21,6 +23,16 @@ class UserService {
 
   async massCreateUsers(): Promise<any> {
     try {
+
+        // Mock Categories
+        await Promise.all(MockData.category.map(async(cate,i)=>{
+            const newCategory = new  Category()
+            newCategory.name = cate
+            newCategory.slug = slugify(cate, { lower: true, locale: 'vi' })
+            await AppDataSource.manager.save(newCategory)
+        }))
+     
+        // Mock faculties
       await Promise.all(
         MockData.faculty.map(async (faculty) => {
           let newFaculty = new Faculty();
@@ -31,6 +43,7 @@ class UserService {
         })
       );
 
+        // Mock accounts
       await Promise.all(
         MockData.users.map(async (user) => {
           let newUser = new User();
@@ -71,6 +84,7 @@ class UserService {
         })
       );
 
+      //Mock feedback
       await Promise.all(
         Array.from(Array(MockData.users.length)).map(async (user, index) => {
           const existedUser = await AppDataSource.getRepository(User).findOneBy(
@@ -85,6 +99,19 @@ class UserService {
           }
         })
       );
+
+      //mock post
+        await Promise.all(MockData.post.map(async(post,i)=>{
+            const newPost = new Post()
+            newPost.title = post.title
+            newPost.slug = slugify(post.title, { lower: true, locale: 'vi' })
+            newPost.body = post.body
+            newPost.keywords = post.keywords
+            newPost.year = post.year
+            newPost.category = await AppDataSource.getRepository(Category).findOneBy({id: post.category})
+            newPost.postedBy = await AppDataSource.getRepository(User).findOneBy({id: 8})
+            await AppDataSource.manager.save(newPost)
+        }))
       return true;
     } catch (error) {
         console.log(error)

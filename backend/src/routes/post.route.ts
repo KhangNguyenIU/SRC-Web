@@ -39,9 +39,17 @@ export class PostRoute extends Router {
         PostController.updatePost
       );
 
+      /**
+       * Get post by category id
+       */
     this.router
       .route('/get-by-category/:id')
-      .get(PostController.getPostByCategory);
+      .get(PostController.getPostByCategoryId);
+
+      /**
+       * Get post by category's slug
+       */
+        this.router.route('/get-by-category-slug/:slug').get(PostController.getPostByCategorySlug);
 
     this.router.route('/get-by-slug/:slug').get(PostController.getPostBySlug);
   }

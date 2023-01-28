@@ -103,7 +103,7 @@ class PostController {
       return res.status(400).json({ error: 'Error occurs when updating post' });
     }
   }
-  async getPostByCategory(
+  async getPostByCategoryId(
     req: Request,
     res: Response
   ): Promise<Response<string | any>> {
@@ -112,6 +112,26 @@ class PostController {
       const { id } = req.params as unknown as { id: number };
       const cate: Category = await CategoryRepository.findOneBy({
         id: id,
+      });
+      if (!cate) return res.status(400).json({ error: 'Category not existed' });
+
+      return res.status(200).json({ posts: cate.posts });
+    } catch (error) {
+      Logger.log('error', error);
+      return res.status(400).json({ error: 'Error occurs when getting post' });
+    }
+  }
+
+  async getPostByCategorySlug(
+    req: Request,
+    res: Response
+  ): Promise<Response<string | any>> {
+    try {
+      const CategoryRepository = await AppDataSource.getRepository(Category);
+      const { slug } = req.params as unknown as { slug: string };
+      console.log({slug})
+      const cate: Category = await CategoryRepository.findOneBy({
+        slug: slug,
       });
       if (!cate) return res.status(400).json({ error: 'Category not existed' });
 

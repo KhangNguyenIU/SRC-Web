@@ -1,10 +1,11 @@
-import { Modal } from '@mui/material';
+import { MenuItem, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import styles from '@styles/Auth.module.scss';
 import { useDispatch } from 'react-redux';
 import { signinUser } from 'slices/auth/auth.slice';
 import data from 'data';
+import { useState } from 'react';
 
 const modalBox = {
   position: 'absolute',
@@ -31,19 +32,25 @@ const titleStyle = {
 export default function AuthModal({ open, closeModal }) {
   const dispatch = useDispatch();
 
+  const [authOptions, setAuthOptions] = useState({
+    user: data.signin.user[0].email,
+    staff: data.signin.staff[0].email,
+    admin: data.signin.admin.email,
+  });
+
   const handleAuthSigninOptions = (e) => {
     let option = e.target.attributes.getNamedItem('data-tag').value;
     if (!option) return;
 
     switch (option) {
       case 'guest':
-        dispatch(signinUser({ body: data.signin.user, callback: closeModal }));
+        dispatch(signinUser({ body: {email:authOptions.user, password:'123456'}, callback: closeModal }));
         break;
       case 'staff':
-        dispatch(signinUser({ body: data.signin.staff, callback: closeModal }));
+        dispatch(signinUser({ body: {email:authOptions.staff, password:'123456'}, callback: closeModal }));
         break;
       case 'admin':
-        dispatch(signinUser({ body: data.signin.admin, callback: closeModal }));
+        dispatch(signinUser({ body: {email:authOptions.admin, password:'123456'}, callback: closeModal }));
         break;
       default:
         break;
@@ -56,6 +63,26 @@ export default function AuthModal({ open, closeModal }) {
           <h2 id="modal-modal-title" style={titleStyle}>
             Sign in
           </h2>
+          <div style={{width:'100%'}}>
+          <TextField
+            select
+            label="select"
+            value={authOptions.user}
+            fullWidth
+
+            onChange={(e) =>
+              setAuthOptions({ ...authOptions, user: e.target.value })
+            }
+          >
+            {data.signin.user.map((user, i) => (
+              <MenuItem key={i} value={user.email}>
+                {user.firstName}
+              </MenuItem>
+            ))}
+          </TextField>
+            </div>
+
+  
           <div
             className={styles.authButton}
             data-tag="guest"
@@ -63,6 +90,27 @@ export default function AuthModal({ open, closeModal }) {
           >
             Sign in as a guest
           </div>
+
+
+
+          <div style={{width:'100%'}}>
+          <TextField
+            select
+            label="select"
+            value={authOptions.staff}
+            onChange={(e) =>
+              setAuthOptions({ ...authOptions, staff: e.target.value })
+            }
+            fullWidth
+          >
+            {data.signin.staff.map((user, i) => (
+              <MenuItem key={i} value={user.email}>
+                {user.username}
+              </MenuItem>
+            ))}
+          </TextField>
+            </div>
+
 
           <div
             className={styles.authButton}

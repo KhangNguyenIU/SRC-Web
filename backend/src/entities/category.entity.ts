@@ -16,6 +16,11 @@ export class Category {
   @Column()
   name: string;
 
+  @Column({
+    unique: true
+  })
+  slug: string
+
   @OneToMany((type) => Post, (post) => post.category, {
     eager: true,
     onDelete: 'CASCADE',

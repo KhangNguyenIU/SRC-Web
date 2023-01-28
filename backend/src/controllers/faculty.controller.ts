@@ -37,10 +37,11 @@ class FacultyController {
         try {
             // const faculties: Faculty[] = await AppDataSource.manager.find(Faculty)
             const faculties = await AppDataSource.getRepository(Faculty).createQueryBuilder('faculty')
-            .select(['users.id', 'faculty.id', 'faculty.name', 'faculty.slug', 'emails.email', 'phones.phone'])
+            .select(['users.id', 'faculty.id', 'faculty.name', 'faculty.slug','faculty.avatar', 'emails.email', 'phones.phone'])
             .leftJoinAndSelect('faculty.emails', 'emails')
             .leftJoinAndSelect('faculty.phones', 'phones')
             .leftJoin('faculty.users', 'users')
+            .addSelect(['users.id', 'users.firstName', 'users.lastName', 'users.username', 'users.avatar'])
             .getMany()
             return res.status(200).json(faculties)
         } catch (error) {

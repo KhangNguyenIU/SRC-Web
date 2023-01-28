@@ -18,7 +18,6 @@ export default function CreatePostPage({ categories }) {
 }
 export async function getServerSideProps() {
   const res = await CategoryService.getAll();
-  console.log({ res: res.data });
 
   return {
     props: {

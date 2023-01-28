@@ -1,21 +1,19 @@
 import Layout from '@components/Layout';
+import Post from '@components/Post';
 import { Container } from '@mui/system';
 import PostService from '@services/post';
 import React from 'react';
-import { useEffect } from 'react';
-import renderHTML from 'react-render-html';
 /**
  * @author
  * @function PostPage
  **/
 
-export const PostPage = ({ post }) => {
-  console.log({ post });
+export const PostPage = ({ post,socket }) => {
 
   return <React.Fragment>
-    <Layout>
+    <Layout socket={socket}>
         <Container maxWidth="md">
-            {renderHTML(post.body)}
+            <Post post={post}/>
         </Container>
     </Layout>
   </React.Fragment>;

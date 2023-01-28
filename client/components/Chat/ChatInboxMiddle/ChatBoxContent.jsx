@@ -15,8 +15,8 @@ export default function ChatBoxContent({ currentChatRoom }) {
   return (
     <React.Fragment>
       <div className={styles.chatboxContent}>
-        {!!currentChatRoom.messages.length &&
-          currentChatRoom.messages.map((message, index) => (
+        {!!currentChatRoom?.messages?.length &&
+          currentChatRoom?.messages.map((message, index) => (
             <Message key={index} message={message} />
           ))}
         <div ref={chatBoxRef}></div>

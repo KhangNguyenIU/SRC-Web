@@ -1,0 +1,43 @@
+@import '../colors';
+@import '../mixins';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Lora';
+  margin-bottom: 3rem;
+  width: 100%;
+  .heading {
+    font-family: 'Lora';
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    @include respond(sm) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    @include respond(sm) {
+      width: 100%;
+    }
+    .intro {
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    iframe {
+      height: 30rem;
+
+      @include respond(sm) {
+        height: 20rem;
+      }
+    }
+  }
+}

@@ -46,7 +46,6 @@ class ConversationController {
           chatInitiatorId,
           chatReceiverId,
         ]);
-      console.log('existedConversation', existedConversation);
       if (existedConversation.length > 0) {
         return res.status(400).json({ message: 'Conversation existed' });
       }

@@ -17,13 +17,9 @@ const navItems = [
   { item: 'Contact', link: '/contact' },
 ];
 
-const privateItems =[
-    { item: 'Message', link: '/private/message' },
-]
+const privateItems = [{ item: 'Message', link: '/private/message' }];
 
-const adminItems = [
-    { item: 'Dashboard', link: '/private/dashboard' },
-]
+const adminItems = [{ item: 'Dashboard', link: '/private/dashboard' }];
 
 const SideBar = (props) => {
   const closeBar = () => props.setToggleSideBar(false);
@@ -38,6 +34,7 @@ const SideBar = (props) => {
 
 const list = () => {
   const user = useSelector((state) => state.user);
+  console.log(['admin', 'staff', 'user'].includes(user.role));
   return (
     <Box
       sx={{
@@ -56,11 +53,19 @@ const list = () => {
           </ListItem>
         ))}
 
-        {['admin','staff','user'].includes(user.role)  && privateItems.map((item, index)=>(
-          <ListItem key={`${item}-${index}`}>
-            <Link href={`${item.link}`}>{item.item}</Link>
-          </ListItem>
-        ))}
+        {['admin', 'staff', 'user'].includes(user.role) &&
+          privateItems.map((item, index) => (
+            <ListItem key={`${item}-${index}`}>
+              <Link href={`${item.link}`}>{item.item}</Link>
+            </ListItem>
+          ))}
+
+        {['admin', 'staff'].includes(user.role) &&
+          adminItems.map((item, index) => (
+            <ListItem key={`${item}-${index}`}>
+              <Link href={`${item.link}`}>{item.item}</Link>
+            </ListItem>
+          ))}
       </List>
     </Box>
   );

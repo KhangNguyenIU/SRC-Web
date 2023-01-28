@@ -6,47 +6,47 @@ import GroupMessageList from './GroupListLeft/GroupMessageList';
 import ChatConversation from './ChatInboxMiddle/ChatConversation';
 import { ChatService } from '@services/chat';
 
-export default function Chat({ socket, chatList }) {
+export default function Chat({ socket, chatList, currentChatRoom, setCurrentChatRoom }) {
 
-    
+
     const user = useSelector(state => state.user)
-    const [chatRooms, setChatRooms] = useState([...chatList]);
-    const [currentChatRoom, setCurrentChatRoom] = useState(chatList[0]);
+    const [chatRooms, setChatRooms] = useState([]);
     const chatSummaryRef = useRef(null);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        console.log(chatRooms)
-})
     useEffect(() => {
-        if (socket && user && currentChatRoom) {
-            socket.emit('identity', user.username)
+        setChatRooms([...chatList])
 
-            socket.emit('joinRoom',currentChatRoom.id)
+    }, [chatList])
+
+    useEffect(() => {
+        if (socket  && currentChatRoom) {
+            socket.emit('joinRoom', currentChatRoom?.id)
         }
-    }, [socket, user, currentChatRoom])
+    }, [socket, currentChatRoom])
+
+    useEffect(() => {
+        if (socket && user?.id!=='') {
+            console.log("identity", user.id)
+            socket.emit('identity', user.id)
+        }
+    }, [socket, user])
 
     useEffect(() => {
         if (socket) {
-            socket.on('notification', (data) => {
-                // console.log('new message', data)
-            })
 
-            socket.on('receive-message',async message=>{
-                console.log('new message', message)
-                if(message){
-                    console.log('new messageasd', message)
-
+            socket.on('receive-message', async message => {
+                if (message) {
                     const newCurConversationData = await updateChatList()
-                        setCurrentChatRoom(newCurConversationData.find(item=>item.id == message.conversation.id))
+                    setCurrentChatRoom(newCurConversationData.find(item => item.id == message.conversation.id))
                 }
             })
         }
     }, [socket])
 
-    const updateChatList = async ()=>{
+    const updateChatList = async () => {
         const res = await ChatService.getChatList()
-        if(res.status === 200){
+        if (res.status === 200) {
             setChatRooms(res.data.conversations)
             return res.data.conversations
         }

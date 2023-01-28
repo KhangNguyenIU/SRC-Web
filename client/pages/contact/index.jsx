@@ -4,11 +4,10 @@ import { Container } from '@mui/system';
 import Contact from '@components/Contact';
 import { ContactService } from '@services/contact';
 
-export default function ContactPage({ contacts}) {
-    console.log({contacts})
+export default function ContactPage({ contacts,socket}) {
   return (
     <React.Fragment>
-      <Layout>
+      <Layout socket={socket}>
         <Container maxWidth="md">
           <Contact contacts={contacts}/>
         </Container>

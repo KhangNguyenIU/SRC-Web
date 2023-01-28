@@ -27,10 +27,10 @@ export default function GroupMessage({ conversation, setCurrentChatRoom }) {
         className={`${styles.groupChatWrapper} `}
         onClick={()=>handleChatRoomClick(conversation)}
         >
-          <Avatar />
+          <Avatar src={partner.user.avatar}/>
           <div className={styles.groupInfo}>
             <div className={styles.groupName}>
-              <span className={styles.nameText}>{partner.user.username}</span>
+              <span className={styles.nameText}>{partner?.user?.username}</span>
             </div>
 
             {/**
@@ -40,12 +40,12 @@ export default function GroupMessage({ conversation, setCurrentChatRoom }) {
             <div className={styles.groupLastMessage}>
               <div>
                 {!!conversation.messages.length &&
-                  conversation.messages[0].content}
+                  conversation?.messages[0]?.content}
               </div>
 
               <span className={styles.timeText}>
                 {!!conversation.messages.length &&
-                  moment(conversation.messages[0].created_at).fromNow()}
+                  moment(conversation?.messages[0]?.created_at).fromNow()}
               </span>
             </div>
           </div>
