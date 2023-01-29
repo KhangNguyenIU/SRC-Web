@@ -49,7 +49,7 @@ export class PostRoute extends Router {
       /**
        * Get post by category's slug
        */
-        this.router.route('/get-by-category-slug/:slug').get(PostController.getPostByCategorySlug);
+        this.router.route('/get-by-category-slug/:slug').post(PostController.getPostByCategorySlug);
 
     this.router.route('/get-by-slug/:slug').get(PostController.getPostBySlug);
   }

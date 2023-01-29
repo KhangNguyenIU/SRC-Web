@@ -1,0 +1,50 @@
+@import "../colors";
+@import "../mixins";
+
+.card{
+    width:80%;
+    padding:2rem 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $primary-gray;
+
+    @include respond(sm){
+        width: 100%;
+    }
+    .time{
+        color: $primary-gray-light;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+
+        @include respond(sm){
+            font-size: .7rem;
+        }
+    }
+
+    .title{
+        color: $primary-gray;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+
+        @include respond(sm){
+            font-size: 1.2rem;
+        }
+    }
+
+    .button{
+        color: $primary-purple;
+        font-size: .8rem;
+        position: relative;
+        cursor: pointer;
+        &::after{
+            content: '';
+            height: 1px;
+            width: 100%;
+            background-color: $primary-purple;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+    }
+}

@@ -11,9 +11,10 @@ import { useSelector } from 'react-redux';
 
 const navItems = [
   { item: 'Home', link: '/' },
-  { item: 'Recruiment', link: '/recruiment' },
-  { item: 'News', link: '/news' },
-  { item: 'Enrollment Project', link: '/enrollment-project' },
+  { item: 'Recruiment', link: '/post/category/recruiment' },
+  { item: 'News', link: '/post/category/news' },
+  { item: 'Benchmart', link: '/post/category/benchmark' },
+  { item: 'Enrollment Project', link: '/post/category/enrollment-project' },
   { item: 'Contact', link: '/contact' },
 ];
 
@@ -34,7 +35,6 @@ const SideBar = (props) => {
 
 const list = () => {
   const user = useSelector((state) => state.user);
-  console.log(['admin', 'staff', 'user'].includes(user.role));
   return (
     <Box
       sx={{

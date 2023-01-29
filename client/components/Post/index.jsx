@@ -1,6 +1,6 @@
 import React from 'react'
 import renderHTML from 'react-render-html';
-import styles from '@styles/Post.module.scss'
+import styles from '@styles/Post/Post.module.scss'
 import moment from 'moment'
 export default function Post({post}) {
     console.log(post)

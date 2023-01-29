@@ -17,6 +17,11 @@ const PostService ={
     getPostBySlug: (slug)=>{
         const url = `/post/get-by-slug/${slug}`;
         return axiosClient.get(url);
+    },
+    getPostByCateSlug: (slug, data)=>{
+        console.log(data)
+        const url =`/post/get-by-category-slug/${slug}`;
+        return axiosClient.post(url, JSON.stringify(data));
     }
 }
 
