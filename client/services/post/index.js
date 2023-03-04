@@ -5,7 +5,7 @@ const PostService ={
         const url = '/post/create';
         return axiosClient.post(url, JSON.stringify(data));
     },
-    getPostList: (limit, page)=>{
+    getPostList: ({limit, page,search=""})=>{
         let prefix =''
         if(limit && page) prefix = `?limit=${limit}&page=${page}`
         else if(limit && ! page) prefix = `?limit=${limit}`

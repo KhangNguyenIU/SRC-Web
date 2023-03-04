@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 const navItems = [
   { item: 'Home', link: '/' },
-  { item: 'Recruiment', link: '/post/category/recruiment' },
+  { item: 'Recruiment', link: '/post/category/recruitment' },
   { item: 'News', link: '/post/category/news' },
   { item: 'Benchmart', link: '/post/category/benchmark' },
   { item: 'Enrollment Project', link: '/post/category/enrollment-project' },

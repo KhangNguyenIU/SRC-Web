@@ -13,7 +13,6 @@ class PostController {
     if (!PostController.instance) {
       PostController.instance = new PostController();
     }
-
     return PostController.instance;
   }
 
@@ -129,7 +128,7 @@ class PostController {
     try {
       const CategoryRepository = await AppDataSource.getRepository(Category);
       const { slug } = req.params as unknown as { slug: string };
-        console.log(req.body)
+      console.log(req.body);
       const limit = Number(req.query.limit) || 10;
       let page = Number(req.query.page) || 1;
       const order = req.body.order || 'date';
@@ -145,8 +144,6 @@ class PostController {
         default:
           orderPreix = 'post.created_at';
       }
-
-      console.log({ order, orderSign, orderPreix });
 
       const cate: Category = await CategoryRepository.findOneBy({
         slug: slug,
@@ -195,7 +192,8 @@ class PostController {
       let page = Number(req.query.page) || 1;
       const order = req.body.order || 'date';
       const orderSign = req.body.orderSign || 'ASC';
-
+      const searchKey = req.body.searchKey || '';
+      console.log({ searchKey }, !!searchKey);
       let orderPreix = '';
       switch (order) {
         case 'alphabet':
@@ -215,9 +213,16 @@ class PostController {
         .addSelect(['category.id', 'category.name', 'category.slug'])
         .orderBy(orderPreix, orderSign)
         .skip((page - 1) * limit)
-        .take(limit)
-        .getMany();
-      return res.status(200).json({ posts });
+        .take(limit);
+
+      if (searchKey)
+        posts.where(
+          `LOWER(post.title) LIKE LOWER(:search) OR LOWER(post.body) LIKE LOWER(:search)`,
+          { search: `%${searchKey}%` }
+        );
+
+      const result = await posts.getMany();
+      return res.status(200).json({ posts: result });
     } catch (error) {
       Logger.log('error', error);
       return res.status(400).json({ error: 'Error occurs when getting post' });

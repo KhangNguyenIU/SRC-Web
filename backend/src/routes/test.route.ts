@@ -12,5 +12,7 @@ export class TestRoute extends Router{
         this.router.post('/', UploadController.upload);
         
         this.router.post('/mass-create-users', TestController.massCreateUsers)
+
+        this.router.get('/fetch-provinces', TestController.fetchProvinces)
     }
 }

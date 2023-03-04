@@ -2,7 +2,6 @@ import React from 'react'
 import styles from "@styles/ChatGroupLeft.module.scss"
 import GroupMessage from './GroupMessage'
 
-
 export default function GroupMessageList({chatRooms, setCurrentChatRoom}) {
 
   return (

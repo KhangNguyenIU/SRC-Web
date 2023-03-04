@@ -6,22 +6,38 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  TextField,
   Tooltip,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
 import AuthModal from '@components/Auth/AuthModal';
 import { logout } from 'slices/auth/auth.slice';
+import useDebounce from '@hooks/useDebounce';
+import PostService from '@services/post';
 
 export default function NavBar(props) {
   let user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = React.useState(false);
-
+  const [search, setSearch] = useState('');
+    const [listPost, setListPost] = useState([]);
   const handleOpenAuthModal = () => {
     setOpenAuthModal(true);
   };
   const handleCloseAuthModal = () => setOpenAuthModal(false);
 
+  useDebounce(()=>handleGetListPost,1000,[search])
+//   useEffect(()=>{
+//     console.log({listPost})
+//   })
+  const  handleGetListPost =async()=>{
+    // console.log('debounde')
+    const res = await PostService().getListPost({search:search});
+    if(res.status ===200 && !!res.data.posts.length){
+        setListPost(res.data.posts)
+    }
+  }
   return (
     <React.Fragment>
       <Box
@@ -31,7 +47,7 @@ export default function NavBar(props) {
           width: '100%',
           alignItems: 'center',
           fontFamily: 'Lora',
-        //   position: 'fixed',
+          //   position: 'fixed',
           zIndex: 1,
         }}
       >
@@ -39,8 +55,19 @@ export default function NavBar(props) {
           <MenuIcon />
         </IconButton>
 
+        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <SearchIcon />
+          <TextField
+            id="standard-basic"
+            label="Search"
+            variant="standard"
+            sx={{ width: ['100px', '200px'] }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         {user?.email ? (
-          <UserInfo socket={props.socket}/>
+          <UserInfo socket={props.socket} />
         ) : (
           <AuthButtons handleOpenAuthModal={handleOpenAuthModal} />
         )}
@@ -64,15 +91,15 @@ const AuthButtons = ({ handleOpenAuthModal }) => {
   );
 };
 
-const UserInfo = ({socket}) => {
+const UserInfo = ({ socket }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const onSignout = () => {
-    if(socket){
-        socket.disconnect()
+    if (socket) {
+      socket.disconnect();
     }
     dispatch(logout({ callback: handleClose }));
   };
