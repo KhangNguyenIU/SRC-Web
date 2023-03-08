@@ -16,6 +16,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { styled } from '@mui/material/styles';
 import provincesData from 'provinces.json';
 import { NormalTextField } from './NormalTextField';
+import { useDispatch } from 'react-redux';
+import { registerUser } from 'slices/auth/auth.slice';
 
 /**
  * @author
@@ -43,6 +45,7 @@ const schools = [
 ];
 
 export const Register = ({ handleAuthOptions }) => {
+    const dispatch = useDispatch()
   const [data, setData] = React.useState({
     firstName: '',
     lastName: '',
@@ -62,7 +65,11 @@ export const Register = ({ handleAuthOptions }) => {
   };
 
   const submit = () => {
-    console.log('submit', data);
+
+    dispatch(registerUser({
+        body: data,
+        callback:()=> handleAuthOptions(1)
+    }))
   };
   const handleChangeForm = (field) => (e) => {
     setData({ ...data, [field]: e.target.value });

@@ -1,4 +1,5 @@
 import { ROLE } from '@enums';
+import provinces from './provinces';
 
 const imgs = {
   facultyImg: [
@@ -24,6 +25,18 @@ const imgs = {
     'https://images.pexels.com/photos/975657/pexels-photo-975657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   ],
 };
+
+const means = ['Mạng Xã Hội', 'Bạn Bè', 'Tin Tức', 'Khác'];
+
+const schools = [
+  'THPT Nguyễn Trãi',
+  'THPT Nguyễn Du',
+  'THPT Nguyễn Khuyến',
+  'THPT Nguyễn Văn Linh',
+  'THPT Nguyễn Văn Cừ',
+  'THPT Nguyễn Văn Huyên',
+];
+
 
 const mockData = {
   category: [
@@ -101,6 +114,7 @@ const mockData = {
       email: 'admin@gmail.com',
       username: 'admin',
       avatar: imgs.userImg[7],
+    //   interest: 
     },
     {
       role: ROLE.user,
@@ -108,6 +122,10 @@ const mockData = {
       firstName: 'khang',
       lastName: 'nguyen',
       avatar: imgs.userImg[8],
+      interest: 5,
+      location: provinces[1],
+      mean: means[0],
+      school: schools[0],
     },
     {
       role: ROLE.user,
@@ -115,6 +133,10 @@ const mockData = {
       firstName: 'John',
       lastName: 'Doe',
       avatar: imgs.userImg[9],
+      interest: 3,
+      location: provinces[0],
+      mean: means[0],
+      school: schools[1],
     },
     {
       role: ROLE.user,
@@ -122,6 +144,10 @@ const mockData = {
       firstName: 'Mary',
       lastName: 'Doe',
       avatar: imgs.userImg[10],
+      interest: 4,
+      location: provinces[2],
+      mean: means[0],
+      school: schools[2],
     },
   ],
 

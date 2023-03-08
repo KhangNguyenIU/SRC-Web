@@ -1,4 +1,4 @@
-[
+const provinces = [
   { "province": "Thành phố Hà Nội", "slug": "Thanh-pho-Ha-Noi" },
   { "province": "Tỉnh Hà Giang", "slug": "Tinh-Ha-Giang" },
   { "province": "Tỉnh Cao Bằng", "slug": "Tinh-Cao-Bang" },
@@ -63,3 +63,6 @@
   { "province": "Tỉnh Bạc Liêu", "slug": "Tinh-Bac-Lieu" },
   { "province": "Tỉnh Cà Mau", "slug": "Tinh-Ca-Mau" }
 ]
+
+
+export default provinces

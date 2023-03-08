@@ -5,7 +5,10 @@ const authService = {
         const url = '/user/signup'
         return axiosClient.post(url, JSON.stringify(data))
     },
-
+    register: (data) => {
+        const url = '/user/signin'
+        return axiosClient.post(url, JSON.stringify(data))
+    },
     checkAuth: () => {
         const url = '/user/auth'
         return axiosClient.post(url)

@@ -30,7 +30,6 @@ export const DevAuth = ({closeModal}) => {
 
   const handleAuthSigninOptions = (e) => {
     let option = e.target.attributes.getNamedItem('data-tag').value;
-    console.log({ option })
     if (!option) return;
 
     switch (option) {

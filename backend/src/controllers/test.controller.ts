@@ -4,6 +4,11 @@ import { Request, Response } from 'express';
 import * as fs from 'fs';
 import axios from 'axios';
 import slugify from 'slugify';
+
+import { faker} from "@faker-js/faker"
+import { Unsplash } from '@config/unsplash.config';
+import fetch from 'node-fetch'
+global.fetch = fetch
 class TestController {
   private static instance: TestController;
 
@@ -52,6 +57,28 @@ class TestController {
           // provinces
         });
       }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+  }
+
+  async testFakerData(req: Request, res: Response): Promise<any> {
+    try {
+      
+        Unsplash.photos.getRandom({ query: 'nature', orientation: 'landscape' }).then((result: any) => {
+            console.log(result.response.urls.regular)
+        })
+
+
+     
+        return res.status(200).json({
+          message: 'Fetched faker data successfully',
+    
+        });
+      
     } catch (error) {
       console.log(error);
       return res.status(500).json({

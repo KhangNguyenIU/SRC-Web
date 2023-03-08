@@ -7,6 +7,8 @@ import styles from '@styles/Auth/Login.module.scss';
 
 import { NormalTextField } from './NormalTextField';
 import { DevAuth } from './DevAuth';
+import { useDispatch } from 'react-redux';
+import { signinUser } from 'slices/auth/auth.slice';
 
 /**
  * @author
@@ -15,6 +17,8 @@ import { DevAuth } from './DevAuth';
 
 
 export const Login = ({ handleAuthOptions, closeModal }) => {
+    const dispatch = useDispatch()
+
   const handleChangeForm = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
   };
@@ -26,6 +30,7 @@ export const Login = ({ handleAuthOptions, closeModal }) => {
 
   const submit = () => {
     console.log('submit', formData);
+    dispatch(signinUser({body: formData, callback: closeModal}))
   };
 
   const checkCanSubmit = () => {

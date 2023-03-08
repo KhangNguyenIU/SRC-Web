@@ -28,12 +28,12 @@ export class User {
   id: number;
 
   @Column({
-    nullable:true
+    nullable: true,
   })
   firstName: string;
 
   @Column({
-    nullable:true
+    nullable: true,
   })
   lastName: string;
 
@@ -67,6 +67,26 @@ export class User {
     nullable: false,
   })
   password: string;
+
+  @Column({
+    nullable: true,
+  })
+  location: string;
+
+  @Column({
+    nullable: true,
+  })
+  school: string;
+
+  @Column({
+    nullable: true,
+  })
+  lvInterest: number;
+
+  @Column({
+    nullable: true,
+  })
+  mean: string;
 
   @Column({
     type: 'enum',

@@ -26,6 +26,8 @@ export namespace Nodejs{
         DB_MIGRATIONS: string;
         DB_CACHE: boolean;
         REDIS_URL: string;
+        UNSPLASH_ACCESS_KEY: string;
+        UNSPLASH_SECRET_KEY: string;
     }
 }
 

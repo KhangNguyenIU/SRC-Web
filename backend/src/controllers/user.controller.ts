@@ -24,7 +24,7 @@ class UserController {
   async signIn(req: Request, res: Response): Promise<Response<string | any>> {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
-      const { firstName, lastName, email, password } = req.body;
+      const { firstName, lastName, email, password, mean, location, school, interest } = req.body;
 
       // check existed account
       const existedUser = await UserRepo.findOneBy({ email });
@@ -42,6 +42,11 @@ class UserController {
       user.salt = await bcrypt.genSalt();
       user.password = await bcrypt.hash(password, user.salt);
       user.username = email.split('@')[0];
+      user.mean = mean;
+      user.lvInterest = Number(interest);
+      user.school = school;
+      user.location =location;
+      
       await AppDataSource.manager.save(user);
       return res.status(200).json({
         message: 'Create new account success',
