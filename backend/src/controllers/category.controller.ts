@@ -2,7 +2,9 @@ import { AppDataSource } from '@config/database.config';
 import { Logger } from '@config/logger.config';
 import { Category } from '@entities/category.entity';
 import { Request, Response } from 'express';
-import slugify from 'slugify';class CategoryController {
+import slugify from 'slugify';
+
+class CategoryController {
   private static instance: CategoryController;
 
   private constructor() {}

@@ -1,5 +1,6 @@
 import { CategoryRoute } from '@routes/category.route';
 import { ConversationRoute } from '@routes/conversation.route';
+import { DashboardRoute } from '@routes/dashboard.route';
 import { EmailRoute } from '@routes/email.route';
 import { FacultyRoute } from '@routes/faculty.route';
 import { FeedbackRoute } from '@routes/feedback.route';
@@ -36,6 +37,7 @@ class ProxyRouter {
     { segment: '/faculty', provider: FacultyRoute },
     { segment: '/conversation', provider: ConversationRoute },
     { segment: '/message', provider: MessageRoute },
+    { segment: '/dashboard', provider: DashboardRoute },
   ];
 
   private constructor() {}

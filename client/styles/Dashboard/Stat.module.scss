@@ -1,0 +1,15 @@
+@import '../colors';
+@import '../mixins';
+
+.chartWrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    .chart{
+        position: relative;
+        margin: auto;
+        width: 80wh;
+    }
+}

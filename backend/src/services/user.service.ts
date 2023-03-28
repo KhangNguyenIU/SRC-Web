@@ -169,6 +169,65 @@ class UserService {
       throw new Error(error);
     }
   }
+
+  async statUsersBy(field: string) : Promise<any> {
+    try{
+        const userRepo = await AppDataSource.getRepository(User);
+
+
+        const roleStat = async ()=>{
+            return await userRepo.createQueryBuilder('user')
+            .select(['user.role'])
+            .addSelect(['COUNT(user.role) as Count'])
+            .groupBy('user.role')
+            .getRawMany()
+        }
+
+        const locationStat = async ()=>{
+            return await userRepo.createQueryBuilder('user')
+            .select(['user.location'])
+            .addSelect(['COUNT(user.location) as Count'])
+            .groupBy('user.location')
+            .having('COUNT(user.location) > 0')
+            .getRawMany()
+        }
+
+        const schoolStat = async ()=>{
+            return await userRepo.createQueryBuilder('user')
+            .select(['user.school'])
+            .addSelect(['COUNT(user.school) as Count'])
+            .groupBy('user.school')
+            .having('COUNT(user.school) > 0')
+            .getRawMany()
+        }
+
+        const meanStat = async ()=>{
+            return await userRepo.createQueryBuilder('user')
+            .select(['user.mean'])
+            .addSelect(['COUNT(user.mean) as Count'])
+            .groupBy('user.mean')
+            .having('COUNT(user.mean) > 0')
+            .getRawMany()
+        }
+
+        const interestStat = async ()=>{
+            return await userRepo.createQueryBuilder('user')
+            .select(['user.lvInterest'])
+            .addSelect(['COUNT(user.lvInterest) as Count'])
+            .groupBy('user.lvInterest')
+            .having('COUNT(user.lvInterest) > 0')
+            .orderBy('user.lvInterest', 'ASC')
+            .getRawMany()
+        }
+
+        const [role, location,school, mean, interest] = await Promise.all([roleStat(), locationStat(), schoolStat(), meanStat(), interestStat()]);
+        return {role, location, school, mean, interest};
+
+    }catch(error){
+        console.log(error);
+        throw new Error(error);
+    }
+}
 }
 
 const userService = UserService.get();

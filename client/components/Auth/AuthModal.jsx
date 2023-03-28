@@ -15,7 +15,6 @@ const AuthModal = ({ open, closeModal }) => {
    * 1: login
    */
   const [authOptions, setAuthOptions] = useState(1);
-  console.log(!authOptions);
 
   const handleAuthOptions = (option) => {
     console.log(option)

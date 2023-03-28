@@ -15,6 +15,7 @@ const navItems = [
   { item: 'News', link: '/news' },
   { item: 'Enrollment Project', link: '/enrollment-project' },
   { item: 'Contact', link: '/contact' },
+  { item: 'User Stat', link :' /private/dashboard/stat/user-stat' },
 ];
 
  const DashboardSideNav = (props) => {

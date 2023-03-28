@@ -29,22 +29,6 @@ class MessageController {
                 return res.status(400).send('Error occurs when create message');
             }
 
-
-            // const ConversationRepo = await AppDataSource.getRepository(Conversation);
-            // const UserRepo = await AppDataSource.getRepository(User);
-            // const MessageRepo = await AppDataSource.getRepository(Message);
-            // const user = await UserRepo.findOneBy({ id: userId });
-
-            // const conversation = await ConversationRepo.findOneBy({ id: conversationId });
-            // const newMessage = new Message();
-            // newMessage.content = content;
-            // newMessage.conversation = conversation;
-            // newMessage.postedBy = user;
-            // newMessage.type = messageType;
-
-            // conversation.updated_at = new Date();
-            // await AppDataSource.manager.save(conversation);
-            // await AppDataSource.manager.save(newMessage);
             return res.status(200).json({ message: 'Create new message success', newMessage });
         } catch (error) {
             Logger.log('error', error);
