@@ -1,3 +1,13 @@
+import HomeIcon from '@mui/icons-material/Home';
+import ArticleIcon from '@mui/icons-material/Article';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import MoneyIcon from '@mui/icons-material/Money';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import SendIcon from '@mui/icons-material/Send';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+
+
 export const isAuth = user => user.email != "" && user.role != "" && user.id != "" && user.firstName != ""
 
 
@@ -195,3 +205,40 @@ export const interestLvStatOptions = {
         },
     },
 }
+
+export const navItems = [
+    { item: 'Home', link: '/', icon: <HomeIcon sx={{ color: '#7F8487' }} /> },
+    {
+        item: 'Recruiment',
+        link: '/post/category/recruitment',
+        icon: <ArticleIcon sx={{ color: '#7F8487' }} />,
+    },
+    {
+        item: 'News',
+        link: '/post/category/news',
+        icon: <NewspaperIcon sx={{ color: '#7F8487' }} />,
+    },
+    { item: 'Benchmart', link: '/post/category/benchmark', icon: <MoneyIcon /> },
+    {
+        item: 'Enrollment Project',
+        link: '/post/category/enrollment-project',
+        icon: <AppRegistrationIcon />,
+    },
+    { item: 'Contact', link: '/contact', icon: <ContactMailIcon /> },
+];
+
+export const privateItems = [
+    {
+        item: 'Message',
+        link: '/private/message',
+        icon: <SendIcon sx={{ color: '#7F8487' }} />,
+    },
+];
+
+export const adminItems = [
+    {
+        item: 'Dashboard',
+        link: '/private/dashboard',
+        icon: <DashboardIcon sx={{ color: '#7F8487' }} />,
+    },
+];

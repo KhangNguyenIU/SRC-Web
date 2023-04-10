@@ -1,0 +1,71 @@
+@import '../colors';
+@import '../mixins';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 250px;
+  justify-content: center;
+  padding: 1rem;
+  color: $primary-gray-light;
+  font-weight: 600;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    p{
+        font-size: .8rem;
+        font-weight: 400;
+        margin: .2rem;
+    }
+
+    span{
+        font-size: 1rem;
+        font-weight: 600;
+        color: black;
+        margin: 0;
+    }
+  }
+
+  .item {
+    display: flex;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    width: 100%;
+    span {
+      margin-left: 1rem;
+    }
+
+    &:hover {
+      background-color: #ededed;
+      border-radius: 5px;
+      transition: 200ms;
+      cursor: pointer;
+      span {
+        color: black;
+      }
+
+      .css-1bme4zt-MuiSvgIcon-root {
+        color: black;
+      }
+    }
+  }
+
+  .tool, .admin, .staff {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0;
+
+    .title{
+        font-size: .8rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+  }
+}

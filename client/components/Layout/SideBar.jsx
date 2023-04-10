@@ -1,26 +1,17 @@
-import { Drawer, List, ListItem, ListItemText } from '@mui/material';
-import { Box } from '@mui/system';
+import { Avatar, Divider, Drawer } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
-
+import SearchIcon from '@mui/icons-material/Search';
+import SettingsIcon from '@mui/icons-material/Settings';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { adminItems, navItems, privateItems } from 'utils';
+import styles from '@styles/Layout/Sidebar.module.scss';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 /**
  * @author
  * @function SideBar
  **/
-
-const navItems = [
-  { item: 'Home', link: '/' },
-  { item: 'Recruiment', link: '/post/category/recruitment' },
-  { item: 'News', link: '/post/category/news' },
-  { item: 'Benchmart', link: '/post/category/benchmark' },
-  { item: 'Enrollment Project', link: '/post/category/enrollment-project' },
-  { item: 'Contact', link: '/contact' },
-];
-
-const privateItems = [{ item: 'Message', link: '/private/message' }];
-
-const adminItems = [{ item: 'Dashboard', link: '/private/dashboard' }];
 
 const SideBar = (props) => {
   const closeBar = () => props.setToggleSideBar(false);
@@ -35,39 +26,61 @@ const SideBar = (props) => {
 
 const list = () => {
   const user = useSelector((state) => state.user);
+  console.log({ user });
   return (
-    <Box
-      sx={{
-        width: 250,
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      }}
-      role="presentation"
-    >
-      <List>
+    <div className={styles.wrapper}>
+      {!!user.username && (
+        <div className={styles.logo}>
+          <Avatar src={user.avatar} sx={{ width: 56, height: 56 }} />
+          <p>Welcome back,</p>
+          <span>{user.username}</span>
+        </div>
+      )}
+
+      <div className={styles.tool}>
         {navItems.map((item, index) => (
-          <ListItem key={index}>
-            <Link href={`${item.link}`}>{item.item}</Link>
-          </ListItem>
+          <div key={index} className={styles.item}>
+            {item.icon}
+            <span>
+              <Link href={item.link}>{item.item}</Link>
+            </span>
+          </div>
         ))}
-
-        {['admin', 'staff', 'user'].includes(user.role) &&
-          privateItems.map((item, index) => (
-            <ListItem key={`${item}-${index}`}>
-              <Link href={`${item.link}`}>{item.item}</Link>
-            </ListItem>
-          ))}
-
+      </div>
+      {/* <Divider /> */}
+      <div className={styles.staff}>
+        <div className={styles.title}>
+          <span>Functionalities</span>
+          <ExpandMoreIcon />
+        </div>
         {['admin', 'staff'].includes(user.role) &&
-          adminItems.map((item, index) => (
-            <ListItem key={`${item}-${index}`}>
-              <Link href={`${item.link}`}>{item.item}</Link>
-            </ListItem>
+          privateItems.map((item, index) => (
+            <div key={index} className={styles.item}>
+              {item.icon}
+              <span>
+                <Link href={item.link}>{item.item}</Link>
+              </span>
+            </div>
           ))}
-      </List>
-    </Box>
+      </div>
+      {/* <Divider /> */}
+
+      <div className={styles.admin}>
+        <div className={styles.title}>
+          <span>Mainboard</span>
+          <ExpandMoreIcon />
+        </div>
+        {['admin'].includes(user.role) &&
+          adminItems.map((item, index) => (
+            <div key={index} className={styles.item}>
+              {item.icon}
+              <span>
+                <Link href={item.link}>{item.item}</Link>
+              </span>
+            </div>
+          ))}
+      </div>
+    </div>
   );
 };
 export default SideBar;
