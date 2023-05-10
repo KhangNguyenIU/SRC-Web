@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signinUser } from 'slices/auth/auth.slice';
 
-import data from 'data';
+import {authData} from 'data';
 import {
   Button,
   FormControl,
@@ -23,9 +23,9 @@ export const DevAuth = ({closeModal}) => {
   const dispatch = useDispatch();
 
   const [authOptions, setAuthOptions] = useState({
-    user: data.signin.user[0].email,
-    staff: data.signin.staff[0].email,
-    admin: data.signin.admin.email,
+    user: authData.signin.user[0].email,
+    staff: authData.signin.staff[0].email,
+    admin: authData.signin.admin.email,
   });
 
   const handleAuthSigninOptions = (e) => {
@@ -77,7 +77,7 @@ export const DevAuth = ({closeModal}) => {
               setAuthOptions({ ...authOptions, user: e.target.value })
             }
           >
-            {data.signin.user.map((user, i) => (
+            {authData.signin.user.map((user, i) => (
               <MenuItem key={i} value={user.email}>
                 {user.firstName}
               </MenuItem>
@@ -103,7 +103,7 @@ export const DevAuth = ({closeModal}) => {
             }
             fullWidth
           >
-            {data.signin.staff.map((user, i) => (
+            {authData.signin.staff.map((user, i) => (
               <MenuItem key={i} value={user.email}>
                 {user.username}
               </MenuItem>

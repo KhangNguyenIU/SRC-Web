@@ -26,7 +26,6 @@ const SideBar = (props) => {
 
 const list = () => {
   const user = useSelector((state) => state.user);
-  console.log({ user });
   return (
     <div className={styles.wrapper}>
       {!!user.username && (

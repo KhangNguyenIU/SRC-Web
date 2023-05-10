@@ -1,0 +1,144 @@
+@import '../colors';
+@import '../mixins';
+
+.wrapper {
+padding: 2rem 0 ;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: #eee;
+  .questions {
+    margin-bottom: 1rem;
+    @include respond(sm){
+      width: 90%;
+    }
+    .card {
+      width: 500px;
+      padding: 1rem;
+      background-color: white;
+      margin-bottom: 0.2rem;
+      transition: 200ms;
+      display: flex;
+      border-radius: 2px;
+      &:hover {
+        box-shadow: -4px 5px 25px -7px rgba(0, 0, 0, 0.2);
+      }
+
+      @include respond(sm){
+        width: 100%;
+      }
+
+      .number{
+        width: 10%;
+        font-family: 'Lora';
+        font-size: 1.3rem;
+        font-weight:500;
+        color: $primary-purple;
+      }
+      
+      .content{
+        .question{
+            font-family: 'Lora';
+            margin-bottom: .5rem;
+            font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .directTool{
+    .button{
+        padding: .5rem 1.8rem;
+        border-radius: 30px;
+        background-color: transparent;
+        font-size: .8rem;
+        font-weight: 500;
+        color: $secondary-gray;
+        border: 1px solid $secondary-gray;
+        cursor: pointer;
+        transition: 200ms;
+        margin-bottom: 3rem;
+        @include respond(sm){
+            padding: .5rem 1.5rem;
+            font-size: .8rem;
+            margin-bottom: 1rem;
+        }
+            &.active{
+                color: $primary-gray-light;
+                border: 1px solid $primary-gray-light;
+                &:hover{
+                    border: 1px solid $primary-gray;
+                    color: $primary-gray;
+                }
+            }
+        
+    }
+  }
+}
+
+.resultBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Lora';
+    .heading{
+        font-size: 2rem;
+        font-weight: 500;
+    }
+    img{
+        width: 35%;
+        height: 35%;
+        margin-bottom: 1rem;
+    }
+
+    .desc{
+        max-width: 80%;
+        text-align: center;
+        color: $primary-gray-light;
+        font-size: .8rem;
+        margin: .2rem;
+    }
+
+    .suitableCareer{
+        max-width: 80%;
+        word-wrap: break-word;
+        p{
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .careerList{
+            display: flex;
+            flex-wrap: wrap;
+            & >*{
+                margin-right: 1rem;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .suggestMajor{
+        max-width: 80%;
+        word-wrap: break-word;
+        
+        p{
+            text-align: center;
+            color: $secondary-purple-dark;
+            font-weight: bold;
+        }
+        .suggestMajorList{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: .5rem;
+            & >*{
+                cursor: pointer;
+                margin-right: 1rem;
+                margin-bottom: .5rem;
+            }
+        }
+    }
+   
+}

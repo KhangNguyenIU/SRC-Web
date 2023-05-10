@@ -28,9 +28,7 @@ export default function NavBar(props) {
   const handleCloseAuthModal = () => setOpenAuthModal(false);
 
   useDebounce(()=>handleGetListPost,1000,[search])
-//   useEffect(()=>{
-//     console.log({listPost})
-//   })
+
   const  handleGetListPost =async()=>{
     // console.log('debounde')
     const res = await PostService().getListPost({search:search});
@@ -59,7 +57,7 @@ export default function NavBar(props) {
           <SearchIcon />
           <TextField
             id="standard-basic"
-            label="Search"
+            // label="Search"
             variant="standard"
             sx={{ width: ['100px', '200px'] }}
             value={search}

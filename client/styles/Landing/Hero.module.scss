@@ -1,0 +1,59 @@
+@import '../colors';
+@import '../mixins';
+
+.wrapper{
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    h1{
+        font-size: 3rem;
+        color:$primary-blue ;
+        margin: 0;
+        text-align: center;
+        @include respond(sm){
+            font-size: 2rem;
+        }
+    }
+
+    h2{
+        max-width: 50%;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 200;
+        @include respond(sm){
+            max-width: 80%;
+            font-size: 1rem;
+        }
+    }
+
+    .button{
+        padding: .8rem 1.8rem;
+        border-radius: 30px;
+        background-color: $primary-blue;
+        font-size: .8rem;
+        font-weight: 500;
+        outline: none;
+        border: none;
+        color: black;
+        cursor: pointer;
+        transition: 200ms;
+        margin-bottom: 3rem;
+        @include respond(sm){
+            padding: .5rem 1.5rem;
+            font-size: .8rem;
+            margin-bottom: 1rem;
+        }
+        &:hover{
+            background-color: $secondary-blue;
+        }
+    }
+    img {
+        width: 30%;
+        height: 30%;
+        object-fit: contain;
+    }
+}
