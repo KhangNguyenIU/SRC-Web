@@ -2,7 +2,8 @@ import { MessageService } from '@services/message.service';
 import { Server as SocketServer } from 'socket.io';
 import { Environment } from './environment.config';
 import { Logger } from './logger.config';
-import { ServerConfiguration } from './server.config';
+import { MESSAGE_TYPE } from '@enums';
+import { CloudinaryService } from '@services/cloudinary.service';
 
 class SocketConfig {
   private static instance: SocketConfig;
@@ -68,25 +69,42 @@ class SocketConfig {
 
       socket.on('notification', (data) => console.log('notification', data));
 
+      socket.on('user-typing', (fields) => {
+        const { chatRoomId, user } = fields;
+        this.socketIo.to(chatRoomId).emit('user-typing', {
+          user: user,
+          isTyping: true,
+        });
+      });
+
+      socket.on('user-stop-typing', (fields) => {
+        const { chatRoomId, user } = fields;
+        this.socketIo.to(chatRoomId).emit('user-typing', {
+          user: user,
+          isTyping: false,
+        });
+      });
+
       socket.on('send-message', async (fields) => {
-        const { chatRoomId, message, postedBy, type, partner } = fields;
-        console.log({ usersList: this.users });
+        let { chatRoomId, message, postedBy, type, partner } = fields;
 
-        console.log({ partner });
         if (!chatRoomId || !message || !postedBy || !type) return;
-
+        let formattedMessage = message;
         try {
+          // console.log('send-message', fields);
+          if (type === MESSAGE_TYPE.image) {
+            console.log('IAMGE');
+            formattedMessage = await CloudinaryService.upload(message);
+          }
           const newMessage = await MessageService.createMessage(
-            message,
+            (message = formattedMessage.url),
             chatRoomId,
             type,
             postedBy
           );
+
           if (!newMessage) return;
           if (partner) {
-            // const socketUser = this.users.find(
-            //   (user) => user.userId === partner
-            // )
             const socketUser = this.users.map((item, _) => {
               if ([partner, postedBy].includes(item.userId)) {
                 this.socketIo

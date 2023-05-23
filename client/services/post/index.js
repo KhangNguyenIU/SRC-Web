@@ -5,9 +5,11 @@ const PostService ={
         const url = '/post/create';
         return axiosClient.post(url, JSON.stringify(data));
     },
-    getPostList: ({limit, page,search=""})=>{
+    getPostList: (limit=5, page=1,search="")=>{
         let prefix =''
-        if(limit && page) prefix = `?limit=${limit}&page=${page}`
+
+        if (!limit && !page) prefix = ''
+        else if(limit && page) prefix = `?limit=${limit}&page=${page}`
         else if(limit && ! page) prefix = `?limit=${limit}`
         else if (!limit && page) prefix = `?page=${page}`
 
@@ -18,7 +20,7 @@ const PostService ={
         const url = `/post/get-by-slug/${slug}`;
         return axiosClient.get(url);
     },
-    getPostByCateSlug: (slug, data)=>{
+    getPostByCateSlug: (slug, data={})=>{
         console.log(data)
         const url =`/post/get-by-category-slug/${slug}`;
         return axiosClient.post(url, JSON.stringify(data));

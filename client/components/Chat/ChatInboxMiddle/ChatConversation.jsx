@@ -1,9 +1,10 @@
 import React, { useMemo, useState, useRef } from 'react';
-import styles from '@styles/ChatInboxMiddle.module.scss';
-import ChatBoxHeader from './ChatBoxHeader';
 import { useSelector } from 'react-redux';
+
+import ChatBoxHeader from './ChatBoxHeader';
 import ChatBoxContent from './ChatBoxContent';
 import ChatBoxInput from './ChatBoxInput';
+
 import { messageType } from '@constants';
 import { ChatService } from '@services/chat';
 
@@ -23,38 +24,44 @@ export default function ChatConversation({
     [user, currentChatRoom]
   );
 
-//   console.log({partner})
-
   const [textInput, setTextInput] = useState('');
-  const [typeOfMessage, setTypeOMessage] = useState(messageType.TEXT);
+  const [typeOfMessage, setTypeOfMessage] = useState(messageType.TEXT);
 
-  const handleSendMessage =async  () => {
+  const handleSendMessage = async () => {
     if (socket && textInput !== '') {
-        let chatRoomId = currentChatRoom.id
-        let messagePacket = {
-            chatRoomId: chatRoomId,
-            message: textInput,
-            type: typeOfMessage,
-            postedBy: user.id,
-          };
+      let chatRoomId = currentChatRoom.id;
+      let messagePacket = {
+        chatRoomId: chatRoomId,
+        message: textInput,
+        type: typeOfMessage,
+        postedBy: user.id,
+      };
+      // check if the room is temporary room
+      const partner = JSON.parse(localStorage.getItem('partner'));
 
-        // check if the room is temporary room
-        const partner = JSON.parse(localStorage.getItem('partner'))
-        if(partner!== null){
-            const newChat = await ChatService.createNewChat({chatReceiverId: partner.id})
-            if(newChat.status ===200){
-                chatRoomId = newChat.data.newConversation.id
-                messagePacket = {
-                    ...messagePacket,
-                    chatRoomId: chatRoomId,
-                    partner : partner.id
-                }
-            }
+      if (
+        partner !== null &&
+        !currentChatRoom.conversationParticipants.some(
+          (part) => part.userid === partner?.id
+        ) &&
+        currentChatRoom.status === 'temporary'
+      ) {
+        const newChat = await ChatService.createNewChat({
+          chatReceiverId: partner.id,
+        });
+        if (newChat.status === 200) {
+          chatRoomId = newChat.data.newConversation.id;
+          messagePacket = {
+            ...messagePacket,
+            chatRoomId: chatRoomId,
+            partner: partner.id,
+          };
         }
-   
+        localStorage.removeItem('partner');
+      }
+      console.log({ messagePacket });
       socket.emit('send-message', messagePacket);
       setTextInput('');
-      localStorage.removeItem('partner')
     }
   };
 
@@ -69,7 +76,7 @@ export default function ChatConversation({
         setTextInput={setTextInput}
         handleSendMessage={handleSendMessage}
         typeOfMessage={typeOfMessage}
-        setTypeOMessage={setTypeOMessage}
+        setTypeOfMessage={setTypeOfMessage}
         updateChatList={updateChatList}
       />
     </React.Fragment>

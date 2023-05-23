@@ -16,7 +16,6 @@ export default function GroupMessageList({chatRooms, setCurrentChatRoom}) {
                             conversation={room}
                             setCurrentChatRoom={setCurrentChatRoom}
                             />
-
                         ))
                     }
                 </div>

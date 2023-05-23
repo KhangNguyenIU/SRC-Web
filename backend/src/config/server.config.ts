@@ -1,8 +1,6 @@
 import { Application } from 'express';
 import { Server as HTTPServer, createServer } from 'http';
-import { Environment } from './environment.config';
 import { Logger } from './logger.config';
-import cluster from 'cluster';
 import * as os from 'os';
 
 export class ServerConfiguration {

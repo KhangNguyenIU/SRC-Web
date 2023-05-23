@@ -25,12 +25,12 @@ export default function Contact({ contacts }) {
   const handleDirectMessage = (data) => {
     const partner = localStorage.getItem('partner')
     if(!!partner){
-        console.log("remove", data)
         localStorage.removeItem('partner')
     }
     localStorage.setItem('partner', JSON.stringify(data));
     router.push('/private/message');
   };
+  
   return (
     <React.Fragment>
       <TableContainer component={Paper}>

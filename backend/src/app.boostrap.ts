@@ -6,8 +6,7 @@ import { Logger } from '@config/logger.config';
 import { Server } from '@config/server.config';
 import { RedisCache } from '@config/cache.config';
 import { Server as SocketServer } from 'socket.io';
-import { Message } from '@entities/message.entity';
-import { MessageService } from '@services/message.service';
+
 import { SocketConfig } from '@config/socket.config';
 
 const main = async (): Promise<void> => {
@@ -18,7 +17,7 @@ const main = async (): Promise<void> => {
         'info',
         `Connect to database ${Environment.DB_DATABASE} on port ${Environment.DB_PORT}`
       );
-      //init serve
+      //init server
       const application = Application;
       const server = Server.init(application).listen() as unknown;
 

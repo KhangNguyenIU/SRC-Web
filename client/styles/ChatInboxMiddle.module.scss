@@ -112,6 +112,22 @@
             }
           }
         }
+
+        .messageImage{
+            img {
+                width: 20rem;
+                height: 17rem;
+                border-radius: 20px;
+                object-fit: contain;
+                @include respond (sm){
+                    width: 12rem;
+                    height: 10rem;
+                }
+              }
+              &.isMyMessage {
+                margin-right: 0.5rem;
+              }
+        }
     }
   }
 
@@ -152,16 +168,37 @@
           justify-content: flex-start;
           .imagePreviewBox {
             max-width: 100%;
-            height: 80px;
+            height: 100px;
             margin-left: 20px;
             position: relative;
+            transition: 150ms;
+            .overlay{
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                opacity: 0;
+                transition: .5s ease;
+                background-color: rgba(0,0,0,.4);
 
-            .close-icon {
-              position: absolute;
-              top: -15px;
-              right: -15px;
-              color: aliceblue;
+                .closeIcon {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left:0;
+                    right:0;
+                    margin: auto;
+                  }
             }
+            &:hover{
+                .overlay{
+                    opacity: 1;
+                }
+            }
+           
             img {
               max-width: 100%;
               height: 100%;

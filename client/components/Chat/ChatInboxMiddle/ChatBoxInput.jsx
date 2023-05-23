@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import styles from '@styles/ChatInboxMiddle.module.scss';
+import { loadingType, messageType } from '@constants';
+
 import { CircularProgress, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import ImageIcon from '@mui/icons-material/Image';
 import { EmojiEmotions } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
+import CloseIcon from '@mui/icons-material/Close';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
-import { loadingType, messageType } from '@constants';
 import Grow from '@mui/material/Grow';
-import { useEffect } from 'react';
 
 export default function ChatBoxInput({
   textInput,
   setTextInput,
   handleSendMessage,
   typeOfMessage,
-  setTypeOMessage,
+  setTypeOfMessage,
 }) {
   const user = useSelector((state) => state.user);
   const [fileInput, setFileInput] = useState('');
@@ -24,12 +27,11 @@ export default function ChatBoxInput({
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
 
-
   const onLoadImage = (e) => {
     const file = e.target.files[0];
     previewFile(file);
     setFileInput(file);
-    setMessageType(TYPE_IMAGE);
+    setTypeOfMessage(messageType.IMAGE);
   };
 
   const previewFile = (file) => {
@@ -39,6 +41,13 @@ export default function ChatBoxInput({
       setPreviewSource(reader.result);
       setTextInput(reader.result);
     };
+  };
+
+  const clearInput = () => {
+    setTextInput('');
+    setFileInput('');
+    setPreviewSource('');
+    setTypeOfMessage(messageType.TEXT);
   };
 
   const handleChangeInput = (e) => {
@@ -56,6 +65,13 @@ export default function ChatBoxInput({
     // }
   };
 
+
+  const onSendMessage = () => {
+    if (textInput !== '') {
+      handleSendMessage();
+      clearInput();
+    }
+  }
   return (
     <React.Fragment>
       <div className={styles.chatboxInput}>
@@ -93,10 +109,13 @@ export default function ChatBoxInput({
               <div className={styles.imagePreview}>
                 <div className={styles.imagePreviewBox}>
                   <img src={previewSource || ''} alt="preview" />
-                  <div className={styles.closeIcon}>
-                    <IconButton onClick={clearInput}>
-                      <DoDisturbOnIcon sx={{ color: 'white' }} />
-                    </IconButton>
+
+                  <div className={styles.overlay}>
+                    
+                      <IconButton onClick={clearInput} styles={styles.closeIcon}>
+                        <CloseIcon sx={{ color: 'black' }} />
+                      </IconButton>
+                  
                   </div>
                 </div>
               </div>
@@ -107,7 +126,7 @@ export default function ChatBoxInput({
         {loading.state && loading.type === loadingType.MESSAGE ? (
           <CircularProgress color="secondary" size={20} />
         ) : (
-          <IconButton onClick={handleSendMessage}>
+          <IconButton onClick={onSendMessage}>
             <SendIcon color="secondary" />
           </IconButton>
         )}

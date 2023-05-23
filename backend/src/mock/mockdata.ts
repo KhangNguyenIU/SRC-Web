@@ -40,7 +40,7 @@ const schools = [
 
 const mockData = {
   category: [
-    'Recruiment','News','Enrollment Project','Benchmark'
+    'Recruitment','News','Enrollment Project','Benchmark'
   ],
 
   faculty: [

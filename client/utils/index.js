@@ -242,3 +242,15 @@ export const adminItems = [
         icon: <DashboardIcon sx={{ color: '#7F8487' }} />,
     },
 ];
+
+
+export const addObjectToUniqueArray = (array, object, isTyping) => {
+    let index = array.findIndex(item => item._id === object._id);
+    if (index === -1 && isTyping) {
+        array.push(object);
+    }
+    if (index !== -1 && !isTyping) {
+        array.splice(index, 1);
+    }
+    return array
+}

@@ -15,19 +15,18 @@ export default function MessagePage({ socket, chatList }) {
               chat.conversationParticipants[1]?.user?.id === partner.id
           );
           if (foundChat) {
-            // console.log({foundChat})
             setCurrentChatRoom(foundChat)
         }  else {
             conversations.unshift({
               conversationParticipants: [{ user: partner }],
               messages: [],
+              status: 'temporary'
             });
             setConversations(chatList);
           }
     }
-  
-    // if(chatList)
   }, []);
+
   return (
     <React.Fragment>
       <Chat
