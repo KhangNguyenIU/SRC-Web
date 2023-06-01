@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 
-export default function MessagePage({ socket, chatList }) {
+export default function MessagePage({ socket, chatList, contactList }) {
   const [currentChatRoom, setCurrentChatRoom] = useState(chatList[0]);
   const [conversations, setConversations] = useState(chatList);
   useEffect(() => {
@@ -34,13 +34,14 @@ export default function MessagePage({ socket, chatList }) {
         chatList={conversations}
         currentChatRoom={currentChatRoom}
         setCurrentChatRoom={setCurrentChatRoom}
+        contactList={contactList}
       />
     </React.Fragment>
   );
 }
 
 export async function getServerSideProps({ req }) {
-  const res = await axios.get(
+  const conversationData = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/conversation/my-conversation`,
     {
       withCredentials: true,
@@ -50,9 +51,12 @@ export async function getServerSideProps({ req }) {
     }
   );
 
+  const contactData = await axios.get( `${process.env.NEXT_PUBLIC_API_URL}/faculty`,)
+
   return {
     props: {
-      chatList: res.data.conversations,
+      chatList: conversationData.data.conversations,
+        contactList: contactData.data
     },
   };
 }

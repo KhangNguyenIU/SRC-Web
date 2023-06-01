@@ -52,7 +52,7 @@ const list = () => {
           <span>Functionalities</span>
           <ExpandMoreIcon />
         </div>
-        {['admin', 'staff'].includes(user.role) &&
+        {['admin', 'staff','user'].includes(user.role) &&
           privateItems.map((item, index) => (
             <div key={index} className={styles.item}>
               {item.icon}

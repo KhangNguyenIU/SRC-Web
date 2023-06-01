@@ -11,6 +11,14 @@
   @include respond(xs) {
     padding: 0;
   }
+
+  .directPart{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+  }
 }
 
 .groupList {
@@ -93,4 +101,94 @@
 .timeText {
   color: $primary-gray-light;
   font-size: 11px;
+}
+
+
+.search{
+    flex-basis: 40px;
+    padding: 0.8rem 0.5rem;
+    background-color: $secondary-purple-dark;
+    border-radius: 10px;
+    // margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin :1rem 0;
+    margin-bottom: 1.5rem;
+    @include respond(xs) {
+      justify-content: center;
+      // margin-top: 2rem;
+      padding: 0.5rem;
+      border-radius: 20px;
+      background-color: inherit;
+    }
+    input {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: $primary-purple;
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+      flex: 1;
+      font-size: 1rem;
+      @include respond(xs) {
+        visibility: hidden;
+        display: none;
+      }
+    }
+
+    .icon {
+      color: $secondary-gray;
+      font-size: 1.5rem;
+    }
+}
+
+
+.inboxModal{
+    width:100%;
+    padding: 1rem ;
+
+    .heading{
+        text-align: center;
+        font-family: 'Lora';
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .search{
+        background-color:$secondary-gray ;
+        padding: 1.2rem 1rem;
+    }
+
+    .contact{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: .8rem;
+        transition: 200ms;
+        padding: .5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+
+        @include respond(xs){
+            font-size: .8rem;
+            padding: .2rem .8rem;
+        }
+
+        &:hover{
+            background-color: $secondary-gray;
+        }
+        .contactInfoGroup{
+            display: flex;
+            align-items: center;
+            .contactName{
+                font-family: 'Lora';
+                font-size: 1rem;
+                font-weight: 600;
+                margin-left: 1rem;
+
+                @include respond(xs){
+                    font-size: .8rem;
+                }
+            }
+        }
+    }
 }

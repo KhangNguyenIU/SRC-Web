@@ -1,21 +1,28 @@
 import React from 'react';
 
-import { Chip, Divider, Modal } from '@mui/material';
+import { Chip, Modal } from '@mui/material';
 import { Box } from '@mui/system';
 import styles from '@styles/Major/Major.module.scss';
+import Image from 'next/image';
 
-export default function Result({ open, closeModal, charac }) {
-
-  const handleClick =(link)=>{
+export default function CharacteristicsResult({ open, closeModal, charac }) {
+  const handleClick = (link) => {
     window.open(link, '_blank');
-  }
+  };
   return (
     <React.Fragment>
       <Modal open={open} onClose={closeModal} style={{ padding: '0px' }}>
         <Box sx={modalBox}>
           <div className={styles.resultBox}>
             <h1 className={styles.heading}>{charac.charac}</h1>
-            <img src={charac.img} alt="characteristics" />
+            <div className={styles.img}>
+              <Image
+                src={`/${charac.img}`}
+                alt="/characteristics"
+                fill
+                sizes="(width: 30%)"
+              />
+            </div>
             <p className={styles.desc}>{charac.des}</p>
 
             <div className={styles.suitableCareer}>
@@ -35,10 +42,13 @@ export default function Result({ open, closeModal, charac }) {
 
               <div className={styles.suggestMajorList}>
                 {charac.sugest.map((item, index) => (
-                  <Chip key={index} label={item.name} variant="outlined" 
-                  color='primary'
-                  size="small"
-                  onClick={()=>handleClick(item.link)}
+                  <Chip
+                    key={index}
+                    label={item.name}
+                    variant="outlined"
+                    color="primary"
+                    size="small"
+                    onClick={() => handleClick(item.link)}
                   />
                 ))}
               </div>

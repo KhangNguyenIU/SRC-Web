@@ -95,9 +95,11 @@ class SocketConfig {
           if (type === MESSAGE_TYPE.image) {
             console.log('IAMGE');
             formattedMessage = await CloudinaryService.upload(message);
+            formattedMessage = formattedMessage.url;
           }
+          console.log('formattedMessage', formattedMessage);
           const newMessage = await MessageService.createMessage(
-            (message = formattedMessage.url),
+            formattedMessage,
             chatRoomId,
             type,
             postedBy

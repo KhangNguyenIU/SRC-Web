@@ -4,9 +4,10 @@ import { Avatar } from '@mui/material';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
+import { messageType } from 'constants';
+import { textLengthCut } from 'utils';
 
 export default function GroupMessage({ conversation, setCurrentChatRoom }) {
-
   const user = useSelector((state) => state.user);
   const partner = useMemo(
     () =>
@@ -16,18 +17,18 @@ export default function GroupMessage({ conversation, setCurrentChatRoom }) {
     [user, conversation]
   );
 
-  const handleChatRoomClick =(conversation)=>{
-    setCurrentChatRoom(conversation)
-  }
+  const handleChatRoomClick = (conversation) => {
+    setCurrentChatRoom(conversation);
+  };
 
   return (
     <React.Fragment>
       <div className={styles.wrapper}>
-        <div 
-        className={`${styles.groupChatWrapper} `}
-        onClick={()=>handleChatRoomClick(conversation)}
+        <div
+          className={`${styles.groupChatWrapper} `}
+          onClick={() => handleChatRoomClick(conversation)}
         >
-          <Avatar src={partner.user.avatar}/>
+          <Avatar src={partner.user.avatar} />
           <div className={styles.groupInfo}>
             <div className={styles.groupName}>
               <span className={styles.nameText}>{partner?.user?.username}</span>
@@ -40,7 +41,15 @@ export default function GroupMessage({ conversation, setCurrentChatRoom }) {
             <div className={styles.groupLastMessage}>
               <div>
                 {!!conversation.messages.length &&
-                  conversation?.messages[0]?.content}
+                  //   conversation?.messages[conversation?.messages.length-1]?.content
+                  (conversation?.messages[conversation?.messages.length - 1]
+                    ?.type == messageType.IMAGE ? (
+                    <span>[ Image ]</span>
+                  ) : (
+                    textLengthCut(conversation?.messages[conversation?.messages.length - 1]
+                        ?.content,60)
+                  
+                  ))}
               </div>
 
               <span className={styles.timeText}>

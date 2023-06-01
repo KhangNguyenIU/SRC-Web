@@ -84,14 +84,22 @@ padding: 2rem 0 ;
     align-items: center;
     flex-direction: column;
     font-family: 'Lora';
+    width: 100%;
+    height: 100%;
     .heading{
         font-size: 2rem;
         font-weight: 500;
     }
-    img{
+    .img{
         width: 35%;
         height: 35%;
         margin-bottom: 1rem;
+        position: relative;
+
+        @include respond(sm){
+            width: 50%;
+            height: 20%;
+        }
     }
 
     .desc{

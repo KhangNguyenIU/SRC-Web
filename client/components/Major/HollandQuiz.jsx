@@ -7,7 +7,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import Rating from '@mui/material/Rating';
 
 import { majorData } from 'data';
-import Result from './Result';
+import CharacteristicsResult from './CharacteristicsResult';
 // import { MAX_QUESTIONS_LENGTH, MAX_QUESTIONS_SET } from 'constants';
 
 const MAX_QUESTIONS_LENGTH = 9;
@@ -24,15 +24,13 @@ const StyledRating = styled(Rating)({
 
 const initialStates = Array.from(Array(MAX_QUESTIONS_LENGTH)).fill(0);
 
-export default function Major() {
+export default function HollandQuiz() {
   const [listValue, setListValue] = React.useState(initialStates);
   const [ListPoints, setListPoints] = React.useState([]);
   const [curPage, setCurPage] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = React.useState(null);
   const closeModal = () => setOpen(false);
-
-
 
   const handleChangeRating = (index, value) => {
     const newListValue = [...listValue];
@@ -59,11 +57,11 @@ export default function Major() {
     let prevState = [...ListPoints, sum];
     setListPoints(prevState);
 
-    console.log({ prevState });
+    // console.log({ prevState });
     let max = Math.max(...prevState);
     let index = prevState.indexOf(max);
-    console.log({ max, index });
-    console.log({ result: majorData[index] });
+    // console.log({ max, index });
+    // console.log({ result: majorData[index] });
     setResult(majorData[index]);
     setOpen(true);
   };
@@ -131,7 +129,13 @@ export default function Major() {
         </div>
       </div>
 
-      {!!result && <Result open={open} closeModal={closeModal} charac={result} />}
+      {!!result && (
+        <CharacteristicsResult
+          open={open}
+          closeModal={closeModal}
+          charac={result}
+        />
+      )}
     </React.Fragment>
   );
 }
