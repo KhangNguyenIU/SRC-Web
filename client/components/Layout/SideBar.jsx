@@ -8,6 +8,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { adminItems, navItems, privateItems } from 'utils';
 import styles from '@styles/Layout/Sidebar.module.scss';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 /**
  * @author
  * @function SideBar

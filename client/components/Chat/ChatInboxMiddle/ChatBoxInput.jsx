@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from '@styles/ChatInboxMiddle.module.scss';
@@ -11,8 +12,11 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import ImageIcon from '@mui/icons-material/Image';
 import { EmojiEmotions } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
-import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import Grow from '@mui/material/Grow';
+
+const EmojiPicker = dynamic(() => import('emoji-picker-react'), {
+  ssr: false,
+});
 
 export default function ChatBoxInput({
   textInput,
@@ -20,10 +24,14 @@ export default function ChatBoxInput({
   handleSendMessage,
   typeOfMessage,
   setTypeOfMessage,
+  socket,
+  currentChatRoom,
 }) {
   const user = useSelector((state) => state.user);
   const [fileInput, setFileInput] = useState('');
   const [previewSource, setPreviewSource] = useState('');
+  const [openEmoji, setOpenEmoji] = useState(false);
+
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
 
@@ -50,30 +58,39 @@ export default function ChatBoxInput({
     setTypeOfMessage(messageType.TEXT);
   };
 
-  const handleChangeInput = (e) => {
-    setTextInput(e.target.value);
+  const handleChangeInput = (input) => {
+    setTextInput(input);
 
-    // if (socket) {
-    //   if (e.target.value.length > 0) {
-    //     socket.emit('user-typing', { chatRoomId: groupInfo._id, user: user });
-    //   } else {
-    //     socket.emit('user-stop-typing', {
-    //       chatRoomId: groupInfo._id,
-    //       user: user,
-    //     });
-    //   }
-    // }
+    if (socket) {
+      if (input.length > 0) {
+        socket.emit('user-typing', {
+          chatRoomId: currentChatRoom.id,
+          user: user,
+        });
+      } else {
+        socket.emit('user-stop-typing', {
+          chatRoomId: currentChatRoom.id,
+          user: user,
+        });
+      }
+    }
   };
-
 
   const onSendMessage = () => {
     if (textInput !== '') {
       handleSendMessage();
       clearInput();
     }
-  }
+  };
   return (
     <React.Fragment>
+      {openEmoji && (
+        <EmojiPicker
+          lazyLoadEmojis={true}
+          onEmojiClick={(e) => handleChangeInput(e.emoji)}
+          style={{ position: 'absolute', bottom: '50px', right: '0' }}
+        />
+      )}
       <div className={styles.chatboxInput}>
         <div className={styles.chatInputTool}>
           <AddCircleOutlinedIcon />
@@ -82,8 +99,10 @@ export default function ChatBoxInput({
               <ImageIcon />
             </label>
           </div>
+          <IconButton onClick={() => setOpenEmoji((state) => !state)}>
+            <EmojiEmotions style={{ position: 'relative' }}></EmojiEmotions>
+          </IconButton>
 
-          <EmojiEmotions />
           <input
             type="file"
             accept="image/*"
@@ -100,7 +119,7 @@ export default function ChatBoxInput({
                 type="text"
                 value={textInput}
                 className={styles.messageInput}
-                onChange={handleChangeInput}
+                onChange={(e) => handleChangeInput(e.target.value)}
                 placeholder="Aa"
               />
             </Grow>
@@ -111,11 +130,9 @@ export default function ChatBoxInput({
                   <img src={previewSource || ''} alt="preview" />
 
                   <div className={styles.overlay}>
-                    
-                      <IconButton onClick={clearInput} styles={styles.closeIcon}>
-                        <CloseIcon sx={{ color: 'black' }} />
-                      </IconButton>
-                  
+                    <IconButton onClick={clearInput} styles={styles.closeIcon}>
+                      <CloseIcon sx={{ color: 'black' }} />
+                    </IconButton>
                   </div>
                 </div>
               </div>

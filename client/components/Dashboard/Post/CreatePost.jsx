@@ -56,7 +56,6 @@ export const CreatePost = ({ categories }) => {
   };
 
   const handleSubmit = () => {
-    console.log({ title, content, keywords, selectedCategory });
     const data = {
       title,
       body: content,

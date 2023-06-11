@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMemo } from 'react';
 
 import styles from '@styles/ChatInboxMiddle.module.scss';
-import { Avatar } from '@mui/material';
+import { Avatar, Box, Modal } from '@mui/material';
 
 import { messageType } from '@constants';
 
-export default function MessageText({ message, isMyMessage }) {
+export default function MessageText({ message, isMyMessage,onClickImg }) {
   const prefix = useMemo(
     () => (isMyMessage ? styles.isMyMessage : ''),
     [isMyMessage]
   );
+
 
   const classes = useMemo(() => {
     return {
@@ -19,6 +20,7 @@ export default function MessageText({ message, isMyMessage }) {
       messageText: `${styles.messageText} + ${prefix}`,
     };
   }, [message, isMyMessage]);
+
 
   return (
     <React.Fragment>
@@ -30,16 +32,17 @@ export default function MessageText({ message, isMyMessage }) {
             {message.type === messageType.TEXT ? (
               <div className={styles.messageText}>{message.content}</div>
             ) : (
-              <div className={styles.messageImage}>
-                <img
-                  src={message.content}
-                  alt="message media"
-                />
+              <div
+                className={styles.messageImage}
+                onClick={() => onClickImg(message)}
+              >
+                <img src={message.content} alt="message media" />
               </div>
             )}
           </div>
         </div>
       </div>
+  
     </React.Fragment>
   );
 }

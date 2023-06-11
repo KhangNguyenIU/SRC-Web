@@ -12,6 +12,7 @@ export default function ChatConversation({
   currentChatRoom,
   socket,
   updateChatList,
+  isTypingList
 }) {
   const user = useSelector((state) => state.user);
   const chatBoxRef = useRef(null);
@@ -59,8 +60,8 @@ export default function ChatConversation({
         }
         localStorage.removeItem('partner');
       }
-      console.log({ messagePacket });
       socket.emit('send-message', messagePacket);
+      socket.emit('user-stop-typing', { chatRoomId: currentChatRoom.id, user: user });
       setTextInput('');
     }
   };
@@ -69,7 +70,7 @@ export default function ChatConversation({
     <React.Fragment>
       <ChatBoxHeader currentChatRoom={currentChatRoom} participant={partner} />
 
-      <ChatBoxContent currentChatRoom={currentChatRoom} />
+      <ChatBoxContent currentChatRoom={currentChatRoom} isTypingList={isTypingList} />
 
       <ChatBoxInput
         textInput={textInput}
@@ -78,6 +79,8 @@ export default function ChatConversation({
         typeOfMessage={typeOfMessage}
         setTypeOfMessage={setTypeOfMessage}
         updateChatList={updateChatList}
+        socket={socket}
+        currentChatRoom={currentChatRoom} 
       />
     </React.Fragment>
   );

@@ -10,7 +10,7 @@ import InboxModal from './InboxModal';
 export default function DirectPart({contactList,updateChatList,updateCurrentChatRoom}) {
   const router = useRouter();
 
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
   const handleOpen = () => setOpen(true)
   return (

@@ -3,8 +3,7 @@ import renderHTML from 'react-render-html';
 import styles from '@styles/Post/Post.module.scss'
 import moment from 'moment'
 export default function Post({post}) {
-    console.log(post)
-    console.log(moment(post.created_at).format('LL'))
+
   return (
     <React.Fragment>
         <div className={styles.header}>

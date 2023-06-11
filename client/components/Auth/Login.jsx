@@ -29,7 +29,6 @@ export const Login = ({ handleAuthOptions, closeModal }) => {
   });
 
   const submit = () => {
-    console.log('submit', formData);
     dispatch(signinUser({body: formData, callback: closeModal}))
   };
 

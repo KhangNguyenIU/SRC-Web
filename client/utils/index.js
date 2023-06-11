@@ -6,7 +6,8 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import SendIcon from '@mui/icons-material/Send';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
 export const isAuth = user => user.email != "" && user.role != "" && user.id != "" && user.firstName != ""
 
@@ -241,11 +242,21 @@ export const adminItems = [
         link: '/private/dashboard',
         icon: <DashboardIcon sx={{ color: '#7F8487' }} />,
     },
+    {
+        item: 'Stat',
+        link: '/private/dashboard/stat/user-stat',
+        icon:   <AnalyticsIcon sx={{ color: '#7F8487' }} />
+    },
+    {
+        item: 'Create Post',
+        link: '/private/dashboard/create-post',
+        icon: <DriveFileRenameOutlineIcon sx={{ color: '#7F8487' }} />, 
+    }
 ];
 
 
 export const addObjectToUniqueArray = (array, object, isTyping) => {
-    let index = array.findIndex(item => item._id === object._id);
+    let index = array.findIndex(item => item.id === object.id);
     if (index === -1 && isTyping) {
         array.push(object);
     }
@@ -257,4 +268,16 @@ export const addObjectToUniqueArray = (array, object, isTyping) => {
 
 export const textLengthCut = (str, maxLength) =>{
     return str.length > maxLength ? str.substring(0, maxLength) + '...' : str
+}
+
+
+export const detectWhoIsTyping = array => {
+
+    if (!array.length)
+        return ''
+
+    if (array.length === 1)
+        return array[0].username + ' is typing...'
+    else
+        return array[0].username + " and " + String(array.length - 1) + " more users " + ' are typing...'
 }

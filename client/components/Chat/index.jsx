@@ -8,6 +8,7 @@ import ChatConversation from './ChatInboxMiddle/ChatConversation';
 
 import { ChatService } from '@services/chat';
 import ChatSummary from './ChatSummaryRight';
+import { addObjectToUniqueArray } from 'utils';
 
 export default function Chat({
   socket,
@@ -20,11 +21,17 @@ export default function Chat({
   const [chatRooms, setChatRooms] = useState([]);
   const chatSummaryRef = useRef(null);
   const dispatch = useDispatch();
+  const [isTypingList, setIsTypingList] = useState([]);
+
+//   useEffect(()=>{
+//     console.log({isTypingList})
+//   })
+  
   useEffect(() => {
     setChatRooms([...chatList]);
+    setIsTypingList([]);
   }, [chatList]);
 
-  console.log({chatRooms})
   useEffect(() => {
     if (socket && currentChatRoom) {
       socket.emit('joinRoom', currentChatRoom?.id);
@@ -33,8 +40,17 @@ export default function Chat({
 
   useEffect(() => {
     if (socket && user?.id !== '') {
-      console.log('identity', user.id);
+      //   console.log('identity', user.id);
       socket.emit('identity', user.id);
+
+      socket.on('user-typing', (fields) => {
+        const { user: typingUser, isTyping } = fields;
+        if (typingUser.id !== user.id) {
+          setIsTypingList([
+            ...addObjectToUniqueArray(isTypingList, typingUser, isTyping),
+          ]);
+        }
+      });
     }
   }, [socket, user]);
 
@@ -53,9 +69,15 @@ export default function Chat({
     }
   }, [socket]);
 
-  const updateCurrentChatRoom =(roomId) =>{
-    setCurrentChatRoom(chatRooms.find((item) => (item.conversationParticipants[0]?.user?.id == roomId) || item.conversationParticipants[1]?.user?.is == roomId) || chatRooms[0]);
-  }
+  const updateCurrentChatRoom = (roomId) => {
+    setCurrentChatRoom(
+      chatRooms.find(
+        (item) =>
+          item.conversationParticipants[0]?.user?.id == roomId ||
+          item.conversationParticipants[1]?.user?.is == roomId
+      ) || chatRooms[0]
+    );
+  };
 
   const updateChatList = async (callback, roomId) => {
     const partner = JSON.parse(localStorage.getItem('partner'));
@@ -64,7 +86,6 @@ export default function Chat({
 
     if (res.status === 200) {
       tempChatList = [...res.data.conversations];
-      console.log('tempChatList', tempChatList);
 
       const bol = !tempChatList.some((con) =>
         con.conversationParticipants.every(
@@ -72,7 +93,6 @@ export default function Chat({
         )
       );
 
-      console.log({ bol });
       if (partner !== null && bol) {
         tempChatList.splice(0, 0, {
           conversationParticipants: [{ user: partner }],
@@ -104,6 +124,7 @@ export default function Chat({
 
         <div className={styles.messageChatboxMiddle}>
           <ChatConversation
+            isTypingList={isTypingList}
             currentChatRoom={currentChatRoom}
             socket={socket}
             updateChatList={updateChatList}

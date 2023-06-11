@@ -50,10 +50,27 @@
     p{
         color:$primary-purple;
         font-family: 'Lora' ;
-    }
+    } 
     .medias{
+        cursor: pointer;
         display: flex;
         justify-content: center;
+
+        img{
+            max-width: 300px;
+            max-height: 100px;
+        }
+        &.number{
+            background-color: $secondary-purple-dark;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+            font-family: 'Arial',  sans-serif;
+        }
     }
   }
 

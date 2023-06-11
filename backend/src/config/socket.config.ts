@@ -71,6 +71,7 @@ class SocketConfig {
 
       socket.on('user-typing', (fields) => {
         const { chatRoomId, user } = fields;
+        console.log('user-typing', fields)
         this.socketIo.to(chatRoomId).emit('user-typing', {
           user: user,
           isTyping: true,
@@ -91,13 +92,12 @@ class SocketConfig {
         if (!chatRoomId || !message || !postedBy || !type) return;
         let formattedMessage = message;
         try {
-          // console.log('send-message', fields);
           if (type === MESSAGE_TYPE.image) {
             console.log('IAMGE');
             formattedMessage = await CloudinaryService.upload(message);
             formattedMessage = formattedMessage.url;
           }
-          console.log('formattedMessage', formattedMessage);
+        //   console.log('formattedMessage', formattedMessage);
           const newMessage = await MessageService.createMessage(
             formattedMessage,
             chatRoomId,

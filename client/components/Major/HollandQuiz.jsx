@@ -73,6 +73,7 @@ export default function HollandQuiz() {
   return (
     <React.Fragment>
       <div className={styles.wrapper}>
+        <h2>Holland quiz</h2>
         <div className={styles.questions}>
           {Array.from(Array(MAX_QUESTIONS_LENGTH))
             .fill(0)

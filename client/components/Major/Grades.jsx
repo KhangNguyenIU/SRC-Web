@@ -42,6 +42,7 @@ export default function Grades() {
     <React.Fragment>
       <GradesResults open={open} closeModal={closeModal} result={result} />
       <div className={styles.wrapper}>
+        <h2>Enter your grades</h2>
         <div className={styles.gradeBox}>
           {Subject &&
             Object.entries(Subject).map(([key, value]) => (

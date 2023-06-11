@@ -53,6 +53,7 @@ export const UserStat = ({ data }) => {
 
   return (
     <React.Fragment>
+        <h2>User Statistics</h2>
       <Grid container>
         <Grid item xs={12} md={6}>
           <div className={styles.chartWrapper}>

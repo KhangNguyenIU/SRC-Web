@@ -1,0 +1,95 @@
+@import '../colors';
+@import '../mixins';
+
+.messageContent {
+//   &.isTyping {
+//     padding-left: 1rem;
+//   }
+  margin-bottom: 1rem;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  &.isMyMessage {
+    flex-direction: row-reverse;
+  }
+
+  .messagePart{
+    display: flex;
+    // margin-left: 0.5rem;
+    align-items: flex-start;
+    width: 100%;
+    .messageTypingWrapper {
+        margin-left: 10px;
+        padding: 10px 5px;
+        .messageTyping {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 42px;
+          background-color: $secondary-purple-dark;
+          width: 86px;
+          border-radius: 15px;
+          padding: 10px 15px;
+          margin-bottom: 5px;
+
+          .dotFlashing {
+            position: relative;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: $primary-gray-light;
+            color: $primary-gray-light;
+            animation: dotFlashing 1s infinite linear alternate;
+            animation-delay: 0.5s;
+            &::before {
+              left: -15px;
+              width: 10px;
+              height: 10px;
+              border-radius: 5px;
+              background-color: $primary-gray-light;
+              color: $primary-gray-light;
+              animation: dotFlashing 1s infinite alternate;
+              animation-delay: 0s;
+            }
+    
+            &::after {
+              left: 15px;
+              width: 10px;
+              height: 10px;
+              border-radius: 5px;
+              background-color: $primary-gray-light;
+              color: $primary-gray-light;
+              animation: dotFlashing 1s infinite alternate;
+              animation-delay: 1s;
+            }
+    
+            &::before,
+            &::after {
+              content: '';
+              display: inline-block;
+              position: absolute;
+              top: 0;
+            }
+          }
+        }
+      }
+  }
+
+  .isTypingText {
+    color: $primary-gray;
+    margin-top: 0.1rem;
+    margin-top: .1rem;
+  //   font-style: italic;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  @keyframes dotFlashing {
+    0% {
+      background-color: $primary-gray-light;
+    }
+    50%,
+    100% {
+      background-color: #ebe6ff;
+    }
+  }
+}

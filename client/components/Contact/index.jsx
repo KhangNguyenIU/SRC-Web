@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 export default function Contact({ contacts }) {
 
   const router = useRouter();
-    // console.log(contacts)
+    console.log(contacts)
   const handleDirectMessage = (data) => {
     const partner = localStorage.getItem('partner')
     if(!!partner){

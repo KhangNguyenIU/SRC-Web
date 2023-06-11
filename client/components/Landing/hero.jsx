@@ -14,8 +14,8 @@ export default function Hero() {
   return (
     <React.Fragment>
       <div className={styles.wrapper}>
-      <img src="rocket.svg" alt="hero" />
-      <img src="blob1.svg" alt="blob-hero" className={styles.blob} />
+        <img src="rocket.svg" alt="hero" />
+        {/* <img src="blob1.svg" alt="blob-hero" className={styles.blob} /> */}
         <h1>Major Suggesting Tool</h1>
         <h2>
           Discover yourself through your personality group and suitable career
@@ -23,11 +23,7 @@ export default function Hero() {
         </h2>
 
         <div className={buttonStyles.container}>
-          <div
-          
-            className={buttonStyles.button}
-            onClick={() => setOpen(true)}
-          >
+          <div className={buttonStyles.button} onClick={() => setOpen(true)}>
             <div className={buttonStyles.buttonLine}></div>
             <div className={buttonStyles.buttonLine}></div>
             <span className={buttonStyles.buttonText}>Explore Now</span>
@@ -39,18 +35,38 @@ export default function Hero() {
         {/* <button className={styles.button}>
           <Link href="marjor-suggest/characteristics">Start Exploring</Link>
         </button> */}
-        
       </div>
       <Modal open={open} onClose={closeModal} style={{ padding: '0px' }}>
         <Box sx={modalBox}>
           <div className={styles.modalBox}>
-            <button className={styles.button}>
-              <Link href="marjor-suggest/characteristics">Holland Quiz</Link>
-            </button>
+            <h2>Select one major suggest method</h2>
+            <div className={styles.selectBox}>
+              <div className={styles.card}>
+                <div className={styles.title}>
+                  <h3>Holland Test</h3>
+                </div>
+                <div className={styles.image}>
+                  <img src="quiz1.png" alt="holland" />
+                </div>
 
-            <button className={styles.button}>
-              <Link href="marjor-suggest/grades">Grades</Link>
-            </button>
+                <button className={styles.button}>
+                  <Link href="marjor-suggest/characteristics">Try now</Link>
+                </button>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.title}>
+                  <h3>High school test grades</h3>
+                </div>
+                <div className={styles.image}>
+                  <img src="quiz2.png" alt="holland" />
+                </div>
+
+                <button className={styles.button}>
+                  <Link href="marjor-suggest/grades">Try now</Link>
+                </button>
+              </div>
+            </div>
           </div>
         </Box>
       </Modal>
@@ -64,7 +80,7 @@ const modalBox = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: [400, 600, 800],
-  height: [400, 500],
+  height: [500, 600],
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: 'white',

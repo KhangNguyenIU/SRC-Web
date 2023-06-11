@@ -5,7 +5,6 @@ import styles from '@styles/ChatGroupLeft.module.scss';
 import SearchIcon from '@mui/icons-material/Search';
 export default function InboxModal({ open, closeModal, contactList ,updateChatList,updateCurrentChatRoom}) {
 
-    console.log({contactList})
   const handleDirectMessage = (data) => {
     const partner = localStorage.getItem('partner')
     if(!!partner){

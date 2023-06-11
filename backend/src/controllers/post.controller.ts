@@ -163,7 +163,7 @@ class PostController {
       return res.status(200).json({ posts });
     } catch (error) {
       Logger.log('error', error);
-      return res.status(400).json({ error: 'Error occurs when getting post' });
+      return res.status(404).json({ error: 'Error occurs when getting post' });
     }
   }
 
@@ -175,7 +175,7 @@ class PostController {
       const PostRepoitory = await AppDataSource.getRepository(Post);
       const { slug } = req.params as unknown as { slug: string };
       const post = await PostRepoitory.findOneBy({ slug });
-      if (!post) return res.status(400).json({ error: 'Post not existed' });
+      if (!post) return res.status(404).json({ error: 'Post not existed' });
       return res.status(200).json({ post });
     } catch (error) {
       Logger.log('error', error);
