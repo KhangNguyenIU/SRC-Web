@@ -18,7 +18,7 @@ export default function Hero() {
         {/* <img src="blob1.svg" alt="blob-hero" className={styles.blob} /> */}
         <h1>Major Suggesting Tool</h1>
         <h2>
-          Discover yourself through your personality group and suitable career
+          Discover yourself through your characteristics group and suitable career
           path
         </h2>
 
