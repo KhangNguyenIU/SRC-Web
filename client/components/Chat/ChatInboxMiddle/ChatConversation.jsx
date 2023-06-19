@@ -46,13 +46,13 @@ export default function ChatConversation({
 
       if (
         partner !== null &&
-        !currentChatRoom.conversationParticipants.some(
-          (part) => part.userid === partner?.id
+        !currentChatRoom?.conversationParticipants?.some(
+          (part) => part?.userid === partner?.id
         ) &&
         currentChatRoom.status === 'temporary'
       ) {
         const newChat = await ChatService.createNewChat({
-          chatReceiverId: partner.id,
+          chatReceiverId: partner?.id,
         });
         if (newChat.status === 200) {
           chatRoomId = newChat.data.newConversation.id;
