@@ -88,7 +88,7 @@ class SocketConfig {
 
       socket.on('send-message', async (fields) => {
         let { chatRoomId, message, postedBy, type, partner } = fields;
-
+        console.log({fields})
         if (!chatRoomId || !message || !postedBy || !type) return;
         let formattedMessage = message;
         try {

@@ -64,12 +64,12 @@ export default function ChatBoxInput({
     if (socket) {
       if (input.length > 0 && !!currentChatRoom?.id) {
         socket.emit('user-typing', {
-          chatRoomId: currentChatRoom.id,
+          chatRoomId: currentChatRoom?.id,
           user: user,
         });
       } else {
         socket.emit('user-stop-typing', {
-          chatRoomId: currentChatRoom.id,
+          chatRoomId: currentChatRoom?.id,
           user: user,
         });
       }

@@ -10,7 +10,6 @@ export default function Loading({type}) {
 
     const dispatch = useDispatch()
     const loading = useSelector(state => state.loading)
-    console.log(loading, loading.type === type)
     const handleClose = () => {
       dispatch(stopLoading())
     };
