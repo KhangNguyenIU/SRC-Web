@@ -33,13 +33,14 @@ export default function ChatConversation({
     console.log("handleSendMessage")
     dispath(setLoading({type:loadingType.SENDMESSAGE}))
     if (socket && textInput !== '') {
-      let chatRoomId = currentChatRoom.id;
+      let chatRoomId = currentChatRoom?.id || undefined;
       let messagePacket = {
         chatRoomId: chatRoomId,
         message: textInput,
         type: typeOfMessage,
         postedBy: user.id,
       };
+      console.log("messagePacket - 1 ",messagePacket)
       // check if the room is temporary room
       const partner = JSON.parse(localStorage.getItem('partner'));
 
