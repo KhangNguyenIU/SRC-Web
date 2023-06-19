@@ -5,9 +5,10 @@ import styles from '@styles/Chat.module.scss';
 
 import GroupMessageList from './GroupListLeft/GroupMessageList';
 import ChatConversation from './ChatInboxMiddle/ChatConversation';
+import ChatSummary from './ChatSummaryRight';
 
 import { ChatService } from '@services/chat';
-import ChatSummary from './ChatSummaryRight';
+
 import { addObjectToUniqueArray } from 'utils';
 
 export default function Chat({
@@ -23,10 +24,6 @@ export default function Chat({
   const dispatch = useDispatch();
   const [isTypingList, setIsTypingList] = useState([]);
 
-//   useEffect(()=>{
-//     console.log({isTypingList})
-//   })
-  
   useEffect(() => {
     setChatRooms([...chatList]);
     setIsTypingList([]);
@@ -40,7 +37,6 @@ export default function Chat({
 
   useEffect(() => {
     if (socket && user?.id !== '') {
-      //   console.log('identity', user.id);
       socket.emit('identity', user.id);
 
       socket.on('user-typing', (fields) => {

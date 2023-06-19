@@ -62,7 +62,7 @@ export default function ChatBoxInput({
     setTextInput(input);
 
     if (socket) {
-      if (input.length > 0) {
+      if (input.length > 0 && !!currentChatRoom?.id) {
         socket.emit('user-typing', {
           chatRoomId: currentChatRoom.id,
           user: user,

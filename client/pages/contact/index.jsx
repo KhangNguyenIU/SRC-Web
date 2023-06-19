@@ -3,8 +3,11 @@ import Layout from '@components/Layout';
 import { Container } from '@mui/system';
 import Contact from '@components/Contact';
 import { ContactService } from '@services/contact';
+import useSWR from 'swr';
 
 export default function ContactPage({ contacts,socket}) {
+
+
   return (
     <React.Fragment>
       <Layout socket={socket}>

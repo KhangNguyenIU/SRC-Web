@@ -6,6 +6,7 @@ export const messageType ={
 export const loadingType ={
     GENERAL: 'general',
     MESSAGE: 'message',
+    SENDMESSAGE: 'sendmessage',
 }
 
 export const MAX_QUESTIONS_LENGTH= 9;

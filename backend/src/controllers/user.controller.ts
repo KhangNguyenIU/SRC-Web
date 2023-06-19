@@ -4,10 +4,11 @@ import * as bcrypt from 'bcrypt';
 import { AppDataSource } from '@config/database.config';
 import { User } from '@entities/user.entity';
 import { JWTService } from '@services/jwt.service';
-import { ACCOUNT_STATUS, ROLE } from '@enums';
+import { ACCOUNT_STATUS, ENVIRONMENT, ROLE } from '@enums';
 import { UserDecode } from '@interfaces/user.interface';
 import { Logger } from '@config/logger.config';
 import { Faculty } from '@entities/faculty.entity';
+import { Environment } from '@config/environment.config';
 
 class UserController {
   private static instance: UserController;
@@ -168,6 +169,7 @@ class UserController {
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         sameSite: 'none',
       });
 

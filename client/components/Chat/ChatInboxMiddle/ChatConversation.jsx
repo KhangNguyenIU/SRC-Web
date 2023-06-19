@@ -1,22 +1,23 @@
 import React, { useMemo, useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ChatBoxHeader from './ChatBoxHeader';
 import ChatBoxContent from './ChatBoxContent';
 import ChatBoxInput from './ChatBoxInput';
 
-import { messageType } from '@constants';
+import { loadingType, messageType } from '@constants';
 import { ChatService } from '@services/chat';
+import { setLoading, stopLoading } from 'slices/util/loading.slice';
+import Loading from '@components/Common/Loading';
 
 export default function ChatConversation({
   currentChatRoom,
   socket,
   updateChatList,
-  isTypingList
+  isTypingList,
 }) {
   const user = useSelector((state) => state.user);
-  const chatBoxRef = useRef(null);
-
+  const dispath = useDispatch();
   const partner = useMemo(
     () =>
       currentChatRoom?.conversationParticipants?.filter(
@@ -29,6 +30,8 @@ export default function ChatConversation({
   const [typeOfMessage, setTypeOfMessage] = useState(messageType.TEXT);
 
   const handleSendMessage = async () => {
+    console.log("handleSendMessage")
+    dispath(setLoading({type:loadingType.SENDMESSAGE}))
     if (socket && textInput !== '') {
       let chatRoomId = currentChatRoom.id;
       let messagePacket = {
@@ -60,17 +63,26 @@ export default function ChatConversation({
         }
         localStorage.removeItem('partner');
       }
+      console.log({messagePacket})
       socket.emit('send-message', messagePacket);
-      socket.emit('user-stop-typing', { chatRoomId: currentChatRoom.id, user: user });
+      socket.emit('user-stop-typing', {
+        chatRoomId: currentChatRoom.id,
+        user: user,
+      });
+
       setTextInput('');
     }
+    dispath(stopLoading())
   };
 
   return (
     <React.Fragment>
       <ChatBoxHeader currentChatRoom={currentChatRoom} participant={partner} />
 
-      <ChatBoxContent currentChatRoom={currentChatRoom} isTypingList={isTypingList} />
+      <ChatBoxContent
+        currentChatRoom={currentChatRoom}
+        isTypingList={isTypingList}
+      />
 
       <ChatBoxInput
         textInput={textInput}
@@ -80,8 +92,10 @@ export default function ChatConversation({
         setTypeOfMessage={setTypeOfMessage}
         updateChatList={updateChatList}
         socket={socket}
-        currentChatRoom={currentChatRoom} 
+        currentChatRoom={currentChatRoom}
       />
+      
+      <Loading type={loadingType.SENDMESSAGE}/>
     </React.Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo} from 'react';
 
 import {
   Avatar,
@@ -11,6 +11,7 @@ import {
   TableRow,
   Tooltip,
 } from '@mui/material';
+
 import Paper from '@mui/material/Paper';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
@@ -18,19 +19,18 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
 
-export default function Contact({ contacts }) {
-
+function Contact({ contacts }) {
   const router = useRouter();
-    console.log(contacts)
+
   const handleDirectMessage = (data) => {
-    const partner = localStorage.getItem('partner')
-    if(!!partner){
-        localStorage.removeItem('partner')
+    const partner = localStorage.getItem('partner');
+    if (!!partner) {
+      localStorage.removeItem('partner');
     }
     localStorage.setItem('partner', JSON.stringify(data));
     router.push('/private/message');
   };
-  
+
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
@@ -42,8 +42,12 @@ export default function Contact({ contacts }) {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <Box sx={{ display: 'flex', alignItems:'center'}}>
-                    <Avatar src={row.avatar} alt="group" style={{marginRight:'.5rem'}}/>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Avatar
+                      src={row.avatar}
+                      alt="group"
+                      style={{ marginRight: '.5rem' }}
+                    />
                     <span>{row.name}</span>
                   </Box>
                 </TableCell>
@@ -124,3 +128,4 @@ const ContactCell = ({ contact }) => {
     </TableCell>
   );
 };
+export default memo(Contact)

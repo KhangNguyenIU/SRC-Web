@@ -1,7 +1,7 @@
 import axiosClient from "@services/axiosClient";
 
 export const ChatService ={
-    getChatList:  (id) => {
+    getChatList:  () => {
         const url ='/conversation/my-conversation'
         return axiosClient.get(url)
     },

@@ -6,6 +6,7 @@ import Loading from '@components/Common/Loading'
 import { useEffect, useState } from 'react'
 import Wrapper from '@components/Auth/Wrapper'
 import io from 'socket.io-client'
+import { loadingType } from '@constants'
 
 function MyApp({ Component, pageProps }) {
     const [socket, setSocket] = useState(null)
@@ -24,7 +25,7 @@ function MyApp({ Component, pageProps }) {
         <Wrapper >
             <Component {...pageProps} socket={socket} />
             <Notification />
-            <Loading />
+            <Loading type={loadingType.GENERAL} />
         </Wrapper>
 
     </Provider>
