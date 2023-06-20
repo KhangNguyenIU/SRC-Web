@@ -52,14 +52,15 @@ export default function NavBar(props) {
           width: '100%',
           alignItems: 'center',
           fontFamily: 'Lora',
-          zIndex: 1,
+          zIndex: 99,
+          position: 'fixed',
         }}
       >
         <IconButton onClick={() => props.setToggleSideBar(true)}>
           <MenuIcon />
         </IconButton>
 
-        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+        {/* <div style={{ display: 'flex', alignItems: 'flex-end' }}>
           <SearchIcon />
           <TextField
             id="standard-basic"
@@ -69,7 +70,7 @@ export default function NavBar(props) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-        </div>
+        </div> */}
         {user?.email ? (
           <UserInfo socket={props.socket} />
         ) : (

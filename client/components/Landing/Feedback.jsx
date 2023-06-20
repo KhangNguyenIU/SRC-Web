@@ -98,6 +98,7 @@ export default function Feedback({ feedbackList }) {
         </div>
 
         <div className={styles.feedbackStat}>
+            
           {!isNaN(santinedFBdata.avg) && (
             <React.Fragment>
               <div className={styles.number}>{santinedFBdata.avg}</div>
@@ -164,3 +165,4 @@ export default function Feedback({ feedbackList }) {
     </React.Fragment>
   );
 }
+

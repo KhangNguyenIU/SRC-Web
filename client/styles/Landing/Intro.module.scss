@@ -1,0 +1,105 @@
+@import '../colors';
+@import '../mixins';
+
+.wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-image: url('/landing/bk2.jpg');
+  background-size: cover;
+  // margin-top: -1rem;
+  z-index: 1;
+
+  .box {
+    position: relative;
+    .imgBK {
+      // position: relative;
+      @include respond(sm) {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .dot {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      @include respond(sm){
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      span {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 17px;
+        font-weight: 600;
+        color: $primary-red;
+        @include respond(sm){
+            font-size: 14px;
+          }
+      }
+      h1 {
+        text-align: center;
+        font-size: 3.6rem;
+        margin: 0;
+        font-weight: 800;
+        font-family: 'Playfair Display', serif;
+
+        @include respond(sm){
+            font-size: 2.4rem;
+        }
+      }
+      p {
+        max-width: 500px;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.8rem;
+        @include respond(sm){
+            font-size: .8rem;
+            max-width: 300px;
+        }
+      }
+
+      button {
+        background-color: $primary-red;
+        padding: 1rem 1.8rem;
+        color: #fff;
+        font-weight: 500;
+        font-size: 1.2rem;
+        font-family: 'Montserrat', sans-serif;
+        outline: none;
+        border: none;
+        border-radius: 25px;
+        border: 1px solid $primary-red;
+        transition: 180ms ease-in-out;
+        @include respond(sm){
+            font-size: .8rem;
+            padding: .8rem 1.2  rem;
+        }
+
+        &:hover{
+            background-color: transparent;
+            color: $primary-red;
+            border: 1px solid $primary-red;
+        }
+      }
+    }
+  }
+}

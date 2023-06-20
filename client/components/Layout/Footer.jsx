@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from '@styles/Layout/Footer.module.scss';
-import { Container } from '@mui/system';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import { Divider } from '@mui/material';
 
 export default function Footer() {
   return (

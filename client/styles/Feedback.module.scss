@@ -15,7 +15,7 @@
 .wrapper{
     display: flex;
     width: 100%;
-
+    padding: 5rem 0 ;
     @include respond(sm){
         flex-direction: column;
     }

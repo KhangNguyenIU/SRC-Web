@@ -8,7 +8,8 @@ module.exports = {
             "api.vip.myblog.engineer",
             "img.upxi.me",
             "source.unsplash.com",
-            "tuyensinh.hcmiu.edu.vn"
+            "tuyensinh.hcmiu.edu.vn",
+            "https://tabula.bold-themes.com"
         ],
     }
 };

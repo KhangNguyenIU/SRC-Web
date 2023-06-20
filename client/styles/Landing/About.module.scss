@@ -1,0 +1,91 @@
+@import '../colors';
+@import '../mixins';
+
+.wrapper{
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    @include respond(md){
+        margin-bottom: 2rem;
+    }
+    .left{
+        flex-basis: 50%;
+        width: 100%;
+        height: 100%;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @include respond(sm){
+            flex-basis: 0;
+        }
+    }
+
+    .right{
+        flex-basis: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 5rem;
+        @include respond(sm){
+            flex-basis: 100%;
+            padding: 0 1rem;
+        }
+        span{
+            color: $primary-red;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        h1{
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+            @include respond(sm){
+                font-size: 2rem;
+            }
+        }
+
+        p{
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            max-width: 90%;
+            line-height: 1.9rem;
+            font-size: 1.2rem;
+            color: $secondary-light-black;
+            @include respond(sm){
+                max-width: 90%;
+                font-size: .8rem;
+                line-height: 1.5rem;
+            }
+        }
+
+        button{
+            padding: 1rem 2rem;
+            color: #fff;
+            background-color: $primary-red;
+            outline: none;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: 200ms ease-in-out;
+            border: 1px solid $primary-red;
+            font-weight: 600;
+            @include respond(sm){
+                font-size: .9rem;
+            }
+            &:hover{
+                background-color: transparent;
+                color: $primary-red;
+                border: 1px solid $primary-red;
+            }
+    }
+
+}
+}
