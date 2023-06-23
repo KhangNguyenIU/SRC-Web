@@ -1,5 +1,6 @@
-import { DashboardLayout } from '@components/Dashboard/Layout';
 import { UserStat } from '@components/Dashboard/Stats/UserStat';
+import Layout from '@components/Layout';
+import TitleLayout from '@components/Layout/TitleLayout';
 import { DashboardService } from '@services/dashboard';
 import React from 'react';
 
@@ -11,9 +12,12 @@ import React from 'react';
 export default function UserStatPage({ userStats }) {
   return (
     <React.Fragment>
-      <DashboardLayout>
+      <Layout>
+        <TitleLayout h2="Dashboard" h1="User Stattistics">
         <UserStat data={userStats} />
-      </DashboardLayout>
+
+        </TitleLayout>
+      </Layout>
     </React.Fragment>
   );
 }

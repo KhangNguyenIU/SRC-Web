@@ -1,10 +1,8 @@
-import { Avatar, Divider, Drawer } from '@mui/material';
+import { Avatar, Drawer } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import SearchIcon from '@mui/icons-material/Search';
-import SettingsIcon from '@mui/icons-material/Settings';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+
 import { adminItems, navItems, privateItems } from 'utils';
 import styles from '@styles/Layout/Sidebar.module.scss';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

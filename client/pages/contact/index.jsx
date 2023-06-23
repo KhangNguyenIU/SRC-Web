@@ -4,16 +4,17 @@ import { Container } from '@mui/system';
 import Contact from '@components/Contact';
 import { ContactService } from '@services/contact';
 import useSWR from 'swr';
+import TitleLayout from '@components/Layout/TitleLayout';
 
-export default function ContactPage({ contacts,socket}) {
-
-
+export default function ContactPage({ contacts, socket }) {
   return (
     <React.Fragment>
       <Layout socket={socket}>
-        <Container maxWidth="md">
-          <Contact contacts={contacts}/>
-        </Container>
+        <TitleLayout h2="Information" h1="Department Contact">
+          <Container maxWidth="md">
+            <Contact contacts={contacts} />
+          </Container>
+        </TitleLayout>
       </Layout>
     </React.Fragment>
   );

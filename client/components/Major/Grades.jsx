@@ -26,18 +26,22 @@ export default function Grades() {
 //   useEffect(() => {
 //     (async () => {
 //       const result = await majorsSuggest({ ...StudentPoints });
+//       console.log({ result })
 //       setResult(result);
 //     })();
 //   }, []);
+
   const closeModal = () => {
     setOpen(false);
     setGrades({ ...initialPts });
   };
+
   const onSubmit = async () => {
     const result = await majorsSuggest(grades);
     setResult(result);
     setOpen(true);
   };
+
   return (
     <React.Fragment>
       <GradesResults open={open} closeModal={closeModal} result={result} />
@@ -52,7 +56,8 @@ export default function Grades() {
                 </div>
                 <TextField
                   type="number"
-                  defaultValue={0}
+                //   defaultValue={0}
+                placeholder='0'
                   value={grades[value]}
                   onChange={(e) =>
                     setGrades((prev) => ({
@@ -60,7 +65,7 @@ export default function Grades() {
                       [value]:
                         Number(e.target.value) > 10
                           ? 10
-                          : Number(e.target.value),
+                          : (e.target.value<0)?0:Number(e.target.value),
                     }))
                   }
                 />

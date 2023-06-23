@@ -219,7 +219,7 @@ export const navItems = [
         link: '/post/category/news',
         icon: <NewspaperIcon sx={{ color: '#7F8487' }} />,
     },
-    { item: 'Benchmart', link: '/post/category/benchmark', icon: <MoneyIcon /> },
+    { item: 'Benchmark', link: '/post/category/benchmark', icon: <MoneyIcon /> },
     {
         item: 'Enrollment Project',
         link: '/post/category/enrollment-project',
@@ -237,11 +237,6 @@ export const privateItems = [
 ];
 
 export const adminItems = [
-    {
-        item: 'Dashboard',
-        link: '/private/dashboard',
-        icon: <DashboardIcon sx={{ color: '#7F8487' }} />,
-    },
     {
         item: 'Stat',
         link: '/private/dashboard/stat/user-stat',

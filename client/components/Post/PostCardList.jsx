@@ -81,7 +81,7 @@ export const PostCardList = ({ posts }) => {
       <div
         style={{ display: 'flex', flexDirection: 'column', marginTop: '2rem' }}
       >
-        <div
+        {/* <div
           style={{
             width: '100%',
             padding: '4rem',
@@ -91,9 +91,9 @@ export const PostCardList = ({ posts }) => {
           }}
         >
           <div style={{fontSize:'3rem'}}>{cate}</div>
-        </div>
+        </div> */}
         <div>
-          Filter by{' '}
+          {/* Filter by{' '} */}
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <Select
               labelId="demo-simple-select-standard-label"

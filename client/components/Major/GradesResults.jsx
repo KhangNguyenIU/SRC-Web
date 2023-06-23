@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { Chip, CircularProgress, Modal, Typography } from '@mui/material';
+import {
+  Chip,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  Modal,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import styles from '@styles/Major/Grades.module.scss';
 
@@ -17,7 +25,11 @@ const pastelColors = [
   '#F8CBA6',
 ];
 export default function GradesResults({ open, closeModal, result }) {
-;
+  const majors = useMemo(
+    () => (!!result?.majors ? Object.entries(result?.majors) : []),
+    [result]
+  );
+
   const handleClick = (link) => {
     window.open(link, '_blank');
   };
@@ -42,25 +54,33 @@ export default function GradesResults({ open, closeModal, result }) {
             </div>
 
             <div className={styles.suggestMajor}>
-              {
-                !!result?.majors?.size ? (<p>
-                    International University has some major that could be suitable
-                    for you:
-                  </p>) : (<p>Currently, International University doesnt have majors that are suitable for you</p>)
-              }
+              {!!majors?.length ? (
+                <p>
+                  International University has some major that could be suitable
+                  for you:
+                </p>
+              ) : (
+                <p>
+                  Currently, International University doesnt have majors that
+                  are suitable for you
+                </p>
+              )}
               <div className={styles.suggestMajorList}>
-                {!!result?.majors?.size &&
-                  [...result.majors].map((item, index) => (
-                    <Chip
-                      key={index}
-                      label={item}
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      className={styles.major}
-                      onClick={() => handleClick(item.link)}
-                    />
-                  ))}
+             
+                  {!!majors?.length && (
+                    <div className={styles.box}>
+                      {majors.map((item, index) => (
+                        <div key={index} className={styles.item}>
+                          <span className={styles.text}>{item[0]}</span>
+                          <div className={styles.list}>
+                            {item[1].map((link, index) => (
+                              <span key={index}>{link}</span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
               </div>
             </div>
           </div>

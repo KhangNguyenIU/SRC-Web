@@ -14,11 +14,16 @@ const CalStuPts = async (stuPts) =>{
 }
 
 const filterMajor = async (stuPts) => {
-    let result = new Set([])
+    console.log({stuPts})
+    let result = {}
     await Object.entries(Majors).forEach(([key, value]) => {
         value.combination.forEach(combination => {
             if(stuPts[combination] >= value.benchmark){
-                result.add(key)
+                if(result[key] == undefined){
+                    result[key] = [combination]
+                }else{
+                    result[key].push(combination)
+                }
             }
         })
     })

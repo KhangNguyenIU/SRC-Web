@@ -7,18 +7,19 @@
   padding: 2rem 5rem;
   display: flex;
   width: 100%;
-
-  @include respond("sm"){
-      flex-direction: column;
+  background-image: url('/landing/bk.jpg');
+  background-position: center;
+  @include respond('sm') {
+    flex-direction: column;
   }
   .info {
     display: flex;
     flex-direction: column;
     flex-basis: 30%;
     align-items: center;
-  
-    @include respond("sm"){
-        flex-basis: 100%;
+
+    @include respond('sm') {
+      flex-basis: 100%;
     }
     h3 {
       font-size: 1.4rem;
@@ -45,8 +46,8 @@
     flex-basis: 40%;
     align-items: center;
 
-    @include respond("sm"){
-        flex-basis: 100%;
+    @include respond('sm') {
+      flex-basis: 100%;
     }
     h3 {
       font-size: 1.4rem;
@@ -73,8 +74,8 @@
     flex-basis: 30%;
     align-items: center;
 
-    @include respond("sm"){
-        flex-basis: 100%;
+    @include respond('sm') {
+      flex-basis: 100%;
     }
     h3 {
       font-size: 1.4rem;
