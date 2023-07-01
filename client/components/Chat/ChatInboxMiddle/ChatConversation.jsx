@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ChatBoxHeader from './ChatBoxHeader';
@@ -29,27 +29,31 @@ export default function ChatConversation({
   const [textInput, setTextInput] = useState('');
   const [typeOfMessage, setTypeOfMessage] = useState(messageType.TEXT);
 
+
   const handleSendMessage = async () => {
-    console.log("handleSendMessage")
-    dispath(setLoading({type:loadingType.SENDMESSAGE}))
+
+    dispath(setLoading({ type: loadingType.SENDMESSAGE }));
+
     if (socket && textInput !== '') {
+      // detect recipient
+
       let chatRoomId = currentChatRoom?.id || undefined;
       let messagePacket = {
         chatRoomId: chatRoomId,
         message: textInput,
         type: typeOfMessage,
         postedBy: user.id,
+        partner: detectRecipient(),
       };
-      console.log("messagePacket - 1 ",messagePacket)
+
       // check if the room is temporary room
       const partner = JSON.parse(localStorage.getItem('partner'));
-
       if (
         partner !== null &&
         !currentChatRoom?.conversationParticipants?.some(
           (part) => part?.userid === partner?.id
         ) &&
-        currentChatRoom.status === 'temporary'
+        currentChatRoom?.status === 'temporary'
       ) {
         const newChat = await ChatService.createNewChat({
           chatReceiverId: partner?.id,
@@ -64,18 +68,25 @@ export default function ChatConversation({
         }
         localStorage.removeItem('partner');
       }
-      console.log({messagePacket})
+
+      //
+
       socket.emit('send-message', messagePacket);
       socket.emit('user-stop-typing', {
-        chatRoomId: currentChatRoom.id,
+        chatRoomId: currentChatRoom?.id,
         user: user,
       });
 
       setTextInput('');
     }
-    dispath(stopLoading())
+    dispath(stopLoading());
   };
 
+  const detectRecipient = () => {
+    return currentChatRoom?.conversationParticipants?.find(
+      (part, idx) => part?.userid !== user.id
+    ).userid;
+  };
   return (
     <React.Fragment>
       <ChatBoxHeader currentChatRoom={currentChatRoom} participant={partner} />
@@ -95,8 +106,8 @@ export default function ChatConversation({
         socket={socket}
         currentChatRoom={currentChatRoom}
       />
-      
-      <Loading type={loadingType.SENDMESSAGE}/>
+
+      <Loading type={loadingType.SENDMESSAGE} />
     </React.Fragment>
   );
 }

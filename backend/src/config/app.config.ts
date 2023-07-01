@@ -2,7 +2,6 @@ import * as Express from 'express';
 import * as Cors from 'cors';
 import * as Helmet from 'helmet';
 import * as Compression from 'compression';
-import { config as Dotenv } from 'dotenv';
 import { ProxyRouter } from '@services/proxy-route.service';
 import * as Morgan from 'morgan';
 import * as CookieParser from 'cookie-parser';

@@ -4,30 +4,30 @@ import {
   Avatar,
   Badge,
   Divider,
-  Icon,
   IconButton,
   Menu,
   MenuItem,
-  TextField,
-  Tooltip,
+
 } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { Box } from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AuthModal from '@components/Auth/AuthModal';
 import { logout } from 'slices/auth/auth.slice';
 import useDebounce from '@hooks/useDebounce';
 import PostService from '@services/post';
 import { useRouter } from 'next/router';
+import StyledBadge from '@components/Utils/StyledBadge';
 
 export default function NavBar(props) {
   let user = useSelector((state) => state.user);
+  const unreadMess = useSelector((state) => state.unreadMess);
   const [openAuthModal, setOpenAuthModal] = React.useState(false);
   const [search, setSearch] = useState('');
   const [listPost, setListPost] = useState([]);
-    const router = useRouter()
+  const router = useRouter();
 
+  console.log("Redux",{ unreadMess });
   const handleOpenAuthModal = () => {
     setOpenAuthModal(true);
   };
@@ -42,7 +42,6 @@ export default function NavBar(props) {
     }
   };
 
-
   return (
     <React.Fragment>
       <Box
@@ -54,25 +53,16 @@ export default function NavBar(props) {
           fontFamily: 'Lora',
           zIndex: 99,
           position: 'fixed',
+          padding: '.5rem 0',
         }}
       >
         <IconButton onClick={() => props.setToggleSideBar(true)}>
           <MenuIcon />
         </IconButton>
 
-        {/* <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-          <SearchIcon />
-          <TextField
-            id="standard-basic"
-            // label="Search"
-            variant="standard"
-            sx={{ width: ['100px', '200px'] }}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div> */}
+
         {user?.email ? (
-          <UserInfo socket={props.socket} />
+          <UserInfo socket={props.socket} newMess={unreadMess.unReadMess} />
         ) : (
           <AuthButtons handleOpenAuthModal={handleOpenAuthModal} />
         )}
@@ -96,12 +86,12 @@ const AuthButtons = ({ handleOpenAuthModal }) => {
   );
 };
 
-const UserInfo = ({ socket }) => {
+const UserInfo = ({ socket, newMess }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-    const router = useRouter()
+  const router = useRouter();
   const onSignout = () => {
     if (socket) {
       socket.disconnect();
@@ -120,18 +110,14 @@ const UserInfo = ({ socket }) => {
   };
   return (
     <React.Fragment>
-      <Box>
-        <IconButton onClick={()=>router.push('/private/message')}>
-          <Badge badgeContent={0} color="error">
-            <SvgIcon
-              viewBox="0 0 24 24"
-           
-              sx={{fontSize: '2rem'}}
-            >
+      <Box sx={{display:'flex', alignItems:'center'}}>
+        <IconButton onClick={() => router.push('/private/message')}>
+          <StyledBadge badgeContent={newMess} max={10}>
+            <SvgIcon viewBox="0 0 24 24" sx={{ fontSize: '2.4rem', color:'black' }}>
               <path fill="none" d="M0 0h24v24H0z" />
               <path d="M7.764 19.225c.59-.26 1.25-.309 1.868-.139.77.21 1.565.316 2.368.314 4.585 0 8-3.287 8-7.7S16.585 4 12 4s-8 3.287-8 7.7c0 2.27.896 4.272 2.466 5.676a2.8 2.8 0 01.942 2.006l.356-.157zM12 2c5.634 0 10 4.127 10 9.7 0 5.573-4.366 9.7-10 9.7a10.894 10.894 0 01-2.895-.384.8.8 0 00-.534.039l-1.984.876a.8.8 0 01-1.123-.707l-.055-1.78a.797.797 0 00-.268-.57C3.195 17.135 2 14.617 2 11.7 2 6.127 6.367 2 12 2zM5.995 14.537l2.937-4.66a1.5 1.5 0 012.17-.4l2.336 1.75a.6.6 0 00.723 0l3.155-2.396c.421-.319.971.185.689.633l-2.937 4.66a1.5 1.5 0 01-2.17.4l-2.336-1.75a.6.6 0 00-.723 0l-3.155 2.395c-.421.319-.971-.185-.689-.633z" />
             </SvgIcon>
-          </Badge>
+          </StyledBadge>
         </IconButton>
 
         <IconButton
@@ -141,7 +127,7 @@ const UserInfo = ({ socket }) => {
           onClick={handleAvatarClick}
         >
           <Avatar
-            sx={{ width: 40, height: 40, cursor: 'pointer' }}
+            sx={{ width: 40, height: 40, cursor: 'pointer' , marginLeft:'.5rem' }}
             alt="user avatar"
             src={user?.avatar}
           />
@@ -194,7 +180,7 @@ const UserInfo = ({ socket }) => {
         >
           <IconButton>
             <Avatar
-              sx={{ width: 40, height: 40, cursor: 'pointer' }}
+              sx={{ width: 40, height: 40, cursor: 'pointer'}}
               alt="user avatar"
               src={user?.avatar}
             />

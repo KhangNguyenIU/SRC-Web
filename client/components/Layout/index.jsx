@@ -6,6 +6,8 @@ import SideBar from './SideBar';
 export default function Layout({ children, socket }) {
   const [toggleSideBar, setToggleSideBar] = React.useState(false);
 
+    
+
   return (
     <React.Fragment>
       <NavBar setToggleSideBar={setToggleSideBar} socket={socket} />
@@ -14,7 +16,7 @@ export default function Layout({ children, socket }) {
         setToggleSideBar={setToggleSideBar}
       />
       {children}
-      <Footer/>
+      <Footer />
     </React.Fragment>
   );
 }

@@ -7,12 +7,16 @@ import { useRouter } from 'next/router';
 import SearchIcon from '@mui/icons-material/Search';
 import InboxModal from './InboxModal';
 
-export default function DirectPart({contactList,updateChatList,updateCurrentChatRoom}) {
+export default function DirectPart({
+  contactList,
+  updateChatList,
+  updateCurrentChatRoom,
+}) {
   const router = useRouter();
 
-  const [open, setOpen] = useState(false)
-  const handleClose = () => setOpen(false)
-  const handleOpen = () => setOpen(true)
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
   return (
     <React.Fragment>
       <div className={styles.directPart}>
@@ -31,7 +35,13 @@ export default function DirectPart({contactList,updateChatList,updateCurrentChat
         <input type="text" placeholder="Search..." />
       </div>
 
-      <InboxModal open={open} closeModal={handleClose} contactList={contactList} updateChatList={updateChatList} updateCurrentChatRoom={updateCurrentChatRoom}/>
+      <InboxModal
+        open={open}
+        closeModal={handleClose}
+        contactList={contactList}
+        updateChatList={updateChatList}
+        updateCurrentChatRoom={updateCurrentChatRoom}
+      />
     </React.Fragment>
   );
 }

@@ -19,6 +19,14 @@ export interface ENV {
   REDIS_URL: string | undefined;
   UNSPLASH_ACCESS_KEY: string | undefined;
   UNSPLASH_SECRET_KEY: string | undefined;
+  FRB_P_KEY_ID: string | undefined;
+  FRB_P_KEY: string | undefined;
+  FRB_CLIENT_EMAIL: string | undefined;
+  FRB_CLIENT_ID: string | undefined;
+  FRB_AUTH_URI: string | undefined;
+  FRB_TOKEN_URI: string | undefined;
+  FRB_AUTH_PROVIDER_X509_CERT_URL: string | undefined;
+  FRB_CLIENT_X509_CERT_URL: string | undefined;
 }
 
 export interface EnvConfig {
@@ -42,4 +50,12 @@ export interface EnvConfig {
   REDIS_URL: string;
   UNSPLASH_ACCESS_KEY: string;
   UNSPLASH_SECRET_KEY: string;
+  FRB_P_KEY_ID: string ;
+  FRB_P_KEY: string ;
+  FRB_CLIENT_EMAIL: string ;
+  FRB_CLIENT_ID: string ;
+  FRB_AUTH_URI: string ;
+  FRB_TOKEN_URI: string ;
+  FRB_AUTH_PROVIDER_X509_CERT_URL: string ;
+  FRB_CLIENT_X509_CERT_URL: string ;
 }

@@ -49,6 +49,8 @@
   cursor: pointer;
   align-items: center;
   margin-bottom: 0.2rem;
+
+
   &.isNotReaded {
     background-color: $primary-gray;
   }
@@ -76,31 +78,40 @@
   @include respond(sm) {
     padding: 0 0.5rem;
   }
-}
 
-.groupName {
-  width: 100%;
-  font-size: 14px;
-  font-weight: 400;
-  margin-bottom: 5px;
-  color: $secondary-gray;
-  display: flex;
-  justify-content: space-between;
-}
+  .groupName {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    color: $secondary-gray;
+    display: flex;
+    justify-content: space-between;
 
-.nameText {
-}
+    .nameText{
 
-.groupLastMessage {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: $secondary-gray-light;
-}
+    }
 
-.timeText {
-  color: $primary-gray-light;
-  font-size: 11px;
+
+    .timeText {
+        color: $primary-gray-light;
+        font-size: 11px;
+      }
+  }
+
+  .groupLastMessage {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: $secondary-gray-light;
+    .unreadNum{
+        background-color:$primary-purple;
+        padding: 2px 6px;
+        border-radius: 50%;
+        font-weight: 700;  
+        color: white;      
+    }
+  }
 }
 
 

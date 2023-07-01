@@ -26,7 +26,7 @@ class JWTService {
     });
   }
 
-  async verifyToken(token: string): Promise<UserDecode> {
+  async verifyToken(token: string): Promise<any> {
     return await jwt.verify(token, Environment.JWT_SECRET);
   }
 }

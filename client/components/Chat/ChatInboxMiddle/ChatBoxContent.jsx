@@ -19,7 +19,6 @@ export default function ChatBoxContent({ currentChatRoom, isTypingList }) {
 
   const onClickImg = (img) => {
     onOpen();
-    console.log('click image', img);
     setCurMedia(img);
   };
   const onClose = () => {

@@ -41,6 +41,15 @@ class Ennvironment {
       REDIS_URL: process.env.REDIS_URL,
       UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
       UNSPLASH_SECRET_KEY: process.env.UNSPLASH_SECRET_KEY,
+      FRB_P_KEY_ID: process.env.FRB_P_KEY_ID,
+      FRB_P_KEY: process.env.FRB_P_KEY,
+      FRB_CLIENT_EMAIL: process.env.FRB_CLIENT_EMAIL,
+      FRB_CLIENT_ID: process.env.FRB_CLIENT_ID,
+      FRB_AUTH_URI: process.env.FRB_AUTH_URI,
+      FRB_TOKEN_URI: process.env.FRB_TOKEN_URI,
+      FRB_AUTH_PROVIDER_X509_CERT_URL:
+        process.env.FRB_AUTH_PROVIDER_X509_CERT_URL,
+      FRB_CLIENT_X509_CERT_URL: process.env.FRB_CLIENT_X509_CERT_URL,
     };
   }
 

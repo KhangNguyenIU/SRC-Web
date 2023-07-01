@@ -83,12 +83,14 @@ export default function Chat({
     if (res.status === 200) {
       tempChatList = [...res.data.conversations];
 
+      // find existed conversation
       const bol = !tempChatList.some((con) =>
         con.conversationParticipants.every(
           (part) => part?.userid === partner?.id || part?.userid === user.id
         )
       );
 
+      // if not exist, create new temporary conversation
       if (partner !== null && bol) {
         tempChatList.splice(0, 0, {
           conversationParticipants: [{ user: partner }],

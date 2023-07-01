@@ -4,7 +4,6 @@ import { detectWhoIsTyping } from 'utils';
 import { Avatar } from '@mui/material';
 
 export default function TypingLoadingMessage({ isTypingList }) {
-  console.log('isTypingList', isTypingList, detectWhoIsTyping(isTypingList));
   return (
     <React.Fragment>
       <div className={`${styles.messageContent}  ${styles.isTyping}`}>

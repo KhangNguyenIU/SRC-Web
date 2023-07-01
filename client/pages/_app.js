@@ -10,6 +10,8 @@ import { loadingType } from '@constants'
 
 function MyApp({ Component, pageProps }) {
     const [socket, setSocket] = useState(null)
+
+    //Socket connection
     useEffect(() => {
             const connectionOptions = {
                 "force new connection": true,
@@ -20,6 +22,8 @@ function MyApp({ Component, pageProps }) {
             const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL, connectionOptions);
             setSocket(newSocket);
     }, [])
+
+ 
 
     return <Provider store={store}>
         <Wrapper >
