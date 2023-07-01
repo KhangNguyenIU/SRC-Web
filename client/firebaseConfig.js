@@ -3,14 +3,14 @@ import { initializeApp } from 'firebase/app'
 import { getDatabase } from 'firebase/database'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA374ebkQxWDJ8Ueyuw7BaKl6KQjlU9W-0",
-    authDomain: "src-noti.firebaseapp.com",
-    databaseURL: "https://src-noti-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "src-noti",
-    storageBucket: "src-noti.appspot.com",
-    messagingSenderId: "732232551077",
-    appId: "1:732232551077:web:1e29e4421578aae1541b4c",
-    measurementId: "G-G7EEGG0ZXG"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.DB,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MESSUREMENT_ID
   };
 
 const app = initializeApp(firebaseConfig)
