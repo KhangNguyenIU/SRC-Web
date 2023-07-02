@@ -13,7 +13,6 @@ import axios from 'axios';
 export default function MessagePage({ socket, chatList, contactList }) {
   const [currentChatRoom, setCurrentChatRoom] = useState(null);
 
-
   useEffect(() => {
     const partner = JSON.parse(localStorage.getItem('partner'));
     if (partner !== null && chatList !== undefined) {
@@ -33,7 +32,7 @@ export default function MessagePage({ socket, chatList, contactList }) {
       }
     }
   }, [chatList]);
-//   console.log({ chatList, currentChatRoom, chatList });
+  //   console.log({ chatList, currentChatRoom, chatList });
   return (
     <React.Fragment>
       <Chat
@@ -50,17 +49,18 @@ export default function MessagePage({ socket, chatList, contactList }) {
 }
 
 export async function getServerSideProps({ req }) {
-  const conversationData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/conversation/my-conversation`,
-    {
-      withCredentials: true,
-      headers: {
-        cookie: req.headers.cookie,
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+  //   const conversationData = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_API_URL}/conversation/my-conversation`,
+  //     {
+  //       withCredentials: true,
+  //       headers: {
+  //         cookie: req.headers.cookie,
+  //         'Access-Control-Allow-Origin': '*',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     }
+  //   );
+  const conversationData = await ChatService.getChatList(req.headers.cookie);
 
   const contactData = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/faculty`

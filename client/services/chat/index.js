@@ -1,9 +1,13 @@
 import axiosClient from "@services/axiosClient";
 
 export const ChatService ={
-    getChatList:  () => {
+    getChatList:  (cookie) => {
         const url ='/conversation/my-conversation'
-        return axiosClient.get(url)
+        return axiosClient.get(url,{
+            headers: {
+                cookie:cookie
+            }
+        })
     },
     createNewChat : (data)=>{
         const url ='/conversation/create'
