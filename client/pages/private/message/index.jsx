@@ -56,6 +56,9 @@ export async function getServerSideProps({ req }) {  const cookie = req.headers.
         // withCredentials: true,
         headers: {
           cookie: req.headers.cookie,
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
         },
       }
     );
