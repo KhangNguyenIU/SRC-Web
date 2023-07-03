@@ -25,7 +25,16 @@ class UserController {
   async signIn(req: Request, res: Response): Promise<Response<string | any>> {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
-      const { firstName, lastName, email, password, mean, location, school, interest } = req.body;
+      const {
+        firstName,
+        lastName,
+        email,
+        password,
+        mean,
+        location,
+        school,
+        interest,
+      } = req.body;
 
       // check existed account
       const existedUser = await UserRepo.findOneBy({ email });
@@ -46,8 +55,8 @@ class UserController {
       user.mean = mean;
       user.lvInterest = Number(interest);
       user.school = school;
-      user.location =location;
-      
+      user.location = location;
+
       await AppDataSource.manager.save(user);
       return res.status(200).json({
         message: 'Create new account success',
@@ -74,10 +83,10 @@ class UserController {
       }
 
       // check existed faculty
-        const existedFaculty = await FacultyRepo.findOneBy({ id: facultyId });
-        if (!existedFaculty) {
-            return res.status(400).json({ message: 'Faculty not found' });
-        }
+      const existedFaculty = await FacultyRepo.findOneBy({ id: facultyId });
+      if (!existedFaculty) {
+        return res.status(400).json({ message: 'Faculty not found' });
+      }
 
       const user = new User();
       user.firstName = firstName;
@@ -130,7 +139,7 @@ class UserController {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
       const { email, password } = req.body;
-    //   const user = await UserRepo.findOne({ where: { email } });
+      //   const user = await UserRepo.findOne({ where: { email } });
       const user = await UserRepo.createQueryBuilder('user')
         .leftJoinAndSelect('user.faculty', 'faculty')
         .where('user.email = :email', { email })
@@ -167,10 +176,10 @@ class UserController {
       }
 
       res.cookie('accessToken', accessToken, {
-        httpOnly: true,
-        secure: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         sameSite: 'none',
+        secure: true,
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       });
 
       return res.status(200).json({
@@ -243,15 +252,15 @@ class UserController {
   ): Promise<Response<string | any>> {
     try {
       const UserRepo = await AppDataSource.getRepository(User);
-    const users = await UserRepo.createQueryBuilder('user')
-    .leftJoin('user.faculty', 'faculty')
-    .addSelect(['faculty'])
-    .getMany()
-    
+      const users = await UserRepo.createQueryBuilder('user')
+        .leftJoin('user.faculty', 'faculty')
+        .addSelect(['faculty'])
+        .getMany();
+
       return res.status(200).json({ users });
     } catch (error) {
-        console.log(error)
-        Logger.log('error', error);
+      console.log(error);
+      Logger.log('error', error);
       return res.status(400).send(error);
     }
   }

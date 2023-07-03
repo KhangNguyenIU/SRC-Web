@@ -48,18 +48,18 @@ export default function MessagePage({ socket, chatList, contactList }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req }) {  const cookie = req.headers.cookie;
+    console.log({ cookie })
     const conversationData = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/conversation/my-conversation`,
       {
-        withCredentials: true,
+        // withCredentials: true,
         headers: {
           cookie: req.headers.cookie,
         },
       }
     );
-  const cookie = req.headers.cookie;
-  console.log({ cookie })
+
 //   const conversationData = await ChatService.getChatList(cookie);
 
   const contactData = await axios.get(
