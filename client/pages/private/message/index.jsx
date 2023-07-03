@@ -10,8 +10,30 @@ import { loadingType } from '@constants';
 import Loading from '@components/Common/Loading';
 import axios from 'axios';
 
-export default function MessagePage({ socket, chatList, contactList }) {
+export default function MessagePage({ socket }) {
   const [currentChatRoom, setCurrentChatRoom] = useState(null);
+  const [chatList, setChatList] = useState([]);
+  const [contactList, setContactList] = useState([]);
+  useEffect(() => {
+    const fetchChatList = async () => {
+      try {
+        const res = await ChatService.getChatList();
+        setChatList(res.data.conversations);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchChatList();
+
+    const fetchContactList = async () => {
+        try {
+            const res = await ContactService.getContacts();
+            setContactList(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+  }, []);
 
   useEffect(() => {
     const partner = JSON.parse(localStorage.getItem('partner'));
@@ -48,31 +70,31 @@ export default function MessagePage({ socket, chatList, contactList }) {
   );
 }
 
-export async function getServerSideProps({ req }) {  const cookie = req.headers.cookie;
-    console.log({ cookie })
-    const conversationData = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/conversation/my-conversation`,
-      {
-        // withCredentials: true,
-        headers: {
-          cookie: req.headers.cookie,
-          'Accept': '*/*',
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+// export async function getServerSideProps({ req }) {  const cookie = req.headers.cookie;
+//     console.log({ cookie })
+//     const conversationData = await axios.get(
+//       `${process.env.NEXT_PUBLIC_API_URL}/conversation/my-conversation`,
+//       {
+//         // withCredentials: true,
+//         headers: {
+//           cookie: req.headers.cookie,
+//           'Accept': '*/*',
+//           'Access-Control-Allow-Origin': '*',
+//           'Content-Type': 'application/json',
+//         },
+//       }
+//     );
 
-//   const conversationData = await ChatService.getChatList(cookie);
+// //   const conversationData = await ChatService.getChatList(cookie);
 
-  const contactData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/faculty`
-  );
+//   const contactData = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API_URL}/faculty`
+//   );
 
-  return {
-    props: {
-      chatList: conversationData.data.conversations,
-      contactList: contactData.data,
-    },
-  };
-}
+//   return {
+//     props: {
+//       chatList: conversationData.data.conversations,
+//       contactList: contactData.data,
+//     },
+//   };
+// }

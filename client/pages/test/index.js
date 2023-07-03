@@ -40,20 +40,20 @@ export default function index({res}) {
 
 export async function getServerSideProps(context) {
 
-  const cookie = context.req.headers.cookie?.accessToken;
+  const cookie = context.req.headers.cookie
   console.log({ cookie, header: context.req.headers })
 
-    // const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/auth`,{},{
-    //     withCredentials: 'include',
-    //     headers: {
-    //         'Access-Control-Allow-Credentials': true,
-    //          Cookie: context.req.headers.cookie
-    //     }
-    // })
-    // console.log({ res })
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/auth`,{},{
+        withCredentials: 'include',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+             Cookie: context.req.headers.cookie
+        }
+    })
+    console.log({ res })
   return {
     props: {
-      res:"res"
+      res:res
     },
   };
 }
