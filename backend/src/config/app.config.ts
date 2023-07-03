@@ -58,13 +58,7 @@ export class ExpressConfiguration {
         origin: ['http://localhost:3000',Environment.FE_URL],
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         credentials: true,
-        allowedHeaders: [
-            'Accept',
-            'Content-Type',
-            'Authorization',
-            'Origin',
-            'From',
-          ],
+
     }))
 
     this.application.use(Express.json());
