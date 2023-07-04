@@ -28,11 +28,14 @@ export default function MessagePage({ socket }) {
     const fetchContactList = async () => {
         try {
             const res = await ContactService.getContacts();
+            console.log("contact list",res.data)
             setContactList(res.data);
         } catch (error) {
             console.log(error);
         }
     }
+
+    fetchContactList()
   }, []);
 
   useEffect(() => {

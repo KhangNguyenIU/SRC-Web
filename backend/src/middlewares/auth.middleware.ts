@@ -36,7 +36,7 @@ class AuthMiddleware {
           return res.status(403).send('Unauthorized??');
         }
       } catch (error) {
-        Logger.log(error);
+        Logger.log("error", error);
         return res.status(401).send('Unauthorized!');
       }
     };

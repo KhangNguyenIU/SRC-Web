@@ -12,36 +12,39 @@ export default function Wrapper({ children }) {
   const user = useSelector((state) => state.user);
   const redirect = () => router.push('/');
 
-  //Firebase subscription unread messages
-  onValue(ref(db, '/unread_messages'), (snapshot) => {
-    const res = snapshot.val();
-    if (res !== null && !!user?.id) {
-
-      let userPattern = `user_${user?.id}`;
-      let unreadMessages = res[userPattern];
-
-      {
-        if (!!unreadMessages && unreadMessages !== {}) {
-          const sumUnreadMess = Object.values(unreadMessages).reduce(
-            (acc, cur) => acc + cur,
-            0
-          );
-          if (!isNaN(sumUnreadMess)) {
-            dispatch(
-              setUnreadMess({
-                unReadMess: sumUnreadMess,
-                unReadCons: unreadMessages,
-              })
-            );
-          }
-        }
-      }
-    }
-  });
-
   useEffect(() => {
     dispatch(checkAuth({ callback: redirect }));
   }, []);
+
+  useEffect(() => {
+    //Firebase subscription unread messages
+    onValue(ref(db, '/unread_messages'), (snapshot) => {
+      console.log('fb', process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN);
+      const res = snapshot.val();
+      if (res !== null && !!user?.id) {
+        let userPattern = `user_${user?.id}`;
+        let unreadMessages = res[userPattern];
+        console.log('firebase', unreadMessages);
+        {
+          if (!!unreadMessages && unreadMessages !== {}) {
+            const sumUnreadMess = Object.values(unreadMessages).reduce(
+              (acc, cur) => acc + cur,
+              0
+            );
+            console.log({ sumUnreadMess });
+            if (!isNaN(sumUnreadMess)) {
+              dispatch(
+                setUnreadMess({
+                  unReadMess: sumUnreadMess,
+                  unReadCons: unreadMessages,
+                })
+              );
+            }
+          }
+        }
+      }
+    });
+  }, [user]);
 
   return <React.Fragment>{children}</React.Fragment>;
 }
