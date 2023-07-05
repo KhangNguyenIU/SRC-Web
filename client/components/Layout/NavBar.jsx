@@ -27,7 +27,6 @@ export default function NavBar(props) {
   const [listPost, setListPost] = useState([]);
   const router = useRouter();
 
-  console.log("Redux",{ unreadMess });
   const handleOpenAuthModal = () => {
     setOpenAuthModal(true);
   };

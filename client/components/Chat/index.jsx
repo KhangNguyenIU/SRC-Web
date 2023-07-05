@@ -10,6 +10,7 @@ import ChatSummary from './ChatSummaryRight';
 import { ChatService } from '@services/chat';
 
 import { addObjectToUniqueArray } from 'utils';
+import { setSound, stopSound } from 'slices/util/sound.slice';
 
 export default function Chat({
   socket,
@@ -41,12 +42,18 @@ export default function Chat({
 
       socket.on('user-typing', (fields) => {
         const { user: typingUser, isTyping } = fields;
+        
         if (typingUser.id !== user.id) {
           setIsTypingList([
             ...addObjectToUniqueArray(isTypingList, typingUser, isTyping),
           ]);
         }
-      });
+        if(isTyping && typingUser.id !== user.id){
+            dispatch(setSound({ sound: '/sound/mess_typing.mp3', playInLoop: true }));
+            return
+        }
+        dispatch(stopSound())
+      })
     }
   }, [socket, user]);
 
@@ -54,6 +61,9 @@ export default function Chat({
     if (socket) {
       socket.on('receive-message', async (message) => {
         if (message) {
+          if (message?.postedBy?.id !== user?.id) {
+            dispatch(setSound({ sound: '/sound/mess_incomming.mp3' }));
+          }
           const newCurConversationData = await updateChatList();
           setCurrentChatRoom(
             newCurConversationData.find(
