@@ -15,7 +15,7 @@ export interface ENV {
   CLOUDINARY_CLOUD_NAME: string | undefined;
   CLOUDINARY_API_KEY: string | undefined;
   CLOUDINARY_API_SECRET: string | undefined;
-  FE_URL: string | undefined;
+  FE_URL: string[] | undefined;
   REDIS_URL: string | undefined;
   UNSPLASH_ACCESS_KEY: string | undefined;
   UNSPLASH_SECRET_KEY: string | undefined;
@@ -46,7 +46,7 @@ export interface EnvConfig {
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
-  FE_URL: string;
+  FE_URL: string[];
   REDIS_URL: string;
   UNSPLASH_ACCESS_KEY: string;
   UNSPLASH_SECRET_KEY: string;

@@ -55,7 +55,7 @@ export class ExpressConfiguration {
   plug(): ExpressConfiguration {
     // this.application.use(Cors(this.options.cors));
     this.application.use(Cors({
-        origin: ['http://localhost:3000',Environment.FE_URL],
+        origin: ['http://localhost:3000',...Environment.FE_URL],
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         credentials: true,
 

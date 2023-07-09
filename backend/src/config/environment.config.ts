@@ -37,7 +37,7 @@ class Ennvironment {
       CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
       CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
       CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
-      FE_URL: process.env.FE_URL,
+      FE_URL: process.env.FE_URL.split(', '),
       REDIS_URL: process.env.REDIS_URL,
       UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
       UNSPLASH_SECRET_KEY: process.env.UNSPLASH_SECRET_KEY,

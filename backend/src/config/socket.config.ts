@@ -28,7 +28,7 @@ class SocketConfig {
       this.socketIo = new SocketServer(server, {
         allowEIO3: true,
         cors: {
-          origin: [Environment.FE_URL, 'http://localhost:3000'],
+          origin: [...Environment.FE_URL, 'http://localhost:3000'],
           methods: ['GET', 'POST'],
         },
       });

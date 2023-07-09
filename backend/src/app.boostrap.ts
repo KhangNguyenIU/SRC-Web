@@ -28,37 +28,7 @@ const main = async (): Promise<void> => {
       //init socket server
       SocketConfig.init(server).plug();
 
-      //   const ref = db.ref('/admin')
-
-      const ref = FireBaseDB.ref('/unread_messages');
-        // ref.set({
-        //     1: {
-        //         2:3
-        //     }
-        // }) 
-      const user1 = ref.child("2");
-
-    //   user1.once("value", (snapshot) => {
-    //         console.log("user1 Once",snapshot.val());
-    //         let data = snapshot.val();
-    //         if(!data){
-    //             ref.update({
-    //                 9:1
-    //             })
-    //             return
-    //         }  
-    //         user1.update({
-    //             2: ++data[2],
-    //             3: ++data[3] ||1
-    //         })
-    //   })
-        // user1.transaction((current_value) => {
-        //     console.log({current_value})
-        //     return current_value ; 
-        // })
-      ref.once('value', function (snapshot) {
-        console.log({ snapshot: snapshot.val() });
-      });
+      console.log([...Environment.FE_URL, 'http://localhost:3000']);
     })
     .catch((error) => {
       console.log(error);
