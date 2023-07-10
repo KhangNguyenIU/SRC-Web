@@ -33,6 +33,8 @@ class Ennvironment {
       DB_SYNCHRONIZE: process.env.DB_SYNCHRONIZE === 'true',
       DB_LOGGING: process.env.DB_LOGGING === 'true',
       DB_ENTITIES: process.env.DB_ENTITIES,
+      DB_CA: process.env.DB_CA,
+      DB_SSL: process.env.DB_SSL === 'true',
       DB_CACHE: process.env.DB_CACHE === 'true',
       CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
       CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,

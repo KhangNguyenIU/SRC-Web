@@ -12,6 +12,8 @@ export interface ENV {
   DB_LOGGING: boolean | undefined;
   DB_ENTITIES: string | undefined;
   DB_CACHE: boolean | undefined;
+  DB_CA: string | undefined;
+  DB_SSL: boolean | undefined;
   CLOUDINARY_CLOUD_NAME: string | undefined;
   CLOUDINARY_API_KEY: string | undefined;
   CLOUDINARY_API_SECRET: string | undefined;
@@ -43,6 +45,8 @@ export interface EnvConfig {
   DB_LOGGING: boolean;
   DB_ENTITIES: string;
   DB_CACHE: boolean;
+  DB_CA: string;
+  DB_SSL: boolean;
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
