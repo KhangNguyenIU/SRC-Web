@@ -26,6 +26,7 @@ class SocketConfig {
   init(server: any): SocketConfig {
     if (!this.socketIo) {
       this.socketIo = new SocketServer(server, {
+        path: '/socket.io',
         allowEIO3: true,
         cors: {
           origin: [...Environment.FE_URL, 'http://localhost:3000'],

@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }) {
             reconnectionAttempts: "Infinity",
             timeout: 10000,
             transports: ["websocket"],
+            path: '/socket.io'
         };
         const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL, connectionOptions);
         setSocket(newSocket);
