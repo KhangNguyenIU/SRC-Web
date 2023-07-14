@@ -18,8 +18,7 @@ function MyApp({ Component, pageProps }) {
             "force new connection": true,
             reconnectionAttempts: "Infinity",
             timeout: 10000,
-            transports: ["websocket"],
-            path: '/socket.io'
+            transports: ["websocket", "polling"],
         };
         const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL, connectionOptions);
         setSocket(newSocket);

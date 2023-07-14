@@ -23,19 +23,32 @@ class SocketConfig {
     return SocketConfig.instance;
   }
 
-  init(server: any): SocketConfig {
-    if (!this.socketIo) {
-      this.socketIo = new SocketServer(server, {
-        path: '/socket.io',
-        allowEIO3: true,
-        cors: {
-          origin: [...Environment.FE_URL, 'http://localhost:3000'],
-          methods: ['GET', 'POST'],
-        },
-      });
-    }
-    return this;
-  }
+//   init(server: any): SocketConfig {
+//     if (!this.socketIo) {
+//       this.socketIo = new SocketServer(server, {
+//         path: '/socket.io',
+//         allowEIO3: true,
+//         cors: {
+//           origin: [...Environment.FE_URL, 'http://localhost:3000'],
+//           methods: ['GET', 'POST'],
+//           credentials: true,
+//         },
+//       });
+//     }
+//     return this;
+//   }
+
+init(server: any): SocketConfig {
+        if (!this.socketIo) {
+          this.socketIo = new SocketServer(server, {
+            cors:{
+                origin: '*',
+                methods: ['GET', 'POST'],
+            }
+          });
+        }
+        return this;
+      }
 
   plug(): any {
     this.socketIo.on('connection', (socket) => {
