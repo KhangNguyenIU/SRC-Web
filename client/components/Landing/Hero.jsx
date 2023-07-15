@@ -7,7 +7,7 @@ import { Box, Modal, SvgIcon } from '@mui/material';
 import buttonStyles from '@styles/Component/Button.module.scss';
 
 export default function Hero() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const closeModal = () => {
     setOpen(false);
