@@ -24,7 +24,7 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      @include respond(md){
+      @include respond(md) {
         float: none;
         width: 100%;
         padding: 1rem;
@@ -38,15 +38,15 @@
           font-size: 14px;
         }
       }
-      h1{
+      h1 {
         font-family: 'Playfair Display', serif;
         font-size: 3.5rem;
         font-weight: 800;
         margin: 1rem 0;
-        @include respond(sm){
-            font-size: 2rem;
+        @include respond(sm) {
+          font-size: 2rem;
         }
-    }
+      }
       p {
         max-width: 500px;
         text-align: left;
@@ -59,13 +59,12 @@
       }
 
       .options {
-        width:100%;
+        width: 100%;
         padding-right: 3rem;
         .select {
           .head {
             display: flex;
             align-items: center;
-
           }
         }
       }
@@ -97,10 +96,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  font-family: 'Playfair Display', serif;
   h2 {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 500;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
   }
 
   .selectBox {
@@ -108,26 +107,44 @@
     justify-content: center;
     width: 100%;
     .card {
-      background-color: #eee;
+    //   background-color: rgba(0, 0, 0, 0.01);
       border-radius: 10px;
-      width: 30%;
+      width: 40%;
       padding: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       margin: 1rem;
-
+      cursor: pointer;
+      transition: 300ms;
+      &:hover {
+        box-shadow: 10px 4px 55px -5px rgba(109,109,109,0.66);
+        -webkit-box-shadow: 10px 4px 55px -5px rgba(109,109,109,0.66);
+        -moz-box-shadow: 10px 4px 55px -5px rgba(109,109,109,0.66);
+      }
+      @include respond(sm) {
+        padding: 0.2rem;
+      }
       .title {
         height: 70px;
+        font-family: 'Playfair Display', serif;
+        @include respond(sm) {
+          height: 100px;
+        }
       }
 
       .image {
-        width: 120px;
-        height: 120px;
+        width: 100%;
+        height: 100%;
+        @include respond(sm) {
+          width: 150px;
+          height: 150px;
+        }
         img {
-          width: 100px;
-          height: 100px;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
       }
 
@@ -139,23 +156,24 @@
 
   .button {
     padding: 0.8rem 1.8rem;
-    border-radius: 30px;
-    background-color: $primary-blue;
-    font-size: 0.8rem;
-    font-weight: 500;
+    color: #fff;
+    background-color: $primary-red;
     outline: none;
     border: none;
-    color: black;
+    border-radius: 25px;
     cursor: pointer;
-    transition: 200ms;
-    margin-bottom: 3rem;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: 200ms ease-in-out;
+    border: 1px solid $primary-red;
+    font-weight: 600;
     @include respond(sm) {
-      padding: 0.5rem 1.5rem;
-      font-size: 0.8rem;
-      margin-bottom: 1rem;
+      font-size: 0.9rem;
     }
     &:hover {
-      background-color: $secondary-blue;
+      background-color: transparent;
+      color: $primary-red;
+      border: 1px solid $primary-red;
     }
   }
 }

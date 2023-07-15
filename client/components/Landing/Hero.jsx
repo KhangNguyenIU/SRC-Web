@@ -3,10 +3,12 @@ import React from 'react';
 import styles from '@styles/Landing/Hero.module.scss';
 import Link from 'next/link';
 import { Box, Modal, SvgIcon } from '@mui/material';
+
 import buttonStyles from '@styles/Component/Button.module.scss';
 
 export default function Hero() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+
   const closeModal = () => {
     setOpen(false);
   };
@@ -90,7 +92,7 @@ export default function Hero() {
                   <h3>Holland Test</h3>
                 </div>
                 <div className={styles.image}>
-                  <img src="quiz1.png" alt="holland" />
+                  <img src="/landing/info_01.png" alt="holland" />
                 </div>
 
                 <button className={styles.button}>
@@ -103,7 +105,7 @@ export default function Hero() {
                   <h3>High school test grades</h3>
                 </div>
                 <div className={styles.image}>
-                  <img src="quiz2.png" alt="holland" />
+                  <img src="/landing/intro1.png" alt="holland" />
                 </div>
 
                 <button className={styles.button}>
