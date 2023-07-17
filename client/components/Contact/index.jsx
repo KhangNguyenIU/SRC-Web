@@ -55,7 +55,9 @@ function Contact({ contacts }) {
                 <TableCell align="right">
                   <Tooltip title="Online Chat">
                     <IconButton
-                      onClick={() => handleDirectMessage(row.users[0])}
+                      onClick={() => {
+                        handleDirectMessage(row.users[0])
+                    }}
                     >
                       <ChatBubbleOutlineIcon />
                     </IconButton>

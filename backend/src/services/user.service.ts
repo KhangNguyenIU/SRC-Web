@@ -82,7 +82,10 @@ class UserService {
           else if (user.role === ROLE.staff) {
             const existedFaculty = await AppDataSource.getRepository(
               Faculty
-            ).findOneBy({ id: user.facultyId });
+            ).findOneBy({ slug: slugify(user.username,{
+                lower: true,
+                locale: 'vi',
+            })});
 
             newUser.username = user.username;
             newUser.faculty = existedFaculty;
@@ -135,7 +138,7 @@ class UserService {
           const existedUser = await AppDataSource.getRepository(User).findOneBy(
             { id: index + 1 }
           );
-          if (existedUser) {
+          if (existedUser && existedUser.role !== ROLE.user) {
             const feedback = new Feedback();
             feedback.rating = Math.floor(Math.random() * 5 + 1);
             feedback.user = existedUser;

@@ -40,6 +40,7 @@ export default function MessagePage({ socket }) {
 
   useEffect(() => {
     const partner = JSON.parse(localStorage.getItem('partner'));
+    console.log({ partner, chatList })
     if (partner !== null && chatList !== undefined) {
       const foundChat = chatList.find(
         (chat) =>
@@ -47,13 +48,17 @@ export default function MessagePage({ socket }) {
           chat.conversationParticipants[1]?.user?.id === partner.id
       );
       if (foundChat) {
+        console.log("IF")
         setCurrentChatRoom(foundChat);
       } else {
+        console.log("ELSE")
         chatList.unshift({
           conversationParticipants: [{ user: partner }],
           messages: [],
           status: 'temporary',
         });
+        setChatList([...chatList])
+        setCurrentChatRoom(chatList[0]);
       }
     }
   }, [chatList]);
